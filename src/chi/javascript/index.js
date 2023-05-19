@@ -14,6 +14,7 @@ import { NumberInput, factory as numberInput } from './components/number-input';
 import { Popover, factory as popover } from "./components/popover";
 import { RangeSlider, factory as rangeSlider } from "./components/range-slider";
 import { Sidenav, factory as sidenav } from "./components/sidenav";
+import { Steps, factory as steps } from './components/steps';
 import { Tab, factory as tab } from './components/tab';
 import { Tooltip, factory as tooltip } from "./components/tooltip";
 
@@ -34,6 +35,7 @@ export {
   popover,
   rangeSlider,
   sidenav,
+  steps,
   tab,
   tooltip,
 
@@ -50,6 +52,7 @@ export {
   Popover,
   RangeSlider,
   Sidenav,
+  Steps,
   Tab,
   Tooltip,
 

@@ -1,0 +1,119 @@
+---
+title: Steps
+---
+
+script(src=`../../js/chi.js`)
+
+ul.chi-steps.-vertical#example-order-progress
+  li.chi-steps__item.-completed.-expanded
+    .chi-steps__icon
+      .chi-steps__content
+        a.chi-steps__item-title.chi-steps__trigger.-text--h5.-text--navy.-lh--2.-m--0 Step 1
+        .chi-steps__subitem-wrapper
+          .chi-steps__subitem.-completed
+            i.chi-icon.icon-check.-xs(aria-hidden='true')
+            p
+              | Completed item
+              span.-text--2xs  | 17 Feb 2021
+            button#example__help-button.chi-button.-icon.-xs.-flat.-p--0.-ml--1(aria-label='Help' data-target='#example__help-popover')
+              i.chi-icon.icon-circle-info-outline.-icon--dark.-mr--0(aria-hidden='true')
+    .chi-steps__line
+  li.chi-steps__item.-active.-expanded
+    .chi-steps__icon
+      .chi-steps__content
+        a.chi-steps__item-title.chi-steps__trigger.-text--h5.-text--navy.-lh--2.-m--0 Step 2
+        .chi-steps__subitem-wrapper
+          .chi-steps__subitem.-completed
+            i.chi-icon.icon-warning.-xs.-icon--warning(aria-hidden='true')
+            p
+              | Completed item 
+              span.-text--2xs  | 17 Feb 2021
+            button#example__help-button-1.chi-button.-icon.-xs.-flat.-p--0.-ml--1(aria-label='Help' data-target='#example__help-popover-1')
+              i.chi-icon.icon-circle-info-outline.-icon--dark.-mr--0(aria-hidden='true')
+          .chi-steps__subitem.-completed
+            i.chi-icon.icon-check.-xs(aria-hidden='true')
+            p
+              | Completed item 
+              span.-text--2xs  | 17 Feb 2021
+            button#example__help-button-2.chi-button.-icon.-xs.-flat.-p--0.-ml--1(aria-label='Help' data-target='#example__help-popover-2')
+              i.chi-icon.icon-circle-info-outline.-icon--dark.-mr--0(aria-hidden='true')
+          .chi-steps__subitem.-completed
+            i.chi-steps__marker.chi-icon.icon-arrow-right.-sm.-icon--warning(aria-hidden='true')
+            i.chi-icon.icon-warning.-xs.-icon--warning(aria-hidden='true')
+            p
+              | Completed item 
+              span.-text--2xs  | 17 Feb 2021
+            button#example__help-button-3.chi-button.-icon.-xs.-flat.-p--0.-ml--1(aria-label='Help' data-target='#example__help-popover-3')
+              i.chi-icon.icon-circle-info-outline.-icon--dark.-mr--0(aria-hidden='true')
+    .chi-steps__line
+  li.chi-steps__item.-expanded.-active
+    .chi-steps__icon
+      .chi-steps__content
+        a.chi-steps__item-title.chi-steps__trigger.-text--h5.-text--navy.-lh--2.-m--0 Step 3
+        .chi-steps__subitem-wrapper
+          .chi-steps__subitem.-d--block.-pl--0
+            .-d--flex.-justify-content--center.-align-items--center.-mb--1
+              .chi-steps__subitem-icon
+                i.chi-icon.icon-warning.-xs.-icon--warning(aria-hidden='true')
+              p
+                | Pending item 
+                span.-text--2xs.-text--navy  | 17 Feb 2021
+              button#example__help-button-4.chi-button.-icon.-xs.-flat.-p--0.-ml--1(aria-label='Help' data-target='#example__help-popover-4')
+                i.chi-icon.icon-circle-info-outline.-icon--dark.-mr--0(aria-hidden='true')
+            .chi-steps__actions
+              button.chi-button.-xs Schedule
+    .chi-steps__line
+  li.chi-steps__item.-expanded
+    .chi-steps__icon
+      .chi-steps__content
+        a.chi-steps__item-title.chi-steps__trigger.-text--h5.-text--navy.-lh--2.-m--0 Step 4
+        .chi-steps__subitem-wrapper
+          .chi-steps__subitem.-d--block.-pl--0
+            .-d--flex.-justify-content--center.-align-items--center.-mb--1
+              .chi-steps__subitem-icon
+              p
+                | Pending item 
+                span.-text--2xs.-text--navy  | 17 Feb 2021
+              button#example__help-button-5.chi-button.-icon.-xs.-flat.-p--0.-ml--1(aria-label='Help' data-target='#example__help-popover-5')
+                i.chi-icon.icon-circle-info-outline.-icon--dark.-mr--0(aria-hidden='true')
+            .chi-steps__actions
+              button.chi-button.-xs Reschedule
+
+section#example__help-popover.chi-popover.chi-popover--top(aria-modal='true' role='dialog')
+  .chi-popover__content
+    p.chi-popover__text Helpful information goes here.
+section#example__help-popover-1.chi-popover.chi-popover--top(aria-modal='true' role='dialog')
+  .chi-popover__content
+    p.chi-popover__text Helpful information goes here.
+section#example__help-popover-2.chi-popover.chi-popover--top(aria-modal='true' role='dialog')
+  .chi-popover__content
+    p.chi-popover__text Helpful information goes here.
+section#example__help-popover-3.chi-popover.chi-popover--top(aria-modal='true' role='dialog')
+  .chi-popover__content
+    p.chi-popover__text Helpful information goes here.
+section#example__help-popover-4.chi-popover.chi-popover--top(aria-modal='true' role='dialog')
+  .chi-popover__content
+    p.chi-popover__text Helpful information goes here.
+section#example__help-popover-5.chi-popover.chi-popover--top(aria-modal='true' role='dialog')
+  .chi-popover__content
+    p.chi-popover__text Helpful information goes here.
+
+
+script.
+  const orderProgressExample = document.getElementById('example-order-progress');
+  const popovers = [
+    { trigger: 'example__help-button' },
+    { trigger: 'example__help-button-1' },
+    { trigger: 'example__help-button-2' },
+    { trigger: 'example__help-button-3' },
+    { trigger: 'example__help-button-4' },
+    { trigger: 'example__help-button-5' },
+  ];
+
+  chi.steps(orderProgressExample);
+
+  Array.prototype.forEach.call(popovers, function(popover) {
+    const popoverTrigger = document.getElementById(popover.trigger);
+
+    chi.popover(popoverTrigger);
+  });
