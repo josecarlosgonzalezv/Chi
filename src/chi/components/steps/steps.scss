@@ -127,13 +127,13 @@ $breakpoints: ('sm', 'md', 'lg', 'xl');
         white-space: normal;
 
         & a,
+        & .chi-steps__item-title,
         & .chi-steps__item-title {
           text-align: center;
           top: 0;
           white-space: normal;
           width: 100px;
         }
-      }
     }
 
     & > a,
