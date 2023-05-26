@@ -13,7 +13,7 @@ const EVENTS = {
   SHOW: 'chi.steps.show',
   HIDE: 'chi.steps.hide'
 };
-const EXPAND_ANIMATION_DURATION = 150;
+const EXPAND_ANIMATION_DURATION = 75;
 
 class Steps extends Component {
   constructor(elem, config) {
@@ -63,16 +63,16 @@ class Steps extends Component {
       Util.threeStepsAnimation(
         () => {
           Util.addClass(contentElem, chi.classes.TRANSITIONING);
-          contentElem.style.removeProperty('height');
           contentElem.style.opacity = '0.5';
+          contentElem.style.height = '0px';
           contentElem.style.display = 'none';
         }, () => {
+          contentElem.style.opacity = '0.5';
+          contentElem.style.removeProperty('height');
+          contentElem.style.removeProperty('display');
           Util.addClass(stepItem, chi.classes.EXPANDED);
-          contentElem.style.opacity = '1';
-          contentElem.style.display = 'contents';
         }, () => {
           contentElem.style.removeProperty('opacity');
-          contentElem.style.removeProperty('display');
           Util.removeClass(contentElem, chi.classes.TRANSITIONING);
         }, EXPAND_ANIMATION_DURATION
       );
@@ -98,15 +98,15 @@ class Steps extends Component {
       Util.threeStepsAnimation(
         () => {
           Util.checkAddClass(contentElem, chi.classes.TRANSITIONING);
-          contentElem.style.opacity = '1';
-          contentElem.style.height = contentHeight;
-          contentElem.style.display = 'contents';
-        }, () => {
-          contentElem.style.height = '0px';
           contentElem.style.opacity = '0.5';
-          contentElem.style.display = 'none';
+          contentElem.style.height = contentHeight;
+        }, () => {
+          contentElem.style.opacity = '0.5';
           Util.checkRemoveClass(stepItem, chi.classes.EXPANDED);
         }, () => {
+          contentElem.style.opacity = '0';
+          contentElem.style.height = '0px';
+          contentElem.style.display = 'none';
           Util.checkRemoveClass(contentElem, chi.classes.TRANSITIONING);
         }, EXPAND_ANIMATION_DURATION
       );
