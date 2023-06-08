@@ -61,31 +61,31 @@ import { Component, Vue } from '@/build/vue-wrapper';
 declare const chi: any;
 
 let dataTableNumber = 0;
+
 @Component({})
 export default class DataTable extends Vue {
   @Prop() data!: DataTableData;
   @Prop() config!: DataTableConfig;
 
   accordionsExpanded: string[] = [];
-  activePage =
-    this.$props.config.pagination.activePage || this.$props.config.activePage || defaultConfig.pagination.activePage;
-  resultsPerPage = this.$props.config.resultsPerPage || defaultConfig.resultsPerPage;
+  activePage = this.config.pagination.activePage || this.config.activePage || defaultConfig.pagination.activePage;
+  resultsPerPage = this.config.resultsPerPage || defaultConfig.resultsPerPage;
   selectedRows: string[] = [];
   slicedData: DataTableRow[] = [];
-  mode = this.$props.config.mode || defaultConfig.mode;
-  treeSelection = Object.prototype.hasOwnProperty.call(this.$props.config, 'treeSelection')
-    ? this.$props.config.treeSelection
+  mode = this.config.mode || defaultConfig.mode;
+  treeSelection = Object.prototype.hasOwnProperty.call(this.config, 'treeSelection')
+    ? this.config.treeSelection
     : defaultConfig.treeSelection;
-  cellWrap = Object.prototype.hasOwnProperty.call(this.$props.config, 'cellWrap')
-    ? this.$props.config.cellWrap
+  cellWrap = Object.prototype.hasOwnProperty.call(this.config, 'cellWrap')
+    ? this.config.cellWrap
     : defaultConfig.cellWrap;
-  showExpandAll = Object.prototype.hasOwnProperty.call(this.$props.config, 'showExpandAll')
-    ? this.$props.config.showExpandAll
+  showExpandAll = Object.prototype.hasOwnProperty.call(this.config, 'showExpandAll')
+    ? this.config.showExpandAll
     : defaultConfig.showExpandAll;
-  showSelectAllDropdown = Object.prototype.hasOwnProperty.call(this.$props.config, 'showSelectAllDropdown')
-    ? this.$props.config.showSelectAllDropdown
+  showSelectAllDropdown = Object.prototype.hasOwnProperty.call(this.config, 'showSelectAllDropdown')
+    ? this.config.showSelectAllDropdown
     : defaultConfig.showSelectAllDropdown;
-  printMode = this.$props.config?.print?.mode || defaultConfig.print?.mode;
+  printMode = this.config?.print?.mode || defaultConfig.print?.mode;
   emptyMessage = this.config.noFiltersMessage || defaultConfig.noFiltersMessage || DATA_TABLE_NO_FILTERS_MESSAGE;
   _currentScreenBreakpoint?: DataTableScreenBreakpoints;
   _dataTableId?: string;
@@ -137,7 +137,7 @@ export default class DataTable extends Vue {
     const template = (description as DataTableColumnDescription).template;
 
     if (template) {
-      const descriptionSlot = this.$scopedSlots[template];
+      const descriptionSlot = this.$slots[template];
 
       if (descriptionSlot) {
         return descriptionSlot((description as DataTableColumnDescription).payload);
@@ -328,13 +328,13 @@ export default class DataTable extends Vue {
   }
 
   _saveView() {
-    const slot = this.$scopedSlots['saveView'];
+    const slot = this.$slots['saveView'];
 
     return slot ? slot({}) : null;
   }
 
   _toolbar() {
-    const slot = this.$scopedSlots['toolbar'];
+    const slot = this.$slots['toolbar'];
 
     if (slot) {
       return <div>{slot({})}</div>;
@@ -343,7 +343,7 @@ export default class DataTable extends Vue {
   }
 
   _bulkActions() {
-    const bulkActionSlot = this.$scopedSlots['bulkActions'] ? this.$scopedSlots['bulkActions']({}) : null;
+    const bulkActionSlot = this.$slots['bulkActions'] ? this.$slots['bulkActions']({}) : null;
 
     if (bulkActionSlot) {
       if (this.mode === DataTableModes.CLIENT) {
@@ -580,7 +580,7 @@ export default class DataTable extends Vue {
 
   _calculateNumberOfPages() {
     const serverSide = this.mode === DataTableModes.SERVER;
-    const pages = this.$props.config.pagination.pages;
+    const pages = this.config.pagination.pages;
 
     if (serverSide && pages && typeof pages === 'number') {
       return pages;
@@ -853,7 +853,7 @@ export default class DataTable extends Vue {
 
   _rowAccordionContent(accordionData: DataTableRowNestedContent, contentLevel: 'parent' | 'child') {
     if (accordionData.template) {
-      const template: NormalizedScopedSlot | undefined = this.$scopedSlots[accordionData.template];
+      const template: NormalizedScopedSlot | undefined = this.$slots[accordionData.template];
 
       if (!template) {
         throw Error(`No template with name ${accordionData.template} is provided.`);
@@ -936,10 +936,10 @@ export default class DataTable extends Vue {
               : null;
         let cellData;
 
-        if (!!rowCell.template && !!this.$scopedSlots[rowCell.template]) {
+        if (!!rowCell.template && !!this.$slots[rowCell.template]) {
           if (typeof rowCell === 'object' && rowCell.payload) {
             // eslint-disable-next-line
-            const slot = this.$scopedSlots[rowCell.template]!(rowCell.payload);
+            const slot = this.$slots[rowCell.template]!(rowCell.payload);
 
             if (slot) {
               const text = slot[0].text;
@@ -993,12 +993,8 @@ export default class DataTable extends Vue {
         data-rowlevel={bodyRow.level}
         class={`
         ${rowClass}
-        ${
-          striped && (this.$props.config.style.striped || this.$props.config.style.portal)
-            ? DATA_TABLE_CLASSES.STRIPED
-            : ''
-        }
-        ${this.$props.config.style.portal ? `-${this.$props.config.style.size}` : ''}
+        ${striped && (this.config.style.striped || this.config.style.portal) ? DATA_TABLE_CLASSES.STRIPED : ''}
+        ${this.config.style.portal ? `-${this.config.style.size}` : ''}
         ${this.selectedRows.includes(bodyRow.rowId) || bodyRow.active ? ACTIVE_CLASS : ''}
         ${
           this._expandable && bodyRow.nestedContent
@@ -1036,7 +1032,7 @@ export default class DataTable extends Vue {
       }
 
       return this.dataToRender().map((bodyRow: DataTableRow, index: number) => {
-        const striped = index % 2 !== 0 && this.$props.config.style.striped;
+        const striped = index % 2 !== 0 && this.config.style.striped;
 
         return this.row(bodyRow, 'parent', striped);
       });
@@ -1122,7 +1118,7 @@ export default class DataTable extends Vue {
 
     if (
       (pages === 1 && this.config.pagination.hideOnSinglePage) ||
-      (this.$props.data.body.length === 0 && this.mode === DataTableModes.CLIENT)
+      (this.data.body.length === 0 && this.mode === DataTableModes.CLIENT)
     ) {
       return null;
     } else {
@@ -1243,8 +1239,7 @@ export default class DataTable extends Vue {
     this._serializedDataBody = [];
     this.selectedRows = [];
     this._expandable =
-      this.$props.config.reserveExpansionSlot ||
-      !!this.data.body.find((row: { nestedContent: any }) => row.nestedContent);
+      this.config.reserveExpansionSlot || !!this.data.body.find((row: { nestedContent: any }) => row.nestedContent);
     this.data.body.forEach(row => {
       this._serializedDataBody.push(serializeRow(row, rowNumber));
       rowNumber++;
@@ -1292,7 +1287,7 @@ export default class DataTable extends Vue {
 
   @Watch('config')
   dataConfigChange() {
-    this.activePage = this.$props.config.pagination.activePage || 1;
+    this.activePage = this.config.pagination.activePage || 1;
   }
 
   created() {
@@ -1300,15 +1295,11 @@ export default class DataTable extends Vue {
     this._dataTableNumber = dataTableNumber;
     this._dataTableId = `dt-${this._dataTableNumber}`;
 
-    if (
-      this.$props.config.defaultSort &&
-      this.$props.config.defaultSort.key &&
-      this.$props.config.defaultSort.direction
-    ) {
+    if (this.config.defaultSort && this.config.defaultSort.key && this.config.defaultSort.direction) {
       this._sortConfig = {
-        key: this.$props.config.defaultSort.key,
-        direction: this.$props.config.defaultSort.direction,
-        sortBy: this.$props.config.defaultSort.sortBy || undefined,
+        key: this.config.defaultSort.key,
+        direction: this.config.defaultSort.direction,
+        sortBy: this.config.defaultSort.sortBy || undefined,
       };
     } else {
       this._sortConfig = undefined;
@@ -1699,9 +1690,9 @@ export default class DataTable extends Vue {
     }
     bodyRow.data.forEach((rowCell: any, index: number) => {
       let cellData: any;
-      if (!!rowCell.template && !!this.$scopedSlots[rowCell.template]) {
+      if (!!rowCell.template && !!this.$slots[rowCell.template]) {
         if (typeof rowCell === 'object' && rowCell.payload) {
-          const template: NormalizedScopedSlot | undefined = this.$scopedSlots[rowCell.template];
+          const template: NormalizedScopedSlot | undefined = this.$slots[rowCell.template];
 
           if (!template) {
             throw Error(`No template with name ${rowCell.template} is provided.`);
@@ -1735,7 +1726,7 @@ export default class DataTable extends Vue {
 
   _printSublevelContent(sublevelData: DataTableRowNestedContent, contentLevel: 'parent' | 'child') {
     if (sublevelData.template) {
-      const template = (this.$scopedSlots[sublevelData.template] as NormalizedScopedSlot)(sublevelData.payload);
+      const template = (this.$slots[sublevelData.template] as NormalizedScopedSlot)(sublevelData.payload);
 
       return (
         <tr>

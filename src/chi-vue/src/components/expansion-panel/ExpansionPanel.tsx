@@ -26,12 +26,12 @@ export default class ExpansionPanel extends Vue {
 
   render() {
     const slots = {
-      active: this.$scopedSlots.active ? this.$scopedSlots.active({}) : null,
-      change: this.$scopedSlots.change ? this.$scopedSlots.change({}) : null,
-      done: this.$scopedSlots.done ? this.$scopedSlots.done({}) : null,
-      footer: this.$scopedSlots.footer ? this.$scopedSlots.footer({}) : null,
-      footerStart: this.$scopedSlots.footerStart ? this.$scopedSlots.footerStart({}) : null,
-      footerEnd: this.$scopedSlots.footerEnd ? this.$scopedSlots.footerEnd({}) : null,
+      active: this.$slots.active ? this.$slots.active({}) : null,
+      change: this.$slots.change ? this.$slots.change({}) : null,
+      done: this.$slots.done ? this.$slots.done({}) : null,
+      footer: this.$slots.footer ? this.$slots.footer({}) : null,
+      footerStart: this.$slots.footerStart ? this.$slots.footerStart({}) : null,
+      footerEnd: this.$slots.footerEnd ? this.$slots.footerEnd({}) : null,
     };
     const footerStartEnd =
       slots.footerStart || slots.footerEnd ? (
@@ -51,7 +51,7 @@ export default class ExpansionPanel extends Vue {
           <div class={EPANEL_CLASSES.TITLE}>{this.title}</div>
           <div class={`${EPANEL_CLASSES.CONTENT} ${this.step ? '' : UTILITY_CLASSES.MARGIN.LEFT[0]}`}>
             <transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
-              <div v-show={this.$props.state === 'done'}>{slots.done}</div>
+              <div v-show={this.state === 'done'}>{slots.done}</div>
             </transition>
           </div>
           <transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
@@ -61,7 +61,7 @@ export default class ExpansionPanel extends Vue {
           </transition>
         </div>
         <transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
-          <div v-show={this.$props.state === 'active'}>
+          <div v-show={this.state === 'active'}>
             <div class={`${this.step ? '' : UTILITY_CLASSES.MARGIN.LEFT[0]} ${EPANEL_CLASSES.CONTENT_ACTIVE}`}>
               <div class={EPANEL_CLASSES.BODY}>
                 <div class={EPANEL_CLASSES.CONTENT}>{slots.active}</div>

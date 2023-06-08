@@ -26,8 +26,8 @@ export default class SearchInput extends Vue {
   @Prop() portal?: boolean;
   @Prop() readOnly?: boolean;
 
-  cleanButtonVisible = !!(this.$props.value && !this.$props.disabled);
-  inputValue = this.$props.value || '';
+  cleanButtonVisible = !!(this.value && !this.disabled);
+  inputValue = this.value || '';
 
   _handleValueInput(ev: Event) {
     const newValue = (ev.target as HTMLInputElement).value;
@@ -47,7 +47,7 @@ export default class SearchInput extends Vue {
   }
 
   mounted() {
-    if (this.$props.dataTableSearch) {
+    if (this.dataTableSearch) {
       const dataTableToolbarComponent = findComponent(this, 'DataTableToolbar');
 
       if (dataTableToolbarComponent) {
@@ -71,12 +71,12 @@ export default class SearchInput extends Vue {
         class={`
         ${INPUT_CLASSES.INPUT}
         ${SEARCH_INPUT_CLASSES.SEARCH_INPUT}
-        ${this.$props.size ? `-${this.$props.size}` : ''}
+        ${this.size ? `-${this.size}` : ''}
       `}
-        placeholder={this.$props.placeholder || ''}
+        placeholder={this.placeholder || ''}
         value={this.inputValue}
-        name={this.$props.name || null}
-        disabled={this.$props.disabled}
+        name={this.name || ''}
+        disabled={this.disabled}
         onFocus={() => this.$emit(SEARCH_INPUT_EVENTS.FOCUS)}
         onBlur={() => this.$emit(SEARCH_INPUT_EVENTS.BLUR)}
         onInput={(ev: Event) => this._handleValueInput(ev)}
@@ -85,7 +85,7 @@ export default class SearchInput extends Vue {
         }}
         autocomplete="off"
         aria-label="search input"
-        readonly={this.$props.readOnly}
+        readonly={this.readOnly}
       />
     );
 
@@ -96,7 +96,7 @@ export default class SearchInput extends Vue {
         ${CLOSE_CLASS}
         ${GENERIC_SIZE_CLASSES.XS}`}
         onClick={() => {
-          if (!this.$props.readOnly) {
+          if (!this.readOnly) {
             this._cleanInput();
           }
         }}
@@ -136,6 +136,6 @@ export default class SearchInput extends Vue {
     );
     const toolbar = <div class={DATA_TABLE_CLASSES.SEARCH}>{formItem}</div>;
 
-    return this.$props.dataTableSearch ? toolbar : formItem;
+    return this.dataTableSearch ? toolbar : formItem;
   }
 }

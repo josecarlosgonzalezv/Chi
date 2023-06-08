@@ -60,17 +60,17 @@ export default class DataTableFilters extends Vue {
       this.storeModule = getModule(store, this.$store);
     }
 
-    const advancedFilters = this.$props.filtersData.filter((filter: DataTableFilter) => filter.advanced);
+    const advancedFilters = this.filtersData.filter((filter: DataTableFilter) => filter.advanced);
 
     if (this._filtersData) {
       this._filtersData = {
-        filters: copyArrayOfObjects(this.$props.filtersData),
+        filters: copyArrayOfObjects(this.filtersData),
       };
     }
 
     this._advancedFiltersData = copyArrayOfObjects(advancedFilters);
 
-    const plainFiltersData = this.$props.filtersData.reduce((accumulator: any, currentValue: any) => {
+    const plainFiltersData = this.filtersData.reduce((accumulator: any, currentValue: any) => {
       return { ...accumulator, [currentValue.id]: currentValue.type === 'checkbox' ? false : currentValue.value || '' };
     }, {});
 
@@ -326,7 +326,7 @@ export default class DataTableFilters extends Vue {
     const advancedFilters =
       this._advancedFiltersData && this._advancedFiltersData.length > 0 ? this._advancedFiltersFields() : null;
 
-    this.$props.filtersData.forEach((filter: DataTableFilter) => {
+    this.filtersData?.forEach((filter: DataTableFilter) => {
       const filterElement =
         filter.type === 'select'
           ? this._createSelectFilter(filter)

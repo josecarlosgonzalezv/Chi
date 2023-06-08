@@ -1,4 +1,4 @@
-import { Prop, Watch } from 'vue-property-decorator';
+import { Emit, Prop, Watch } from 'vue-property-decorator';
 import SelectedColumns from './SelectedColumns';
 import AvailableColumns from './AvailableColumns';
 import { DataTableColumn } from '@/constants/types';
@@ -11,8 +11,8 @@ import { Component, Vue } from '@/build/vue-wrapper';
 
 @Component({})
 export default class ColumnCustomizationContent extends Vue {
-  @Prop() availableColumns?: DataTableColumn[];
-  @Prop() selectedColumns?: DataTableColumn[];
+  @Prop() availableColumns!: DataTableColumn[];
+  @Prop() selectedColumns!: DataTableColumn[];
 
   canMoveUp = true;
   canMoveDown = true;
@@ -35,8 +35,8 @@ export default class ColumnCustomizationContent extends Vue {
   @Watch('availableColumns')
   @Watch('selectedColumns')
   _processData() {
-    this._availableColumns = copyArrayOfObjects(this.$props.availableColumns);
-    this._selectedColumns = copyArrayOfObjects(this.$props.selectedColumns).sort(this.sortByLocked);
+    this._availableColumns = copyArrayOfObjects(this.availableColumns);
+    this._selectedColumns = copyArrayOfObjects(this.selectedColumns).sort(this.sortByLocked);
   }
 
   sortByLocked = (a: DataTableColumn, b: DataTableColumn): number => {
@@ -125,11 +125,12 @@ export default class ColumnCustomizationContent extends Vue {
     this._emitSelectedColumnsChange();
   }
 
+  @Emit(DATA_TABLE_EVENTS.COLUMNS_CHANGE)
   _emitSelectedColumnsChange() {
     if (this._selectedColumns) {
       const eventData = [...this._selectedColumns];
 
-      this.$emit(DATA_TABLE_EVENTS.COLUMNS_CHANGE, eventData);
+      return eventData;
     }
   }
 

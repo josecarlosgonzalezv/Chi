@@ -34,7 +34,7 @@ export default class DataTableBulkActions extends Vue {
   }
 
   _checkBulkActionVisibility() {
-    return this.$props.selectedRows > 0;
+    return this.selectedRows > 0;
   }
 
   @Watch('selectedRows')
@@ -55,7 +55,7 @@ export default class DataTableBulkActions extends Vue {
   }
 
   render() {
-    const startSlot = this.$scopedSlots['start'] ? this.$scopedSlots['start']({}) : null;
+    const startSlot = this.$slots['start'] ? this.$slots['start']({}) : null;
 
     return (
       <transition name="slide-fade">

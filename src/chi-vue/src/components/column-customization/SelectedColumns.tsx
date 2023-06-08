@@ -51,7 +51,7 @@ export default class ColumnCustomizationSelectedColumns extends Vue {
   }
 
   render() {
-    const standardOptions = this.$props.standardColumns ? this._generateOptions(this.$props.standardColumns) : null;
+    const standardOptions = this.standardColumns ? this._generateOptions(this.standardColumns) : null;
 
     return (
       <div>

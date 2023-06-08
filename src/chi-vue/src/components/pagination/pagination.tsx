@@ -244,7 +244,7 @@ export default class Pagination extends Vue {
       this._pagesToRender.push(compactPages);
     } else {
       const _pagesArray: number[] = [];
-      if (this.$props.pages !== 1) {
+      if (this.pages !== 1) {
         _pagesArray.push(1);
       }
       for (

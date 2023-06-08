@@ -159,7 +159,7 @@ export default class ColumnCustomization extends Vue {
 
   @Watch('columnsData')
   _processData() {
-    this.$props.columnsData.columns.forEach((column: DataTableColumn) => {
+    this.columnsData.columns.forEach((column: DataTableColumn) => {
       if (column.selected && this._selectedColumns) {
         this._selectedColumns.push(column);
       } else {
