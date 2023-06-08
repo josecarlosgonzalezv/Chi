@@ -25,7 +25,7 @@ export default class SaveView extends Vue {
   isSaveViewVisible = !!this.config.active;
   isDefaultChecked = !!this.config.default;
   isReadOnly = !!this.config.readonly;
-  viewMode: SaveViewModes = this.config.mode || defaultConfig.mode;
+  viewMode: SaveViewModes = this.config.mode || defaultConfig.mode || SaveViewModes.BASE;
   viewTitle = this.config.title || defaultConfig.title;
   uuid: string | null = this.config.id || null;
   deleteLabel = this.config.label?.delete || defaultConfig.label?.delete;

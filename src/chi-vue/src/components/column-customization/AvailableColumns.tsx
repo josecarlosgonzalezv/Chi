@@ -7,7 +7,7 @@ import { Component, Vue } from '@/build/vue-wrapper';
 
 @Component({})
 export default class ColumnCustomizationAvailableColumns extends Vue {
-  @Prop() availableColumns?: DataTableColumn[];
+  @Prop() availableColumns!: DataTableColumn[];
 
   _ColumnCustomizationContent?: ColumnCustomizationContent;
   _sortedColumns?: DataTableColumn[] = [];

@@ -22,7 +22,7 @@ declare const chi: any;
 
 @Component({})
 export default class ColumnCustomization extends Vue {
-  @Prop() columnsData?: DataTableColumnsData;
+  @Prop() columnsData!: DataTableColumnsData;
 
   key = 0;
   _chiModal: any;
