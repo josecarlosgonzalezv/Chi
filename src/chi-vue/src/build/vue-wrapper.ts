@@ -1,10 +1,23 @@
-import { Vue, Component } from 'vue-property-decorator';
-import { ComponentOptions } from 'vue';
+import { Vue, Options } from 'vue-class-component';
+import { defineAsyncComponent } from 'vue';
 
-function ComponentDecorator(options: ComponentOptions<Vue>) {
-  const componentDecorator = Component;
+function Component(options: any) {
+  const optionsDecorator = Options;
 
-  return componentDecorator(options);
+  if (options.components) {
+    const updatedComponents: any = {};
+
+    for (const [key, value] of Object.entries(options.components)) {
+      if (typeof value === 'function') {
+        updatedComponents[key] = defineAsyncComponent(value as any);
+      } else {
+        updatedComponents[key] = value;
+      }
+    }
+    options.components = updatedComponents;
+  }
+
+  return optionsDecorator(options);
 }
 
-export { ComponentDecorator as Component, Vue };
+export { Component, Vue };

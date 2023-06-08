@@ -32,7 +32,7 @@ export default class ColumnCustomizationAvailableColumns extends Vue {
   }
 
   _sortAvailableColumns() {
-    this._sortedColumns = [...this.$props.availableColumns];
+    this._sortedColumns = [...this.availableColumns];
     this._sortedColumns.sort((a: DataTableColumn, b: DataTableColumn) => {
       const firstValue = a.label.toLowerCase(),
         secondValue = b.label.toLowerCase();

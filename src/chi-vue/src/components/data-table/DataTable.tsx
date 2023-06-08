@@ -60,8 +60,6 @@ import { Component, Vue } from '@/build/vue-wrapper';
 
 declare const chi: any;
 
-Vue.config.ignoredElements = ['chi-popover'];
-
 let dataTableNumber = 0;
 @Component({})
 export default class DataTable extends Vue {
