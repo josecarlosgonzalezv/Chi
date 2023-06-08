@@ -44,7 +44,7 @@ export default class MobileActions extends Vue {
     this.modalTrigger = chi.modal(this.$refs.modalTrigger);
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.modalTrigger.dispose();
   }
 }

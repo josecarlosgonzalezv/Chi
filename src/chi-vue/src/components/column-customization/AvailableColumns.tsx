@@ -7,7 +7,7 @@ import { Component, Vue } from '@/build/vue-wrapper';
 
 @Component({})
 export default class ColumnCustomizationAvailableColumns extends Vue {
-  @Prop() availableColumns?: DataTableColumn[];
+  @Prop() availableColumns!: DataTableColumn[];
 
   _ColumnCustomizationContent?: ColumnCustomizationContent;
   _sortedColumns?: DataTableColumn[] = [];
@@ -25,14 +25,14 @@ export default class ColumnCustomizationAvailableColumns extends Vue {
     this._sortAvailableColumns();
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this._ColumnCustomizationContent) {
       (this._ColumnCustomizationContent as ColumnCustomizationContent)._availableColumnsComponent = undefined;
     }
   }
 
   _sortAvailableColumns() {
-    this._sortedColumns = [...this.$props.availableColumns];
+    this._sortedColumns = [...this.availableColumns];
     this._sortedColumns.sort((a: DataTableColumn, b: DataTableColumn) => {
       const firstValue = a.label.toLowerCase(),
         secondValue = b.label.toLowerCase();

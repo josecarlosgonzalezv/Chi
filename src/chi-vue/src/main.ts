@@ -1,11 +1,11 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
+import ChiVue from '@/store';
 import App from './App.vue';
 import Vuex from 'vuex';
-import ChiVue from '@/store';
+import mitt from 'mitt';
 
-Vue.config.productionTip = false;
-Vue.use(Vuex);
-
+const emitter = mitt();
+const app = createApp(App);
 const store = new Vuex.Store({
   state: {},
   modules: {
@@ -13,7 +13,7 @@ const store = new Vuex.Store({
   },
 });
 
-new Vue({
-  render: h => h(App),
-  store: store,
-}).$mount('#app');
+app
+  .use(store)
+  .provide('emitter', emitter)
+  .mount('#app');

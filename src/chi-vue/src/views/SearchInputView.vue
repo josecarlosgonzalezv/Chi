@@ -6,9 +6,9 @@
       <SearchInput
         @chiInput="ev => input(ev)"
         @chiChange="ev => change(ev)"
-        @chiClean="ev => clean(ev)"
-        @chiFocus="ev => focus(ev)"
-        @chiBlur="ev => blur(ev)"
+        @chiClean="() => clean()"
+        @chiFocus="() => focus()"
+        @chiBlur="() => blur()"
         @chiSearch="ev => search(ev)"
         class="-mt--2"
         size="xs"
@@ -37,7 +37,11 @@
 
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
-import SearchInput from '../components/search-input/SearchInput';
+import SearchInput from '@/components/search-input/SearchInput';
+// TODO: Remove after full migration in Vue 3
+import { configureCompat } from '@vue/compat';
+
+configureCompat({ RENDER_FUNCTION: false });
 
 @Component({
   components: {

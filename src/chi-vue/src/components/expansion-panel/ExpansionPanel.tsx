@@ -4,6 +4,7 @@ import { EPANEL_CLASSES, UTILITY_CLASSES } from '@/constants/classes';
 import './expansion-panel.scss';
 import { EPANEL } from '@/constants/constants';
 import { Component, Vue } from '@/build/vue-wrapper';
+import { Transition, VNode } from 'vue';
 
 @Component({})
 export default class ExpansionPanel extends Vue {
@@ -24,15 +25,31 @@ export default class ExpansionPanel extends Vue {
     }
   }
 
-  render() {
+  _setSlots() {
     const slots = {
-      active: this.$scopedSlots.active ? this.$scopedSlots.active({}) : null,
-      change: this.$scopedSlots.change ? this.$scopedSlots.change({}) : null,
-      done: this.$scopedSlots.done ? this.$scopedSlots.done({}) : null,
-      footer: this.$scopedSlots.footer ? this.$scopedSlots.footer({}) : null,
-      footerStart: this.$scopedSlots.footerStart ? this.$scopedSlots.footerStart({}) : null,
-      footerEnd: this.$scopedSlots.footerEnd ? this.$scopedSlots.footerEnd({}) : null,
+      active: null,
+      change: null,
+      done: null,
+      footer: null,
+      footerStart: null,
+      footerEnd: null,
     };
+
+    if (this.$slots.default) {
+      const defaultSlots = this.$slots.default();
+
+      defaultSlots.forEach((slot: VNode) => {
+        if (slot.props) {
+          slots[slot.props.slot] = slot;
+        }
+      });
+    }
+
+    return slots;
+  }
+
+  render() {
+    const slots = this._setSlots();
     const footerStartEnd =
       slots.footerStart || slots.footerEnd ? (
         <div
@@ -50,20 +67,20 @@ export default class ExpansionPanel extends Vue {
           {this.step ? <span class={EPANEL_CLASSES.NUMBER}>{this.step}.</span> : ''}
           <div class={EPANEL_CLASSES.TITLE}>{this.title}</div>
           <div class={`${EPANEL_CLASSES.CONTENT} ${this.step ? '' : UTILITY_CLASSES.MARGIN.LEFT[0]}`}>
-            <transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
-              <div v-show={this.$props.state === 'done'} class={EPANEL_CLASSES.DONE_ONLY}>
+            <Transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
+              <div v-show={this.state === 'done'} class={EPANEL_CLASSES.DONE_ONLY}>
                 {slots.done}
               </div>
-            </transition>
+            </Transition>
           </div>
-          <transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
+          <Transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
             <div v-show={this.state === 'done'} class={EPANEL_CLASSES.ACTION}>
               {slots.change}
             </div>
-          </transition>
+          </Transition>
         </div>
-        <transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
-          <div v-show={this.$props.state === 'active'}>
+        <Transition name={EPANEL.TRANSITIONS.SLIDE_FADE}>
+          <div v-show={this.state === 'active'}>
             <div class={`${this.step ? '' : UTILITY_CLASSES.MARGIN.LEFT[0]} ${EPANEL_CLASSES.CONTENT_ACTIVE}`}>
               <div class={EPANEL_CLASSES.BODY}>
                 <div class={EPANEL_CLASSES.CONTENT}>{slots.active}</div>
@@ -74,7 +91,7 @@ export default class ExpansionPanel extends Vue {
               </div>
             </div>
           </div>
-        </transition>
+        </Transition>
       </div>
     );
   }

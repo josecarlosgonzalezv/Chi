@@ -1,4 +1,4 @@
-import { Prop } from 'vue-property-decorator';
+import { Emit, Prop } from 'vue-property-decorator';
 import { uuid4 } from '@/utils/utils';
 import {
   ACTIVE_CLASS,
@@ -31,16 +31,22 @@ export default class Pagination extends Vue {
 
   _pageJumperUuid!: string;
   _distanceFromCurrent!: number;
-  _lastRenderedPage!: number;
-  _pagesToRender: JSX.Element[] = [];
   _startPage!: JSX.Element | null;
   _lastPage!: JSX.Element | null;
   _results!: JSX.Element | null;
   _pageSize!: JSX.Element | null;
+  lastRenderedPage = 0;
+  pagesToRender: JSX.Element[] = [];
   goToPage!: JSX.Element | null;
 
-  constructor() {
-    super();
+  @Emit(PAGINATION_EVENTS.PAGE_CHANGE)
+  _emitPageChange(page: number | null) {
+    return page;
+  }
+
+  @Emit(PAGINATION_EVENTS.PAGE_SIZE)
+  _emitPageSize(page: string) {
+    return page;
   }
 
   calculateDistanceFromCurrent() {
@@ -68,15 +74,16 @@ export default class Pagination extends Vue {
         pageToGo = cur.dataset.page ? parseInt(cur.dataset.page) : null;
       }
     }
-    this.$emit(PAGINATION_EVENTS.PAGE_CHANGE, pageToGo);
+
+    this._emitPageChange(pageToGo);
   }
 
   _jumpToPage(jumpTo: number) {
-    this.$emit(PAGINATION_EVENTS.PAGE_CHANGE, jumpTo);
+    this._emitPageChange(jumpTo);
   }
 
   _pageSizeChange(size: string) {
-    this.$emit(PAGINATION_EVENTS.PAGE_SIZE, size);
+    this._emitPageSize(size);
   }
 
   addPage(page: number | null, icon = '', state = '') {
@@ -106,6 +113,7 @@ export default class Pagination extends Vue {
           break;
       }
     }
+    const disabledAriaDisabledState = state === 'disabled' ? true : undefined;
 
     return (
       <button
@@ -123,7 +131,7 @@ export default class Pagination extends Vue {
           this._goToPage(ev.target as HTMLElement);
         }}
         aria-label={ariaLabel}
-        aria-disabled={state === 'disabled'}
+        aria-disabled={disabledAriaDisabledState}
         disabled={state === 'disabled'}>
         <div class={BUTTON_CLASSES.CONTENT}>
           {icon ? (
@@ -146,7 +154,7 @@ export default class Pagination extends Vue {
   }
 
   render() {
-    this._pagesToRender = [];
+    this.pagesToRender = [];
     this.calculateDistanceFromCurrent();
     this._results =
       this.results > 0 ? (
@@ -241,10 +249,10 @@ export default class Pagination extends Vue {
       ) : (
         paginationLabel
       );
-      this._pagesToRender.push(compactPages);
+      this.pagesToRender.push(compactPages);
     } else {
       const _pagesArray: number[] = [];
-      if (this.$props.pages !== 1) {
+      if (this.pages !== 1) {
         _pagesArray.push(1);
       }
       for (
@@ -258,10 +266,10 @@ export default class Pagination extends Vue {
       }
       _pagesArray.push(this.pages);
       for (const pageIndex of _pagesArray) {
-        if (this._lastRenderedPage) {
-          if (pageIndex - this._lastRenderedPage === 2) {
-            this._pagesToRender.push(this.addPage(this._lastRenderedPage + 1));
-          } else if (pageIndex !== 1 && pageIndex - this._lastRenderedPage !== 1) {
+        if (this.lastRenderedPage) {
+          if (pageIndex - this.lastRenderedPage === 2) {
+            this.pagesToRender.push(this.addPage(this.lastRenderedPage + 1));
+          } else if (pageIndex !== 1 && pageIndex - this.lastRenderedPage !== 1) {
             const truncateDots = (
               <div
                 class={`
@@ -275,11 +283,11 @@ export default class Pagination extends Vue {
               </div>
             );
 
-            this._pagesToRender.push(truncateDots);
+            this.pagesToRender.push(truncateDots);
           }
         }
-        this._pagesToRender.push(this.addPage(pageIndex));
-        this._lastRenderedPage = pageIndex;
+        this.pagesToRender.push(this.addPage(pageIndex));
+        this.lastRenderedPage = pageIndex;
       }
     }
 
@@ -300,7 +308,7 @@ export default class Pagination extends Vue {
             <div class={BUTTON_GROUP_CLASSES}>
               {this._startPage}
               {this.addPage(null, 'chevron-left', this.currentPage === 1 ? 'disabled' : '')}
-              {this._pagesToRender}
+              {this.pagesToRender}
               {this.addPage(null, 'chevron-right', this.currentPage === this.pages ? 'disabled' : '')}
               {this._lastPage}
             </div>

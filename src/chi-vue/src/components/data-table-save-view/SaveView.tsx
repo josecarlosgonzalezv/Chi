@@ -21,18 +21,18 @@ import { Component, Vue } from '@/build/vue-wrapper';
 export default class SaveView extends Vue {
   @Prop() config!: SaveViewConfig;
 
-  isRibbonShown = !!this.$props.config.active;
-  isSaveViewVisible = !!this.$props.config.active;
-  isDefaultChecked = !!this.$props.config.default;
-  isReadOnly = !!this.$props.config.readonly;
-  viewMode: SaveViewModes = this.$props.config.mode || defaultConfig.mode;
-  viewTitle = this.$props.config.title || defaultConfig.title;
-  uuid: string | null = this.$props.config.id || null;
-  deleteLabel = this.$props.config.label?.delete || defaultConfig.label?.delete;
-  mainLabel = this.$props.config.label?.main || defaultConfig.label?.main;
-  inputLabel = this.$props.config.input?.label || defaultConfig.input?.label;
-  resultsLabel = this.$props.config.label?.results || defaultConfig.label?.results;
-  saveButtonDisabled = !!this.$props.config.saveButtonDisabled || defaultConfig.saveButtonDisabled;
+  isRibbonShown = !!this.config.active;
+  isSaveViewVisible = !!this.config.active;
+  isDefaultChecked = !!this.config.default;
+  isReadOnly = !!this.config.readonly;
+  viewMode: SaveViewModes = this.config.mode || defaultConfig.mode || SaveViewModes.BASE;
+  viewTitle = this.config.title || defaultConfig.title;
+  uuid: string | null = this.config.id || null;
+  deleteLabel = this.config.label?.delete || defaultConfig.label?.delete;
+  mainLabel = this.config.label?.main || defaultConfig.label?.main;
+  inputLabel = this.config.input?.label || defaultConfig.input?.label;
+  resultsLabel = this.config.label?.results || defaultConfig.label?.results;
+  saveButtonDisabled = !!this.config.saveButtonDisabled || defaultConfig.saveButtonDisabled;
 
   @Watch('config')
   dataConfigChange(newValue: SaveViewConfig, oldValue: SaveViewConfig) {
@@ -99,15 +99,15 @@ export default class SaveView extends Vue {
     }
 
     return (
-      this.viewTitle.length === 0 ||
-      (this.viewTitle === this.$props.config.title && this.isDefaultChecked === !!this.$props.default)
+      this.viewTitle?.length === 0 ||
+      (this.viewTitle === this.config.title && this.isDefaultChecked === !!this.config.default)
     );
   }
 
   render() {
-    const infoIcon = this.$scopedSlots['info-icon'] && this.$scopedSlots['info-icon']({});
-    const infoPopover = this.$scopedSlots['info-popover'] && this.$scopedSlots['info-popover']({});
-    const customActions = this.$scopedSlots['custom-actions'] && this.$scopedSlots['custom-actions']({});
+    const infoIcon = this.$slots['info-icon'] && this.$slots['info-icon']({});
+    const infoPopover = this.$slots['info-popover'] && this.$slots['info-popover']({});
+    const customActions = this.$slots['custom-actions'] && this.$slots['custom-actions']({});
     const arrowDown = <i class={`${ICON_CLASS} icon-arrow-down ${GENERIC_SIZE_CLASSES.XS}`} aria-hidden="true" />;
     const ribbonLabel = (
       <span class={SAVE_VIEW_CLASSES.LABEL}>
@@ -130,7 +130,7 @@ export default class SaveView extends Vue {
           {arrowDown}
           <div class={SAVE_VIEW_CLASSES.RESULTS}>
             <span class={SAVE_VIEW_CLASSES.LABEL}>{this.resultsLabel} </span>
-            <span>{this.$props.config.results}</span>
+            <span>{this.config.results}</span>
           </div>
           {!this.isReadOnly && (
             <template class={SAVE_VIEW_CLASSES.NO_ACTIONS}>

@@ -20,35 +20,6 @@ import { DATA_TABLE_EVENTS } from '@/constants/events';
 import AdvancedFiltersPopoverFooter from './AdvancedFiltersPopoverFooter.vue';
 import { Component, Vue } from '@/build/vue-wrapper';
 
-Vue.config.ignoredElements = [
-  'chi-alert',
-  'chi-app-layout',
-  'chi-badge',
-  'chi-brand',
-  'chi-button',
-  'chi-carousel',
-  'chi-date',
-  'chi-date-picker',
-  'chi-drawer',
-  'chi-expansion-panel',
-  'chi-icon',
-  'chi-label',
-  'chi-link',
-  'chi-marketing-icon',
-  'chi-number-input',
-  'chi-pagination',
-  'chi-phone-input',
-  'chi-popover',
-  'chi-progress',
-  'chi-search-input',
-  'chi-spinner',
-  'chi-text-input',
-  'chi-textarea',
-  'chi-time',
-  'chi-time-picker',
-  'chi-toggle-switch',
-];
-
 declare const chi: any;
 @Component({
   components: {
@@ -259,14 +230,13 @@ export default class AdvancedFilters extends Vue {
     );
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     this._filtersTooltip.dispose();
   }
 
   _createCustomItem(filter: DataTableCustomItem) {
     const customItemSlot =
-      this.$scopedSlots?.default &&
-      this.$scopedSlots.default(null)?.find(item => item[filter.template as keyof typeof item]);
+      this.$slots?.default && this.$slots.default(null)?.find(item => item[filter.template as keyof typeof item]);
 
     return (
       <div class={`${FORM_CLASSES.FORM_ITEM}`}>

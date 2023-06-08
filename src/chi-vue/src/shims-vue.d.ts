@@ -1,6 +1,16 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/ban-types */
 declare module '*.vue' {
-  import Vue from 'vue';
-  export default Vue;
+  import type { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component
+}
+
+import mitt from 'mitt';
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+      emitter: mitt;
+  }
 }
 
 declare module '*.json' {

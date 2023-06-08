@@ -1,4 +1,4 @@
-import { Prop } from 'vue-property-decorator';
+import { Emit, Prop } from 'vue-property-decorator';
 import { uuid4 } from '../../utils/utils';
 import { ACTIVE_CLASS, LIGHT_CLASS, TOOLTIP_CLASSES, TRANSITIONING_CLASS } from '../../constants/classes';
 import { TOOLTIP_EVENTS } from '../../constants/events';
@@ -17,11 +17,31 @@ export default class Tooltip extends Vue {
 
   _tooltipElement?: JSX.Element;
   _tooltipElementNode!: HTMLElement;
-  _shown = false;
+  tooltipShown = false;
   _uuid!: string;
   _animationTimeout?: number;
   _animation?: ThreeStepsAnimation;
   _popper!: PopoverInstance;
+
+  @Emit(TOOLTIP_EVENTS.SHOW)
+  _emitShow() {
+    // This is intentional
+  }
+
+  @Emit(TOOLTIP_EVENTS.SHOWN)
+  _emitShown() {
+    // This is intentional
+  }
+
+  @Emit(TOOLTIP_EVENTS.HIDE)
+  _emitHide() {
+    // This is intentional
+  }
+
+  @Emit(TOOLTIP_EVENTS.HIDDEN)
+  _emitHidden() {
+    // This is intentional
+  }
 
   generateTooltipElement() {
     this._tooltipElement = (
@@ -44,58 +64,64 @@ export default class Tooltip extends Vue {
   }
 
   show() {
-    this.$emit(TOOLTIP_EVENTS.SHOW);
-    if (this._animation && !this._animation.isStopped()) {
-      this._animation.stop();
-    }
+    // if (this._animation && !this._animation.isStopped()) {
+    //   this._animation.stop();
+    // }
 
-    if (this._tooltipElementNode && !this._shown) {
-      this._shown = true;
-      this._animation = ThreeStepsAnimation.animationFactory(
-        () => {
-          this._tooltipElementNode.classList.add(TRANSITIONING_CLASS);
-        },
-        () => {
-          this._tooltipElementNode.classList.add(ACTIVE_CLASS);
-        },
-        () => {
-          this._tooltipElementNode.classList.remove(TRANSITIONING_CLASS);
-          this.$emit(TOOLTIP_EVENTS.SHOWN);
-        },
-        ANIMATION_DURATION.SHORT
-      );
-    }
+    // if (this._tooltipElementNode && !this.tooltipShown) {
+    //   this.tooltipShown = true;
+    //   this._animation = ThreeStepsAnimation.animationFactory(
+    //     () => {
+    //       this._tooltipElementNode.classList.add(TRANSITIONING_CLASS);
+    //     },
+    //     () => {
+    //       this._tooltipElementNode.classList.add(ACTIVE_CLASS);
+    //     },
+    //     () => {
+    //       this._tooltipElementNode.classList.remove(TRANSITIONING_CLASS);
+    //       this._emitShown();
+    //     },
+    //     ANIMATION_DURATION.SHORT
+    //   );
+    // }
+
+    this._tooltipElementNode.classList.add(ACTIVE_CLASS);
+    this.tooltipShown = true;
+    this._emitShow();
   }
 
   hide() {
-    this.$emit(TOOLTIP_EVENTS.HIDE);
-    if (this._animationTimeout) {
-      clearTimeout(this._animationTimeout);
-    }
-    if (this._animation && !this._animation.isStopped()) {
-      this._animation.stop();
-    }
+    // if (this._animationTimeout) {
+    //   clearTimeout(this._animationTimeout);
+    // }
+    // if (this._animation && !this._animation.isStopped()) {
+    //   this._animation.stop();
+    // }
 
-    if (this._tooltipElementNode && this._shown) {
-      this._shown = false;
-      this._animation = ThreeStepsAnimation.animationFactory(
-        () => {
-          this._tooltipElementNode.classList.add(TRANSITIONING_CLASS);
-        },
-        () => {
-          this._tooltipElementNode.classList.remove(ACTIVE_CLASS);
-        },
-        () => {
-          this._tooltipElementNode.classList.remove(TRANSITIONING_CLASS);
-          this.$emit(TOOLTIP_EVENTS.HIDDEN);
-        },
-        ANIMATION_DURATION.SHORT
-      );
-    }
+    // if (this._tooltipElementNode && this.tooltipShown) {
+    //   this.tooltipShown = false;
+    //   this._animation = ThreeStepsAnimation.animationFactory(
+    //     () => {
+    //       this._tooltipElementNode.classList.add(TRANSITIONING_CLASS);
+    //     },
+    //     () => {
+    //       this._tooltipElementNode.classList.remove(ACTIVE_CLASS);
+    //     },
+    //     () => {
+    //       this._tooltipElementNode.classList.remove(TRANSITIONING_CLASS);
+    //       this._emitHidden();
+    //     },
+    //     ANIMATION_DURATION.SHORT
+    //   );
+    // }
+
+    this.tooltipShown = false;
+    this._tooltipElementNode.classList.remove(ACTIVE_CLASS);
+    this._emitHide();
   }
 
   mounted() {
-    const slotTooltipTriggerElements = this.$slots.default;
+    const slotTooltipTriggerElements = this.$slots.default ? this.$slots.default() : [];
     const tooltipElementNode = document.getElementById(this._uuid);
 
     if (tooltipElementNode) {
@@ -103,11 +129,11 @@ export default class Tooltip extends Vue {
     }
 
     if (slotTooltipTriggerElements) {
-      slotTooltipTriggerElements.forEach(vnode => {
-        const slotElement = vnode.elm;
+      slotTooltipTriggerElements.forEach((vNode: any) => {
+        const slotElement = vNode;
         const triggerShow = () => {
           this._animationTimeout = window.setTimeout(() => {
-            if (!this._shown) {
+            if (!this.tooltipShown) {
               this.show();
             }
           }, ANIMATION_DELAY);

@@ -23,11 +23,6 @@
         entered or selected in step 1.<br />
         (e.g.) a package selection
       </div>
-      <!-- <div slot="footer" class="-w--100">
-        <div class="-bg--primary">
-          Test
-        </div>
-      </div> -->
       <button slot="footerStart" class="chi-button" @click="active -= 1">Previous</button>
       <button slot="footerEnd" class="chi-button -primary" @click="active += 1">
         Continue
@@ -41,21 +36,20 @@
 
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
-import ExpansionPanel from '../components/expansion-panel/ExpansionPanel';
-import { EXPANSION_PANEL_STATES } from '../constants/types';
+import ExpansionPanel from '@/components/expansion-panel/ExpansionPanel';
+import { EXPANSION_PANEL_STATES } from '@/constants/types';
+// TODO: Remove after full migration in Vue 3
+import { configureCompat } from '@vue/compat';
+
+configureCompat({ RENDER_FUNCTION: false });
 
 @Component({
   components: {
     ExpansionPanel,
   },
-  data: () => {
-    return {
-      active: 0,
-      states: EXPANSION_PANEL_STATES,
-    };
-  },
 })
-export default class ExpansionPanelView extends Vue {}
+export default class ExpansionPanelView extends Vue {
+  active = 0;
+  states = EXPANSION_PANEL_STATES;
+}
 </script>
-
-<style lang="scss"></style>

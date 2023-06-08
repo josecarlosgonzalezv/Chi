@@ -53,6 +53,29 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    config.resolve.alias.set('vue', '@vue/compat');
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .tap(options => {
+        return {
+          ...options,
+          compilerOptions: {
+            isCustomElement: tag => tag.startsWith('chi-'),
+            compatConfig: {
+              MODE: 3,
+            },
+          },
+        };
+      });
+
+    config.module
+      .rule('md')
+      .test(/\.md$/)
+      .use('raw-loader')
+      .loader('raw-loader')
+      .end();
+
     if (process.env.VUE_APP_MODE === 'prod') {
       config.optimization.minimizer('terser').tap(args => {
         args[0].terserOptions = {
@@ -72,6 +95,7 @@ module.exports = {
     extract: process.env.VUE_APP_MODE === 'prod',
   },
   devServer: {
+    webSocketServer: false,
     client: {
       progress: false,
       overlay: {

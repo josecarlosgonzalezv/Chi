@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 export function uuid4() {
   let uuid = '',
     ii;
@@ -35,7 +33,7 @@ export function contains(ancestorElement: HTMLElement, descendantElement: HTMLEl
   }
 }
 
-export function findComponent(startComponent: Vue, componentName: string) {
+export function findComponent(startComponent: any, componentName: string) {
   let component = null;
   let parent = startComponent.$parent;
   while (parent && !component) {

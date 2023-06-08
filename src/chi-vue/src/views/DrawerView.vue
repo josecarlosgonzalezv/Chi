@@ -1,6 +1,6 @@
 <template>
   <div id="drawer">
-    <h2 class="-ml--2">Drawer</h2>
+    <h2>Drawer</h2>
     <h3>Left Drawer</h3>
     <div class="-position--relative -w--100" style="height: 300px;">
       <Drawer class="-position--absolute" :active="true" position="left">
@@ -43,20 +43,14 @@
         <div class="-px--2">Drawer content here</div>
       </Drawer>
     </div>
-    <h3>Portal</h3>
-    <div class="-position--relative -w--100" style="height: 300px;">
-      <Drawer class="-position--absolute" :active="true" position="left" title="Drawer title here" :portal="true">
-        <div class="-p--2">Drawer content here</div>
-      </Drawer>
-    </div>
     <h3>Show / Hide Drawer</h3>
     <div class="-position--relative -w--100" style="height: 300px;">
-      <button class="chi-button" @click="() => toggleDrawer()">Click me to open the Drawer</button>
+      <chi-button @click.stop="toggleDrawer()">Click me to open the Drawer</chi-button>
       <Drawer
-        @chiDrawerHide="() => (this.drawerActive = false)"
-        @chiDrawerClickOutside="() => (this.drawerActive = false)"
+        @chiDrawerHide="() => (drawerActive = false)"
+        @chiDrawerClickOutside="() => (drawerActive = false)"
         class="-position--absolute"
-        :active="this.drawerActive"
+        :active="drawerActive"
         position="left"
         style="top: 50px"
       >
@@ -68,7 +62,11 @@
 
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
-import Drawer from '../components/drawer/drawer';
+import Drawer from '@/components/drawer/drawer';
+// TODO: Remove after full migration in Vue 3
+import { configureCompat } from '@vue/compat';
+
+configureCompat({ RENDER_FUNCTION: false });
 
 @Component({
   components: {
@@ -83,5 +81,3 @@ export default class DrawerView extends Vue {
   }
 }
 </script>
-
-<style lang="scss"></style>
