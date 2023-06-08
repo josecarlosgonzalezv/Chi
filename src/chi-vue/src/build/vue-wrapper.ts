@@ -1,23 +1,30 @@
-import { Vue, Options } from 'vue-class-component';
-import { defineAsyncComponent } from 'vue';
+import { Vue, Options } from "vue-class-component";
+import { defineAsyncComponent } from "vue";
 
 function Component(options: any) {
-  const optionsDecorator = Options;
+  // vue 3
 
   if (options.components) {
     const updatedComponents: any = {};
 
     for (const [key, value] of Object.entries(options.components)) {
-      if (typeof value === 'function') {
-        updatedComponents[key] = defineAsyncComponent(value as any);
+      if (typeof value === "function") {
+        if (typeof value.prototype === "object") {
+          // support for tsx imports
+          updatedComponents[key] = value.prototype;
+        } else {
+          // support for dynamic vue imports
+          updatedComponents[key] = defineAsyncComponent(value as any);
+        }
       } else {
+        // support for static vue imports
         updatedComponents[key] = value;
       }
     }
     options.components = updatedComponents;
   }
 
-  return optionsDecorator(options);
+  return Options(options);
 }
 
 export { Component, Vue };
