@@ -137,7 +137,7 @@ export default class Drawer extends Vue {
     this.backdropAnimationClasses.push(this.active ? '' : CLOSED_CLASS);
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     document.removeEventListener('click', this.documentClickHandler);
   }
 

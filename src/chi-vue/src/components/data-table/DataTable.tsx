@@ -57,6 +57,7 @@ import { printElement } from '../../utils/utils';
 import { ColumnResize } from './utils/Resize';
 import Tooltip from '../tooltip/tooltip';
 import { Component, Vue } from '@/build/vue-wrapper';
+import { inject } from 'vue';
 
 declare const chi: any;
 
@@ -66,6 +67,8 @@ let dataTableNumber = 0;
 export default class DataTable extends Vue {
   @Prop() data!: DataTableData;
   @Prop() config!: DataTableConfig;
+
+  emitter = inject('emitter');
 
   accordionsExpanded: string[] = [];
   activePage = this.config.pagination.activePage || this.config.activePage || defaultConfig.pagination.activePage;
@@ -1059,7 +1062,7 @@ export default class DataTable extends Vue {
       return;
     }
 
-    (this._toolbarComponent as Vue).$on(DATA_TABLE_EVENTS.TOOLBAR.SEARCH, () => {
+    (this._toolbarComponent as Vue).emitter.on(DATA_TABLE_EVENTS.TOOLBAR.SEARCH, () => {
       this.emptyMessage =
         this.config.noResultsMessage || defaultConfig.noResultsMessage || DATA_TABLE_NO_RESULTS_MESSAGE;
     });
@@ -1068,7 +1071,7 @@ export default class DataTable extends Vue {
   _addPaginationEventListener() {
     if (this.$refs.pagination) {
       if (!this._paginationListenersAdded) {
-        (this.$refs.pagination as Vue).$on(PAGINATION_EVENTS.PAGE_SIZE, (ev: string) => {
+        (this.$refs.pagination as Vue).emitter.on(PAGINATION_EVENTS.PAGE_SIZE, (ev: string) => {
           const data = this._sortedData && this._sortedData.length > 0 ? this._sortedData : this._serializedDataBody;
 
           this.resultsPerPage = ev === 'all' ? this._serializedDataBody.length : parseInt(ev);
@@ -1076,7 +1079,7 @@ export default class DataTable extends Vue {
           this.$emit(PAGINATION_EVENTS.PAGE_SIZE, this.slicedData);
         });
 
-        (this.$refs.pagination as Vue).$on(PAGINATION_EVENTS.PAGE_CHANGE, (ev: number) => {
+        (this.$refs.pagination as Vue).emitter.on(PAGINATION_EVENTS.PAGE_CHANGE, (ev: number) => {
           const data = this._sortedData && this._sortedData.length > 0 ? this._sortedData : this._serializedDataBody;
           const numberOfPages = this._calculateNumberOfPages();
 
@@ -1363,7 +1366,7 @@ export default class DataTable extends Vue {
     }
 
     if (this._bulkActionsComponent) {
-      (this._bulkActionsComponent as Vue).$on(
+      (this._bulkActionsComponent as Vue).emitter.on(
         DATA_TABLE_EVENTS.BULK_ACTIONS.SHOW_SELECTED_ONLY,
         (isSelected: boolean) => {
           this._showSelectedOnly = isSelected;
@@ -1380,10 +1383,10 @@ export default class DataTable extends Vue {
         }
       );
       // TODO: Change deprecated events when major version is released
-      (this._bulkActionsComponent as Vue).$on(DATA_TABLE_EVENTS.SELECTED_ALL_DEPRECATED, () => {
+      (this._bulkActionsComponent as Vue).emitter.on(DATA_TABLE_EVENTS.SELECTED_ALL_DEPRECATED, () => {
         this.selectAllRows('select');
       });
-      (this._bulkActionsComponent as Vue).$on(GENERIC_EVENTS.CANCEL, () => {
+      (this._bulkActionsComponent as Vue).emitter.on(GENERIC_EVENTS.CANCEL, () => {
         this.selectedRows = [];
         this._showSelectedOnly = false;
         this._showAllRows();
@@ -1407,7 +1410,7 @@ export default class DataTable extends Vue {
     this._resizeTimer = setTimeout(this.detectScreenBreakpoint.bind(this), 0);
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('resize', this.resizeHandler, true);
     this._chiDropdownSelectAll?.dispose();
   }

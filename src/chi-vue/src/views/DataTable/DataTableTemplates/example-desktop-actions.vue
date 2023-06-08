@@ -33,7 +33,7 @@ export default class DesktopActions extends Vue {
     this.dropdown = chi.dropdown(this.$refs.dropdownTrigger);
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.dropdown.dispose();
   }
 }

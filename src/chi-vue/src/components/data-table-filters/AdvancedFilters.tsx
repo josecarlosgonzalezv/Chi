@@ -230,7 +230,7 @@ export default class AdvancedFilters extends Vue {
     );
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     this._filtersTooltip.dispose();
   }
 

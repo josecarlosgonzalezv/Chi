@@ -25,7 +25,7 @@ export default class ColumnCustomizationAvailableColumns extends Vue {
     this._sortAvailableColumns();
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this._ColumnCustomizationContent) {
       (this._ColumnCustomizationContent as ColumnCustomizationContent)._availableColumnsComponent = undefined;
     }

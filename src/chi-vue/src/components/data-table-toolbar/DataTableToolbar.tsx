@@ -7,9 +7,12 @@ import DataTable from '../data-table/DataTable';
 import { DATA_TABLE_EVENTS, SEARCH_INPUT_EVENTS } from '@/constants/events';
 import DataTableViews from '../data-table-views/DataTableViews';
 import { Component, Vue } from '@/build/vue-wrapper';
+import { inject } from 'vue';
 
 @Component({})
 export default class DataTableToolbar extends Vue {
+  emitter = inject('emitter');
+
   _searchComponent?: SearchInput;
   _filters?: DataTableFilters;
   _columns?: DataTableColumns;
@@ -23,28 +26,28 @@ export default class DataTableToolbar extends Vue {
     }
 
     if (this._searchComponent) {
-      this._searchComponent.$on(SEARCH_INPUT_EVENTS.SEARCH, (ev: Event) => {
+      this._searchComponent.emitter.on(SEARCH_INPUT_EVENTS.SEARCH, (ev: Event) => {
         this.$emit(DATA_TABLE_EVENTS.TOOLBAR.SEARCH, ev);
       });
     }
 
     if (this._filters) {
-      this._filters.$on(DATA_TABLE_EVENTS.FILTERS_CHANGE, (ev: Event) => {
+      this._filters.emitter.on(DATA_TABLE_EVENTS.FILTERS_CHANGE, (ev: Event) => {
         this.$emit(DATA_TABLE_EVENTS.TOOLBAR.FILTERS_CHANGE, ev);
       });
     }
 
     if (this._columns) {
-      this._columns.$on(DATA_TABLE_EVENTS.COLUMNS_CHANGE, (ev: Event) => {
+      this._columns.emitter.on(DATA_TABLE_EVENTS.COLUMNS_CHANGE, (ev: Event) => {
         this.$emit(DATA_TABLE_EVENTS.TOOLBAR.COLUMNS_CHANGE, ev);
       });
-      this._columns.$on(DATA_TABLE_EVENTS.COLUMNS_RESET, (ev: Event) => {
+      this._columns.emitter.on(DATA_TABLE_EVENTS.COLUMNS_RESET, (ev: Event) => {
         this.$emit(DATA_TABLE_EVENTS.TOOLBAR.COLUMNS_CHANGE, ev);
       });
     }
 
     if (this._views) {
-      this._views.$on(DATA_TABLE_EVENTS.VIEWS_CHANGE, (ev: Event) => {
+      this._views.emitter.on(DATA_TABLE_EVENTS.VIEWS_CHANGE, (ev: Event) => {
         this.$emit(DATA_TABLE_EVENTS.TOOLBAR.VIEWS_CHANGE, ev);
       });
     }
