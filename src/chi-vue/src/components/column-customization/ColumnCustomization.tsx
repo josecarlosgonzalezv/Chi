@@ -17,15 +17,12 @@ import ColumnCustomizationContent from './ColumnCustomizationModalContent';
 import { checkColumns } from './utils';
 import Tooltip from '../tooltip/tooltip';
 import { Component, Vue } from '@/build/vue-wrapper';
-import { inject } from 'vue';
 
 declare const chi: any;
 
 @Component({})
 export default class ColumnCustomization extends Vue {
   @Prop() columnsData!: DataTableColumnsData;
-
-  emitter = inject('emitter');
 
   key = 0;
   _chiModal: any;

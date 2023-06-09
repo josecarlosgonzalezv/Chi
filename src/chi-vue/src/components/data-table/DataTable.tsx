@@ -51,13 +51,11 @@ import arraySort from 'array-sort';
 import { defaultConfig } from './default-config';
 import { ICON_CLASSES } from '@/constants/icons';
 import { alignmentUtilityClasses } from './constants/constants';
-import { NormalizedScopedSlot } from 'vue/types/vnode';
 import Checkbox from '../checkbox/Checkbox';
 import { printElement } from '../../utils/utils';
 import { ColumnResize } from './utils/Resize';
 import Tooltip from '../tooltip/tooltip';
 import { Component, Vue } from '@/build/vue-wrapper';
-import { inject } from 'vue';
 
 declare const chi: any;
 
@@ -68,11 +66,9 @@ export default class DataTable extends Vue {
   @Prop() data!: DataTableData;
   @Prop() config!: DataTableConfig;
 
-  emitter = inject('emitter');
-
   accordionsExpanded: string[] = [];
-  activePage = this.config.pagination.activePage || this.config.activePage || defaultConfig.pagination.activePage;
-  resultsPerPage = this.config.resultsPerPage || defaultConfig.resultsPerPage;
+  activePage = this.config.pagination.activePage || this.config.activePage || defaultConfig.pagination.activePage || 1;
+  resultsPerPage = this.config.resultsPerPage || defaultConfig.resultsPerPage || 10;
   selectedRows: string[] = [];
   slicedData: DataTableRow[] = [];
   mode = this.config.mode || defaultConfig.mode;
@@ -352,7 +348,7 @@ export default class DataTable extends Vue {
       if (this.mode === DataTableModes.CLIENT) {
         return (
           <DataTableBulkActions uuid={this._dataTableNumber} selectedRows={this.selectedRows.length}>
-            <template slot="start">{bulkActionSlot}</template>
+            <template v-slot="start">{bulkActionSlot}</template>
           </DataTableBulkActions>
         );
       }
@@ -856,7 +852,7 @@ export default class DataTable extends Vue {
 
   _rowAccordionContent(accordionData: DataTableRowNestedContent, contentLevel: 'parent' | 'child') {
     if (accordionData.template) {
-      const template: NormalizedScopedSlot | undefined = this.$slots[accordionData.template];
+      const template: any | undefined = this.$slots[accordionData.template];
 
       if (!template) {
         throw Error(`No template with name ${accordionData.template} is provided.`);
@@ -890,7 +886,7 @@ export default class DataTable extends Vue {
 
   row(bodyRow: DataTableRow, rowLevel: DataTableRowLevels = 'parent', striped = false) {
     const row = [],
-      rowCells = [],
+      rowCells: JSX.Element[] = [],
       rowAccordionContent = [],
       rowId = this._rowId(bodyRow.id || bodyRow.rowNumber),
       rowClass =
@@ -945,7 +941,7 @@ export default class DataTable extends Vue {
             const slot = this.$slots[rowCell.template]!(rowCell.payload);
 
             if (slot) {
-              const text = slot[0].text;
+              const text = slot[0].el?.text;
 
               if (text) {
                 cellData = <DataTableTooltip textWrap={this.cellWrap} msg={text} class="-w--100" />;
@@ -1695,7 +1691,7 @@ export default class DataTable extends Vue {
       let cellData: any;
       if (!!rowCell.template && !!this.$slots[rowCell.template]) {
         if (typeof rowCell === 'object' && rowCell.payload) {
-          const template: NormalizedScopedSlot | undefined = this.$slots[rowCell.template];
+          const template: any | undefined = this.$slots[rowCell.template];
 
           if (!template) {
             throw Error(`No template with name ${rowCell.template} is provided.`);
@@ -1729,7 +1725,7 @@ export default class DataTable extends Vue {
 
   _printSublevelContent(sublevelData: DataTableRowNestedContent, contentLevel: 'parent' | 'child') {
     if (sublevelData.template) {
-      const template = (this.$slots[sublevelData.template] as NormalizedScopedSlot)(sublevelData.payload);
+      const template = (this.$slots[sublevelData.template] as any)(sublevelData.payload);
 
       return (
         <tr>

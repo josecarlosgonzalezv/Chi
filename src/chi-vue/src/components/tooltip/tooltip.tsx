@@ -95,7 +95,7 @@ export default class Tooltip extends Vue {
   }
 
   mounted() {
-    const slotTooltipTriggerElements = this.$slots.default;
+    const slotTooltipTriggerElements = Array(this.$slots.default);
     const tooltipElementNode = document.getElementById(this._uuid);
 
     if (tooltipElementNode) {
@@ -103,7 +103,7 @@ export default class Tooltip extends Vue {
     }
 
     if (slotTooltipTriggerElements) {
-      slotTooltipTriggerElements.forEach(vnode => {
+      slotTooltipTriggerElements.forEach((vnode: any) => {
         const slotElement = vnode.elm;
         const triggerShow = () => {
           this._animationTimeout = window.setTimeout(() => {

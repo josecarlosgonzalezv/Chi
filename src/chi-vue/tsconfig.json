@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "declaration": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -12,8 +13,10 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "noImplicitAny": false,
     "resolveJsonModule": true,
     "types": ["webpack-env"],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "paths": {
       "@/*": ["src/*"]
     },

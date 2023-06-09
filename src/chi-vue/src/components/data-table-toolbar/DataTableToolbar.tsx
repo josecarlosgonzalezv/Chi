@@ -7,12 +7,9 @@ import DataTable from '../data-table/DataTable';
 import { DATA_TABLE_EVENTS, SEARCH_INPUT_EVENTS } from '@/constants/events';
 import DataTableViews from '../data-table-views/DataTableViews';
 import { Component, Vue } from '@/build/vue-wrapper';
-import { inject } from 'vue';
 
 @Component({})
 export default class DataTableToolbar extends Vue {
-  emitter = inject('emitter');
-
   _searchComponent?: SearchInput;
   _filters?: DataTableFilters;
   _columns?: DataTableColumns;

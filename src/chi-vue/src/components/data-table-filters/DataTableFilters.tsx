@@ -25,7 +25,6 @@ import AdvancedFilters from './AdvancedFilters';
 import Drawer from '../drawer/drawer';
 import store, { STORE_KEY } from '@/store';
 import { getModule } from 'vuex-module-decorators';
-import { ScopedSlotChildren } from 'vue/types/vnode';
 import './filters.scss';
 import { Component, Vue } from '@/build/vue-wrapper';
 
@@ -270,7 +269,7 @@ export default class DataTableFilters extends Vue {
           [currentValue.template]: this.$slots[currentValue.template],
         };
       }
-    }, {} as { [key: string]: ScopedSlotChildren } | undefined);
+    }, {} as { [key: string]: any } | undefined);
   }
 
   _advancedFiltersPopOver() {
