@@ -63,7 +63,7 @@ let dataTableNumber = 0;
 
 @Component({})
 export default class DataTable extends Vue {
-  @Prop() data!: DataTableData;
+  @Prop() dataItem!: DataTableData;
   @Prop() config!: DataTableConfig;
 
   accordionsExpanded: string[] = [];
@@ -199,16 +199,16 @@ export default class DataTable extends Vue {
       ) : null,
       this._expandable ? this._headExpandable() : null,
     ];
-    const heads = Array.isArray(this.data.head) ? this.data.head : Object.keys(this.data.head);
+    const heads = Array.isArray(this.dataItem.head) ? this.dataItem.head : Object.keys(this.dataItem.head);
     const infoPopovers: JSX.Element[] = [];
 
     heads.forEach((column: string | DataTableColumn, cellIndex: number) => {
-      const columnIndex = String(Array.isArray(this.data.head) ? cellIndex : column);
-      const columnName = Array.isArray(this.data.head) ? (column as DataTableColumn).name : column;
+      const columnIndex = String(Array.isArray(this.dataItem.head) ? cellIndex : column);
+      const columnName = Array.isArray(this.dataItem.head) ? (column as DataTableColumn).name : column;
       const infoPopoverId = `info-popover-${this._dataTableNumber}-${columnName}`,
         buttonId = `info-popover-${this._dataTableNumber}-${columnName}-reference`,
-        label = this.data.head[columnIndex].label || this.data.head[columnIndex],
-        infoIcon = this.data.head[columnIndex].description ? (
+        label = this.dataItem.head[columnIndex].label || this.dataItem.head[columnIndex],
+        infoIcon = this.dataItem.head[columnIndex].description ? (
           <chi-button
             id={buttonId}
             variant="flat"
@@ -220,12 +220,12 @@ export default class DataTable extends Vue {
             <i class={`${ICON_CLASS} -xs ${ICON_CLASSES.ICON_INFO}`} aria-hidden="true"></i>
           </chi-button>
         ) : null,
-        infoPopover = this.data.head[columnIndex].description ? (
+        infoPopover = this.dataItem.head[columnIndex].description ? (
           <chi-popover
             id={infoPopoverId}
             reference=""
             position="top"
-            title={(this.data.head[columnIndex].description as DataTableColumnDescription).title}
+            title={(this.dataItem.head[columnIndex].description as DataTableColumnDescription).title}
             arrow
             onChiPopoverHidden={() => {
               const popover = this._getInfoPopover(infoPopoverId);
@@ -235,20 +235,20 @@ export default class DataTable extends Vue {
               }
             }}>
             <div>
-              {this._getDescription(this.data.head[columnIndex].description as string | DataTableColumnDescription)}
+              {this._getDescription(this.dataItem.head[columnIndex].description as string | DataTableColumnDescription)}
             </div>
           </chi-popover>
         ) : null,
-        sortBy = this.data.head[columnIndex].sortBy,
-        sortable = this.data.head[columnIndex].sortable,
-        alignment = this._cellAlignment(this.data.head[columnIndex].align || 'left'),
+        sortBy = this.dataItem.head[columnIndex].sortBy,
+        sortable = this.dataItem.head[columnIndex].sortable,
+        alignment = this._cellAlignment(this.dataItem.head[columnIndex].align || 'left'),
         sortIcon = sortable ? (
           <chi-button variant="flat" type="icon" alternative-text="Sort icon">
             <i
               class={`
                 ${ICON_CLASS} -xs ${
                 this._sortConfig &&
-                (this._sortConfig.key === this.data.head[columnIndex].sortBy || this._sortConfig.key === columnIndex)
+                (this._sortConfig.key === this.dataItem.head[columnIndex].sortBy || this._sortConfig.key === columnIndex)
                   ? DATA_TABLE_SORT_ICONS.ARROW
                   : DATA_TABLE_SORT_ICONS.SORT
               }`}
@@ -283,7 +283,7 @@ export default class DataTable extends Vue {
           }}
           style={`
               ${cellWidth === 0 ? 'display: none;' : ''}
-              ${this.data.head[columnIndex].allowOverflow ? 'overflow: visible;' : ''}
+              ${this.dataItem.head[columnIndex].allowOverflow ? 'overflow: visible;' : ''}
               `}>
           {this._getHeadLabel(label as string)}
           {infoIcon}
@@ -298,7 +298,7 @@ export default class DataTable extends Vue {
           data-label={label}
           style={`
               ${cellWidth === 0 ? 'display: none;' : ''}
-              ${this.data.head[columnIndex].allowOverflow ? 'overflow: visible;' : ''}
+              ${this.dataItem.head[columnIndex].allowOverflow ? 'overflow: visible;' : ''}
               `}>
           {this._getHeadLabel(label as string)}
           {infoIcon}
@@ -311,7 +311,7 @@ export default class DataTable extends Vue {
         infoPopovers.push(infoPopover as JSX.Element);
       }
 
-      if (this.data.head[columnIndex].sortable && !this._sortable) {
+      if (this.dataItem.head[columnIndex].sortable && !this._sortable) {
         this._sortable = true;
       }
     });
@@ -585,7 +585,7 @@ export default class DataTable extends Vue {
       return pages;
     }
 
-    const bodyLength = this._showSelectedOnly ? this._getSelectedFirstLevelRowsCount() : this.data.body.length;
+    const bodyLength = this._showSelectedOnly ? this._getSelectedFirstLevelRowsCount() : this.dataItem.body.length;
 
     return Math.max(Math.ceil(bodyLength / this.resultsPerPage), 1);
   }
@@ -885,9 +885,9 @@ export default class DataTable extends Vue {
   }
 
   row(bodyRow: DataTableRow, rowLevel: DataTableRowLevels = 'parent', striped = false) {
-    const row = [],
+    const row: JSX.Element[] = [],
       rowCells: JSX.Element[] = [],
-      rowAccordionContent = [],
+      rowAccordionContent: (JSX.Element | JSX.Element[][])[] = [],
       rowId = this._rowId(bodyRow.id || bodyRow.rowNumber),
       rowClass =
         rowLevel === 'grandChild'
@@ -897,11 +897,13 @@ export default class DataTable extends Vue {
           : DATA_TABLE_CLASSES.ROW;
 
     if (this.config.selectable) {
-      rowCells.push(
-        this.config.selectable === 'radio'
-          ? this._radioButton(rowLevel, bodyRow)
-          : this._selectRowCheckbox(false, bodyRow)
-      );
+      const selectableRow = this.config.selectable === 'radio'
+        ? this._radioButton(rowLevel, bodyRow)
+        : this._selectRowCheckbox(false, bodyRow);
+
+      if (selectableRow) {
+        rowCells.push(selectableRow);
+      }
     }
 
     if (this._expandable) {
@@ -911,9 +913,11 @@ export default class DataTable extends Vue {
         } else {
           rowCells.push(this._expansionButtonCell(bodyRow));
         }
-        rowAccordionContent.push(
-          this._rowAccordionContent(bodyRow.nestedContent, rowLevel === 'child' ? 'child' : 'parent')
-        );
+
+        const accordionContent = this._rowAccordionContent(bodyRow.nestedContent, rowLevel === 'child' ? 'child' : 'parent');
+        if (accordionContent) {
+          rowAccordionContent.push(accordionContent);
+        }
       } else {
         rowCells.push(<div class={`${DATA_TABLE_CLASSES.CELL} ${DATA_TABLE_CLASSES.EXPANDABLE}`} role="cell" />);
       }
@@ -922,7 +926,7 @@ export default class DataTable extends Vue {
     let cellIndex = 0;
 
     bodyRow.data.forEach((rowCell: any) => {
-      const columnSettings = this.data.head[Object.keys(this.data.head)[cellIndex]];
+      const columnSettings = this.dataItem.head[Object.keys(this.dataItem.head)[cellIndex]];
 
       if (columnSettings) {
         const alignment = this._cellAlignment(rowCell.align ? rowCell.align : columnSettings.align || null),
@@ -953,7 +957,7 @@ export default class DataTable extends Vue {
         } else if (typeof rowCell === 'object' && !!rowCell.value) {
           cellData = <DataTableTooltip textWrap={this.cellWrap} msg={rowCell.value} class="-w--100" />;
         } else if (typeof rowCell === 'string' || typeof rowCell === 'number') {
-          cellData = <DataTableTooltip textWrap={this.cellWrap} msg={rowCell} class="-w--100" />;
+          cellData = <DataTableTooltip textWrap={this.cellWrap} msg={rowCell as string} class="-w--100" />;
         } else {
           cellData = null;
         }
@@ -1021,7 +1025,7 @@ export default class DataTable extends Vue {
 
   _body() {
     const getTableBodyRows = (): JSX.Element => {
-      if (!this.data.body.length) {
+      if (!this.dataItem.body.length) {
         return (
           <div class={DATA_TABLE_CLASSES.EMPTY}>
             <chi-icon class="-mr--1" icon="search" color="dark"></chi-icon>
@@ -1112,12 +1116,12 @@ export default class DataTable extends Vue {
       this.mode === DataTableModes.CLIENT
         ? this._showSelectedOnly
           ? this._getSelectedFirstLevelRowsCount()
-          : this.data.body.length
+          : this.dataItem.body.length
         : this.config.pagination.results;
 
     if (
       (pages === 1 && this.config.pagination.hideOnSinglePage) ||
-      (this.data.body.length === 0 && this.mode === DataTableModes.CLIENT)
+      (this.dataItem.body.length === 0 && this.mode === DataTableModes.CLIENT)
     ) {
       return null;
     } else {
@@ -1238,14 +1242,14 @@ export default class DataTable extends Vue {
     this._serializedDataBody = [];
     this.selectedRows = [];
     this._expandable =
-      this.config.reserveExpansionSlot || !!this.data.body.find((row: { nestedContent: any }) => row.nestedContent);
-    this.data.body.forEach(row => {
+      this.config.reserveExpansionSlot || !!this.dataItem.body.find((row: { nestedContent: any }) => row.nestedContent);
+    this.dataItem.body.forEach(row => {
       this._serializedDataBody.push(serializeRow(row, rowNumber));
       rowNumber++;
     });
     this._printDisabledColsIndexes = [];
-    Object.keys(this.data.head).forEach((column: string, columnIndex: number) => {
-      if (this.data.head[column].isPrintDisabled) {
+    Object.keys(this.dataItem.head).forEach((column: string, columnIndex: number) => {
+      if (this.dataItem.head[column].isPrintDisabled) {
         this._printDisabledColsIndexes.push(columnIndex);
       }
     });
@@ -1412,8 +1416,8 @@ export default class DataTable extends Vue {
   }
 
   _headIndex(column: string) {
-    if (Array.isArray(this.data.head) && isNaN(Number(column))) {
-      return this.data.head.findIndex((col: DataTableColumn) => col.name === column);
+    if (Array.isArray(this.dataItem.head) && isNaN(Number(column))) {
+      return this.dataItem.head.findIndex((col: DataTableColumn) => col.name === column);
     }
 
     return column;
@@ -1432,12 +1436,12 @@ export default class DataTable extends Vue {
       this._showSelectedOnlyRowsData && this._showSelectedOnlyRowsData.length > 0
         ? [...this._showSelectedOnlyRowsData]
         : [...this._serializedDataBody];
-    const columnData = this.data.head[this._headIndex(column)];
+    const columnData = this.dataItem.head[this._headIndex(column)];
     const ascending: boolean = direction === 'ascending';
 
     if (columnData) {
-      const columnIndex = !Array.isArray(this.data.head)
-        ? Object.keys(this.data.head).indexOf(column)
+      const columnIndex = !Array.isArray(this.dataItem.head)
+        ? Object.keys(this.dataItem.head).indexOf(column)
         : this._headIndex(column);
       const locateData = (data: DataTableRow, sortBy: string | undefined) => {
         return sortBy && data.data[columnIndex].payload && data.data[columnIndex].payload[sortBy]
@@ -1623,8 +1627,8 @@ export default class DataTable extends Vue {
     return (
       <thead>
         <tr>
-          {Object.keys(this.data.head).map((column: string) => {
-            return !this.data.head[column].isPrintDisabled && <th>{this.data.head[column].label}</th>;
+          {Object.keys(this.dataItem.head).map((column: string) => {
+            return !this.dataItem.head[column].isPrintDisabled && <th>{this.dataItem.head[column].label}</th>;
           })}
         </tr>
       </thead>
@@ -1636,14 +1640,14 @@ export default class DataTable extends Vue {
       this.mode === DataTableModes.CLIENT
         ? this._showSelectedOnly
           ? this._getSelectedFirstLevelRowsCount()
-          : this.data.body.length
+          : this.dataItem.body.length
         : this.config.pagination.results;
 
     return <div class={`${DATA_TABLE_CLASSES.PRINT_FOOTER}`}>{resultsCount} results</div>;
   }
 
   _printBody() {
-    if (this.data.body.length > 0) {
+    if (this.dataItem.body.length > 0) {
       const bodyRows =
         this._showSelectedOnlyRowsData?.length > 0
           ? this._showSelectedOnlyRowsData
@@ -1663,7 +1667,7 @@ export default class DataTable extends Vue {
     return (
       <tbody>
         <tr>
-          <td colspan={Object.keys(this.data.head).length} class={DATA_TABLE_CLASSES.EMPTY}>
+          <td colspan={Object.keys(this.dataItem.head).length} class={DATA_TABLE_CLASSES.EMPTY}>
             <chi-icon class="-mr--1" icon="search" color="dark"></chi-icon>
             {this.emptyMessage}
           </td>
@@ -1729,7 +1733,7 @@ export default class DataTable extends Vue {
 
       return (
         <tr>
-          <td colspan={Object.keys(this.data.head).length} class={`${UTILITY_CLASSES.PADDING.LEFT[4]}`}>
+          <td colspan={Object.keys(this.dataItem.head).length} class={`${UTILITY_CLASSES.PADDING.LEFT[4]}`}>
             {template}
           </td>
         </tr>
@@ -1742,7 +1746,7 @@ export default class DataTable extends Vue {
 
     return (
       <tr>
-        <td colspan={Object.keys(this.data.head).length} class={`${UTILITY_CLASSES.PADDING.LEFT[4]}`}>
+        <td colspan={Object.keys(this.dataItem.head).length} class={`${UTILITY_CLASSES.PADDING.LEFT[4]}`}>
           {sublevelData.value}
         </td>
       </tr>
