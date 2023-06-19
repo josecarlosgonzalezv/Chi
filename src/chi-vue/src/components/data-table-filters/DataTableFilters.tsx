@@ -33,6 +33,8 @@ export default class DataTableFilters extends Vue {
   @Prop() filtersData!: DataTableFiltersData;
   @Prop() customItems?: DataTableCustomItem[];
 
+  name = 'DataTableFilters';
+
   _filtersData?: DataTableFiltersData;
   _advancedFiltersData?: DataTableFilter[];
   _advancedFilterComponent?: AdvancedFilters;

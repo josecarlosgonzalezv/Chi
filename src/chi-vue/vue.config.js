@@ -62,9 +62,6 @@ module.exports = {
           ...options,
           compilerOptions: {
             isCustomElement: tag => tag.startsWith('chi-'),
-            compatConfig: {
-              MODE: 3,
-            },
           },
         };
       });

@@ -4,7 +4,7 @@ import { EPANEL_CLASSES, UTILITY_CLASSES } from '@/constants/classes';
 import './expansion-panel.scss';
 import { EPANEL } from '@/constants/constants';
 import { Component, Vue } from '@/build/vue-wrapper';
-import { Transition, VNode } from 'vue';
+import { Transition } from 'vue';
 
 @Component({})
 export default class ExpansionPanel extends Vue {
@@ -25,31 +25,15 @@ export default class ExpansionPanel extends Vue {
     }
   }
 
-  _setSlots() {
-    const slots = {
-      active: null,
-      change: null,
-      done: null,
-      footer: null,
-      footerStart: null,
-      footerEnd: null,
-    };
-
-    if (this.$slots.default) {
-      const defaultSlots = this.$slots.default();
-
-      defaultSlots.forEach((slot: VNode) => {
-        if (slot.props) {
-          slots[slot.props.slot] = slot;
-        }
-      });
-    }
-
-    return slots;
-  }
-
   render() {
-    const slots = this._setSlots();
+    const slots = {
+      active: this.$slots.active ? this.$slots.active({}) : null,
+      change: this.$slots.change ? this.$slots.change({}) : null,
+      done: this.$slots.done ? this.$slots.done({}) : null,
+      footer: this.$slots.footer ? this.$slots.footer({}) : null,
+      footerStart: this.$slots.footerStart ? this.$slots.footerStart({}) : null,
+      footerEnd: this.$slots.footerEnd ? this.$slots.footerEnd({}) : null,
+    };
     const footerStartEnd =
       slots.footerStart || slots.footerEnd ? (
         <div

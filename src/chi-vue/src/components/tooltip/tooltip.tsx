@@ -1,10 +1,10 @@
 import { Emit, Prop, Ref } from 'vue-property-decorator';
 import { uuid4 } from '../../utils/utils';
-import { ACTIVE_CLASS, LIGHT_CLASS, TOOLTIP_CLASSES, TRANSITIONING_CLASS } from '../../constants/classes';
+import { ACTIVE_CLASS, LIGHT_CLASS, TOOLTIP_CLASSES } from '../../constants/classes';
 import { TOOLTIP_EVENTS } from '../../constants/events';
 import { TooltipColors, TooltipPositions } from '../../constants/types';
 import { ThreeStepsAnimation } from '../../utils/ThreeStepsAnimation';
-import { TOOLTIP_ANIMATION_DELAY as ANIMATION_DELAY, ANIMATION_DURATION } from '../../constants/constants';
+import { TOOLTIP_ANIMATION_DELAY as ANIMATION_DELAY } from '../../constants/constants';
 import { createPopper } from '@popperjs/core';
 import { Instance as PopoverInstance } from '@popperjs/core/lib/types';
 import { Component, Vue } from '@/build/vue-wrapper';
@@ -123,47 +123,41 @@ export default class Tooltip extends Vue {
   }
 
   mounted() {
-    // TODO. review the code. _tooltipRef is always an item instead of an array.
-    const slotTooltipTriggerElements = [this._tooltipRef];
+    const slotTooltipTriggerElement = this._tooltipRef;
     const tooltipElementNode = document.getElementById(this._uuid);
 
     if (tooltipElementNode) {
       this._tooltipElementNode = tooltipElementNode;
     }
 
-    if (slotTooltipTriggerElements) {
-      slotTooltipTriggerElements.forEach((vNode: any) => {
-        const slotElement = vNode;
-        const triggerShow = () => {
-          this._animationTimeout = window.setTimeout(() => {
-            if (!this.tooltipShown) {
-              this.show();
-            }
-          }, ANIMATION_DELAY);
-        };
-        const triggerHide = () => {
-          this.hide();
-        };
+    if (slotTooltipTriggerElement) {
+      const triggerShow = () => {
+        this._animationTimeout = window.setTimeout(() => {
+          if (!this.tooltipShown) {
+            this.show();
+          }
+        }, ANIMATION_DELAY);
+      };
+      const triggerHide = () => {
+        this.hide();
+      };
 
-        this._popper = createPopper(slotElement as Element, this._tooltipElementNode, {
-          placement: this.position,
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, 8],
-              },
+      this._popper = createPopper(slotTooltipTriggerElement as Element, this._tooltipElementNode, {
+        placement: this.position,
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 8],
             },
-          ],
-        });
-
-        if (slotElement) {
-          slotElement.addEventListener('mouseenter', triggerShow.bind(this));
-          slotElement.addEventListener('mouseleave', triggerHide.bind(this));
-          slotElement.addEventListener('focus', triggerShow.bind(this));
-          slotElement.addEventListener('blur', triggerHide.bind(this));
-        }
+          },
+        ],
       });
+
+      slotTooltipTriggerElement.addEventListener('mouseenter', triggerShow.bind(this));
+      slotTooltipTriggerElement.addEventListener('mouseleave', triggerHide.bind(this));
+      slotTooltipTriggerElement.addEventListener('focus', triggerShow.bind(this));
+      slotTooltipTriggerElement.addEventListener('blur', triggerHide.bind(this));
     }
   }
 

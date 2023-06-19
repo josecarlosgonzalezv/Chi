@@ -164,7 +164,7 @@ export default class Drawer extends Vue {
   }
 
   render() {
-    const defaultSlot = this.$slots.default ? this.$slots.default()[0] : null;
+    const defaultSlot = this.$slots.default ? this.$slots.default() : null;
     const closeButton = (
       <button
         class={`

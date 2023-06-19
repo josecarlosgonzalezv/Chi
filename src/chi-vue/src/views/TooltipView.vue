@@ -1,5 +1,5 @@
 <template>
-  <div id="tooltipview">
+  <div id="tooltipView">
     <h2>Tooltip</h2>
     <h3>Base</h3>
     <div class="-p--3">
@@ -77,8 +77,8 @@
         <option value="bottom">Bottom</option>
         <option value="left">Left</option>
       </select>
-      <Tooltip class="-mt--3" message="Bottom Tooltip message" :position="position" :color="color">
-        <button class="chi-button" selected>Dynamic tooltip</button>
+      <Tooltip class="-mt--3 -w--25" message="Dynamic Tooltip message" :position="position" :color="color">
+        <button class="chi-button -w--100" selected>Dynamic tooltip</button>
       </Tooltip>
     </div>
   </div>

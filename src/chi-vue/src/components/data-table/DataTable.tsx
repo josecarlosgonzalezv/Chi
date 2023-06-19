@@ -66,6 +66,8 @@ export default class DataTable extends Vue {
   @Prop() dataTableData!: DataTableData;
   @Prop() config!: DataTableConfig;
 
+  name = 'DataTable';
+
   accordionsExpanded: string[] = [];
   activePage = this.config.pagination.activePage || this.config.activePage || defaultConfig.pagination.activePage || 1;
   resultsPerPage = this.config.resultsPerPage || defaultConfig.resultsPerPage || 10;

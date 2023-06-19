@@ -10,6 +10,8 @@ import { Component, Vue } from '@/build/vue-wrapper';
 
 @Component({})
 export default class DataTableToolbar extends Vue {
+  name = 'DataTableToolbar';
+
   _searchComponent?: SearchInput;
   _filters?: DataTableFilters;
   _columns?: DataTableColumns;
@@ -51,11 +53,16 @@ export default class DataTableToolbar extends Vue {
   }
 
   render() {
+    const slots = {
+      start: this.$slots.start ? this.$slots.start({}) : null,
+      end: this.$slots.end ? this.$slots.end({}) : null,
+    };
+
     return (
       <div class={`${DATA_TABLE_CLASSES.TOOLBAR}`}>
         <div class={`${DATA_TABLE_CLASSES.TOOLBAR}__header`}>
-          <div class={`${DATA_TABLE_CLASSES.TOOLBAR}__start`}>{this.$slots.start}</div>
-          <div class={`${DATA_TABLE_CLASSES.TOOLBAR}__end`}>{this.$slots.end}</div>
+          <div class={`${DATA_TABLE_CLASSES.TOOLBAR}__start`}>{slots.start}</div>
+          <div class={`${DATA_TABLE_CLASSES.TOOLBAR}__end`}>{slots.end}</div>
         </div>
       </div>
     );
