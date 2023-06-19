@@ -92,12 +92,6 @@ import Tooltip from '../components/tooltip/tooltip';
   components: {
     Tooltip,
   },
-  data: () => {
-    return {
-      color: 'light',
-      position: 'top',
-    };
-  },
 })
 export default class TooltipView extends Vue {
   color = 'light';

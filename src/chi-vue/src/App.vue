@@ -8,6 +8,7 @@
       <DrawerView />
       <ExpansionPanelView />
       <PaginationView />
+      <TooltipView />
     </div>
   </div>
 </template>
@@ -19,10 +20,7 @@ import DrawerView from './views/DrawerView.vue';
 import ExpansionPanelView from './views/ExpansionPanelView.vue';
 import SearchInputView from './views/SearchInputView.vue';
 import PaginationView from './views/PaginationView.vue';
-// TODO: Remove after full migration in Vue 3
-import { configureCompat } from '@vue/compat';
-
-configureCompat({ RENDER_FUNCTION: false });
+import TooltipView from './views/TooltipView.vue';
 
 @Component({
   components: {
@@ -31,6 +29,7 @@ configureCompat({ RENDER_FUNCTION: false });
     DrawerView,
     ExpansionPanelView,
     PaginationView,
+    TooltipView,
   },
 })
 export default class App extends Vue {}

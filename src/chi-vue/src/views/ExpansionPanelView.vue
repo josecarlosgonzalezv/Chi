@@ -38,10 +38,6 @@
 import { Component, Vue } from '@/build/vue-wrapper';
 import ExpansionPanel from '@/components/expansion-panel/ExpansionPanel';
 import { EXPANSION_PANEL_STATES } from '@/constants/types';
-// TODO: Remove after full migration in Vue 3
-import { configureCompat } from '@vue/compat';
-
-configureCompat({ RENDER_FUNCTION: false });
 
 @Component({
   components: {
