@@ -1,4 +1,9 @@
+import { configureCompat } from '@vue/compat';
 import { ChiVueLibrary } from 'index';
+
+configureCompat({
+  MODE: 3,
+});
 
 const exportComponent: ChiVueLibrary = {
   components: {

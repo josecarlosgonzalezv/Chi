@@ -150,10 +150,6 @@
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
 import Pagination from '../components/pagination/pagination';
-// TODO: Remove after full migration in Vue 3
-import { configureCompat } from '@vue/compat';
-
-configureCompat({ RENDER_FUNCTION: false });
 
 @Component({
   components: {

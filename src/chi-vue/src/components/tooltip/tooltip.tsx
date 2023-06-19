@@ -1,4 +1,4 @@
-import { Emit, Prop } from 'vue-property-decorator';
+import { Emit, Prop, Ref } from 'vue-property-decorator';
 import { uuid4 } from '../../utils/utils';
 import { ACTIVE_CLASS, LIGHT_CLASS, TOOLTIP_CLASSES, TRANSITIONING_CLASS } from '../../constants/classes';
 import { TOOLTIP_EVENTS } from '../../constants/events';
@@ -14,6 +14,8 @@ export default class Tooltip extends Vue {
   @Prop() message!: string;
   @Prop({ default: 'base' }) color?: TooltipColors;
   @Prop({ default: 'top' }) position?: TooltipPositions;
+
+  @Ref() readonly _tooltipRef!: HTMLElement;
 
   _tooltipElement?: JSX.Element;
   _tooltipElementNode!: HTMLElement;
@@ -121,7 +123,8 @@ export default class Tooltip extends Vue {
   }
 
   mounted() {
-    const slotTooltipTriggerElements = this.$slots.default ? this.$slots.default() : [];
+    // TODO. review the code. _tooltipRef is always an item instead of an array.
+    const slotTooltipTriggerElements = [this._tooltipRef];
     const tooltipElementNode = document.getElementById(this._uuid);
 
     if (tooltipElementNode) {
@@ -166,8 +169,8 @@ export default class Tooltip extends Vue {
 
   render() {
     return (
-      <div>
-        {this.$slots.default}
+      <div ref="_tooltipRef">
+        {this.$slots.default && this.$slots.default()}
         {this._tooltipElement}
       </div>
     );

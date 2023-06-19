@@ -17,10 +17,6 @@
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
 import Checkbox from '@/components/checkbox/Checkbox';
-// TODO: Remove after full migration in Vue 3
-import { configureCompat } from '@vue/compat';
-
-configureCompat({ RENDER_FUNCTION: false });
 
 @Component({
   components: {
