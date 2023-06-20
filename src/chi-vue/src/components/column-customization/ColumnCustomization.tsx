@@ -16,7 +16,7 @@ import { DataTableColumn, DataTableColumnsData } from '@/constants/types';
 import ColumnCustomizationContent from './ColumnCustomizationModalContent';
 import { checkColumns } from './utils';
 import { Component, Vue } from '@/build/vue-wrapper';
-import Tooltip from '@/components/tooltip/Tooltip';
+import Tooltip from '@/components/tooltip/tooltip';
 
 declare const chi: any;
 

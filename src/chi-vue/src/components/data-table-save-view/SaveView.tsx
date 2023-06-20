@@ -11,7 +11,7 @@ import {
 } from '@/constants/classes';
 import { SAVE_VIEW_EVENTS } from '@/constants/events';
 import { SaveViewConfig, SaveViewModes, SaveViewSave } from '@/constants/types';
-import Tooltip from '@/components/tooltip/Tooltip';
+import Tooltip from '@/components/tooltip/tooltip';
 import { uuid4 } from '@/utils/utils';
 import './save-view.scss';
 import { defaultConfig } from './default-config';
