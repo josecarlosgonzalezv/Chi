@@ -86,7 +86,7 @@
 
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
-import Tooltip from '../components/tooltip/tooltip';
+import Tooltip from '../components/tooltip/Tooltip';
 
 @Component({
   components: {

@@ -22,7 +22,7 @@ import { compareFilters, getElementFilterData } from './FilterUtils';
 import { DATA_TABLE_EVENTS } from '@/constants/events';
 import DataTableToolbar from '@/components/data-table-toolbar/DataTableToolbar';
 import AdvancedFilters from './AdvancedFilters';
-import Drawer from '../drawer/drawer';
+import Drawer from '../drawer/Drawer';
 import store, { STORE_KEY } from '@/store';
 import { getModule } from 'vuex-module-decorators';
 import './filters.scss';

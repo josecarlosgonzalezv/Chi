@@ -5,6 +5,7 @@
     "strict": true,
     "declaration": true,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,

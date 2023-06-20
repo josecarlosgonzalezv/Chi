@@ -62,7 +62,7 @@
 
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
-import Drawer from '@/components/drawer/drawer';
+import Drawer from '@/components/drawer/Drawer';
 
 @Component({
   components: {

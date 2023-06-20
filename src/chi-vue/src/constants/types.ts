@@ -214,6 +214,12 @@ export enum SaveViewModes {
   SAVED = 'saved',
   DELETE = 'delete',
 }
+
+export interface SaveViewSave {
+  id: string | null;
+  title?: string;
+  default?: boolean;
+}
 //#endregion
 
 //#region Search Input

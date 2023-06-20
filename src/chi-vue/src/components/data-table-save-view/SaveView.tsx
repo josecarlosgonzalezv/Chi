@@ -1,4 +1,4 @@
-import { Prop, Watch } from 'vue-property-decorator';
+import { Emit, Prop, Watch } from 'vue-property-decorator';
 import {
   BUTTON_CLASSES,
   CHECKBOX_CLASSES,
@@ -10,29 +10,55 @@ import {
   SAVE_VIEW_CLASSES,
 } from '@/constants/classes';
 import { SAVE_VIEW_EVENTS } from '@/constants/events';
-import { SaveViewConfig, SaveViewModes } from '@/constants/types';
-import Tooltip from '../tooltip/tooltip';
+import { SaveViewConfig, SaveViewModes, SaveViewSave } from '@/constants/types';
+import Tooltip from '@/components/tooltip/Tooltip';
 import { uuid4 } from '@/utils/utils';
 import './save-view.scss';
 import { defaultConfig } from './default-config';
 import { Component, Vue } from '@/build/vue-wrapper';
+import { Transition } from 'vue';
 
 @Component({})
 export default class SaveView extends Vue {
   @Prop() config!: SaveViewConfig;
 
-  isRibbonShown = !!this.config.active;
-  isSaveViewVisible = !!this.config.active;
-  isDefaultChecked = !!this.config.default;
-  isReadOnly = !!this.config.readonly;
-  viewMode: SaveViewModes = this.config.mode || defaultConfig.mode || SaveViewModes.BASE;
-  viewTitle = this.config.title || defaultConfig.title;
-  uuid: string | null = this.config.id || null;
-  deleteLabel = this.config.label?.delete || defaultConfig.label?.delete;
-  mainLabel = this.config.label?.main || defaultConfig.label?.main;
-  inputLabel = this.config.input?.label || defaultConfig.input?.label;
-  resultsLabel = this.config.label?.results || defaultConfig.label?.results;
-  saveButtonDisabled = !!this.config.saveButtonDisabled || defaultConfig.saveButtonDisabled;
+  @Emit(SAVE_VIEW_EVENTS.SAVE)
+  _emitSave(view: SaveViewSave) {
+    return view;
+  }
+
+  @Emit(SAVE_VIEW_EVENTS.SAVE_LINK)
+  _emitSaveLink() {
+    // This is intentional
+  }
+
+  @Emit(SAVE_VIEW_EVENTS.SHOWN)
+  _emitShown() {
+    // This is intentional
+  }
+
+  @Emit(SAVE_VIEW_EVENTS.HIDE)
+  _emitHide() {
+    // This is intentional
+  }
+
+  @Emit(SAVE_VIEW_EVENTS.HIDDEN)
+  _emitHidden() {
+    // This is intentional
+  }
+
+  isRibbonShown = defaultConfig.active;
+  isSaveViewVisible = defaultConfig.active;
+  isDefaultChecked = defaultConfig.default;
+  isReadOnly = defaultConfig.readonly;
+  viewMode = defaultConfig.mode || SaveViewModes.BASE;
+  viewTitle = defaultConfig.title;
+  uuid = defaultConfig.id || undefined;
+  deleteLabel = defaultConfig.label?.delete;
+  mainLabel = defaultConfig.label?.main;
+  inputLabel = defaultConfig.input?.label;
+  resultsLabel = defaultConfig.label?.results;
+  saveButtonDisabled = defaultConfig.saveButtonDisabled;
 
   @Watch('config')
   dataConfigChange(newValue: SaveViewConfig, oldValue: SaveViewConfig) {
@@ -52,22 +78,23 @@ export default class SaveView extends Vue {
   handlerClickSave() {
     const uuid = this.uuid || uuid4();
 
-    this.$emit(SAVE_VIEW_EVENTS.SAVE, {
+    this._emitSave({
       id: uuid,
-      title: this.viewTitle,
+      title: this.viewTitle || '',
       default: this.isDefaultChecked,
     });
+
     this.setMode(SaveViewModes.SAVED);
   }
 
   handlerAfterEnter() {
     this.isRibbonShown = true;
-    this.$emit(SAVE_VIEW_EVENTS.SHOWN);
+    this._emitShown();
   }
 
   handlerAfterLeave() {
     this.isRibbonShown = false;
-    this.$emit(SAVE_VIEW_EVENTS.HIDDEN);
+    this._emitHidden();
   }
 
   setMode(mode: SaveViewModes) {
@@ -80,17 +107,19 @@ export default class SaveView extends Vue {
     this.viewTitle = '';
     this.isDefaultChecked = false;
     this.setMode(SaveViewModes.BASE);
-    this.$emit(SAVE_VIEW_EVENTS.SAVE, this.uuid);
+    this._emitSave({
+      id: this.uuid || null,
+    });
   }
 
   handlerClose() {
     this.isSaveViewVisible = false;
-    this.$emit(SAVE_VIEW_EVENTS.HIDE);
+    this._emitHide();
   }
 
   handlerClickSaveLink() {
     this.setMode(SaveViewModes.CREATE);
-    this.$emit(SAVE_VIEW_EVENTS.SAVE_LINK);
+    this._emitSaveLink();
   }
 
   disableSaveButton() {
@@ -102,6 +131,21 @@ export default class SaveView extends Vue {
       this.viewTitle?.length === 0 ||
       (this.viewTitle === this.config.title && this.isDefaultChecked === !!this.config.default)
     );
+  }
+
+  beforeMount(): void {
+    this.isRibbonShown = !!this.config.active;
+    this.isSaveViewVisible = !!this.config.active;
+    this.isDefaultChecked = !!this.config.default;
+    this.isReadOnly = !!this.config.readonly;
+    this.viewMode = this.config.mode || defaultConfig.mode || SaveViewModes.BASE;
+    this.viewTitle = this.config.title || defaultConfig.title;
+    this.uuid = this.config.id || undefined;
+    this.deleteLabel = this.config.label?.delete || defaultConfig.label?.delete;
+    this.mainLabel = this.config.label?.main || defaultConfig.label?.main;
+    this.inputLabel = this.config.input?.label || defaultConfig.input?.label;
+    this.resultsLabel = this.config.label?.results || defaultConfig.label?.results;
+    this.saveButtonDisabled = !!this.config.saveButtonDisabled || defaultConfig.saveButtonDisabled;
   }
 
   render() {
@@ -289,9 +333,9 @@ export default class SaveView extends Vue {
     ) : null;
 
     return (
-      <transition onAfter-enter={this.handlerAfterEnter} onAfter-leave={this.handlerAfterLeave} name="slide-fade">
+      <Transition onAfter-enter={this.handlerAfterEnter} onAfter-leave={this.handlerAfterLeave} name="slide-fade">
         {ribbon}
-      </transition>
+      </Transition>
     );
   }
 }

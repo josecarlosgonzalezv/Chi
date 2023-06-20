@@ -1,4 +1,4 @@
-import { Prop, Watch } from 'vue-property-decorator';
+import { Emit, Prop, Watch } from 'vue-property-decorator';
 import { findComponent } from '@/utils/utils';
 import {
   BULK_ACTIONS_CLASSES,
@@ -13,6 +13,7 @@ import DataTable from '../data-table/DataTable';
 import { ICON_CLASSES } from '@/constants/icons';
 import { DATA_TABLE_EVENTS, GENERIC_EVENTS } from '@/constants/events';
 import { Component, Vue } from '@/build/vue-wrapper';
+import { Transition } from 'vue';
 
 @Component({})
 export default class DataTableBulkActions extends Vue {
@@ -21,12 +22,14 @@ export default class DataTableBulkActions extends Vue {
 
   isBulkActionsVisible = this._checkBulkActionVisibility();
 
+  @Emit(DATA_TABLE_EVENTS.BULK_ACTIONS.SHOW_SELECTED_ONLY)
   _emitSelectedRows(e: any) {
-    this.$emit(DATA_TABLE_EVENTS.BULK_ACTIONS.SHOW_SELECTED_ONLY, e.srcElement.checked);
+    return e.srcElement.checked;
   }
 
+  @Emit(DATA_TABLE_EVENTS.BULK_ACTIONS.SHOW_SELECTED_ONLY)
   _emitSelectedAll(e: Event) {
-    this.$emit(DATA_TABLE_EVENTS.SELECTED_ALL, e);
+    return e;
   }
 
   _cancel() {
@@ -58,7 +61,7 @@ export default class DataTableBulkActions extends Vue {
     const startSlot = this.$slots['start'] ? this.$slots['start']({}) : null;
 
     return (
-      <transition name="slide-fade">
+      <Transition name="slide-fade">
         {this.isBulkActionsVisible && (
           <div class={`${BULK_ACTIONS_CLASSES.BULK_ACTIONS}`}>
             <div class={`${BULK_ACTIONS_CLASSES.BULK_ACTIONS_TOP} ${UTILITY_CLASSES.Z_INDEX.Z_10}`}>
@@ -118,7 +121,7 @@ export default class DataTableBulkActions extends Vue {
             </div>
           </div>
         )}
-      </transition>
+      </Transition>
     );
   }
 }

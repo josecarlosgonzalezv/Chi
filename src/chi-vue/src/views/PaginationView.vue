@@ -149,7 +149,7 @@
 
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
-import Pagination from '../components/pagination/pagination';
+import Pagination from '../components/pagination/Pagination';
 
 @Component({
   components: {
