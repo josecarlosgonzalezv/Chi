@@ -1,15 +1,14 @@
 <template>
-  <div id="app">
-    <div class="-p--4">
-      <h1>Chi Vue 3</h1>
+  <div class="-p--4">
+    <h1>Chi Vue 3</h1>
+    <DataTableClientView />
 
-      <CheckboxView />
-      <SearchInputView />
-      <DrawerView />
-      <ExpansionPanelView />
-      <PaginationView />
-      <TooltipView />
-    </div>
+    <CheckboxView />
+    <SearchInputView />
+    <DrawerView />
+    <ExpansionPanelView />
+    <PaginationView />
+    <TooltipView />
   </div>
 </template>
 
@@ -21,6 +20,7 @@ import ExpansionPanelView from './views/ExpansionPanelView.vue';
 import SearchInputView from './views/SearchInputView.vue';
 import PaginationView from './views/PaginationView.vue';
 import TooltipView from './views/TooltipView.vue';
+import DataTableClientView from './views/DataTable/ClientSide/DataTableClientView.vue';
 
 @Component({
   components: {
@@ -30,6 +30,7 @@ import TooltipView from './views/TooltipView.vue';
     ExpansionPanelView,
     PaginationView,
     TooltipView,
+    DataTableClientView,
   },
 })
 export default class App extends Vue {}

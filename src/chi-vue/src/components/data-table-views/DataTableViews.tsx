@@ -1,4 +1,4 @@
-import { Prop } from 'vue-property-decorator';
+import { Emit, Prop } from 'vue-property-decorator';
 import { DataTableView } from '@/constants/types';
 import { DATA_TABLE_CLASSES, FORM_CLASSES, SELECT_CLASSES } from '@/constants/classes';
 import { DATA_TABLE_EVENTS } from '@/constants/events';
@@ -13,6 +13,11 @@ export default class DataTableViews extends Vue {
 
   _selectedView?: string;
 
+  @Emit(DATA_TABLE_EVENTS.VIEWS_CHANGE)
+  _emitViewsChanged(view: DataTableView | undefined) {
+    return view;
+  }
+
   mounted(): void {
     const dataTableToolbarComponent = findComponent(this, 'DataTableToolbar');
 
@@ -21,11 +26,12 @@ export default class DataTableViews extends Vue {
     }
   }
 
-  _emitViewsChanged(ev: Event): void {
+  _handleViewsChange(ev: Event): void {
     const value = (ev.target as HTMLFormElement).value;
     const view = this.views?.find((view: DataTableView) => view.id === value);
+
     this._selectedView = view?.id;
-    this.$emit(DATA_TABLE_EVENTS.VIEWS_CHANGE, view);
+    this._emitViewsChanged(view);
   }
 
   render() {
@@ -44,7 +50,7 @@ export default class DataTableViews extends Vue {
             <select
               aria-label={`Select a View`}
               class={`${SELECT_CLASSES.SELECT}`}
-              onChange={(ev: Event) => this._emitViewsChanged(ev)}>
+              onChange={(ev: Event) => this._handleViewsChange(ev)}>
               {!this.views || !this.views.length ? <option>View</option> : options}
             </select>
           </div>

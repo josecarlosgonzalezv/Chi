@@ -1,4 +1,4 @@
-import { Prop } from 'vue-property-decorator';
+import { Emit, Prop } from 'vue-property-decorator';
 import {
   DataTableCustomItem,
   DataTableFilter,
@@ -61,7 +61,7 @@ export default class DataTableFilters extends Vue {
       this.storeModule = getModule(store, this.$store);
     }
 
-    const advancedFilters = this.filtersData.filters.filter((filter: DataTableFilter) => filter.advanced);
+    const advancedFilters = this.filtersData.filters?.filter((filter: DataTableFilter) => filter.advanced);
 
     if (this._filtersData) {
       this._filtersData = {
@@ -259,8 +259,9 @@ export default class DataTableFilters extends Vue {
     }
   }
 
+  @Emit(DATA_TABLE_EVENTS.FILTERS_CHANGE)
   _emitFiltersChanged() {
-    this.$emit(DATA_TABLE_EVENTS.FILTERS_CHANGE, this._getUpdatedFiltersObject());
+    return this._getUpdatedFiltersObject();
   }
 
   getCustomItemsSlots() {
