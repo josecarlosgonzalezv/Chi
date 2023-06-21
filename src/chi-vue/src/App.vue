@@ -1,19 +1,21 @@
 <template>
   <div class="-p--4">
     <h1>Chi Vue 3</h1>
-    <DataTableClientView />
+    <!-- <DataTableClientView /> -->
 
     <CheckboxView />
-    <SearchInputView />
+    <!-- <SearchInputView />
     <DrawerView />
     <ExpansionPanelView />
     <PaginationView />
-    <TooltipView />
+    <TooltipView /> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from '@/build/vue-wrapper';
+import { Inject } from 'vue-property-decorator';
+import { Emitter } from 'mitt';
 import CheckboxView from './views/CheckboxView.vue';
 import DrawerView from './views/DrawerView.vue';
 import ExpansionPanelView from './views/ExpansionPanelView.vue';
@@ -33,5 +35,19 @@ import DataTableClientView from './views/DataTable/ClientSide/DataTableClientVie
     DataTableClientView,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  @Inject({
+    from: 'emitter',
+    default: undefined,
+  })
+  readonly emitter!: Emitter<{
+    'checkbox-msg': string,
+    content: string,
+  }>;
+
+  created() {
+    console.log(`created emitter listener for checkbox-msg`);
+    this.emitter.on('checkbox-msg', e => console.log(`[on]:`, e));
+  }
+}
 </script>

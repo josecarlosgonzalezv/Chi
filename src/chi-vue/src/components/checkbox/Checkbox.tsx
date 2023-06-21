@@ -1,8 +1,9 @@
-import { Emit, Prop, Watch } from 'vue-property-decorator';
+import { Emit, Inject, Prop, Watch } from 'vue-property-decorator';
 import { CHECKBOX_CLASSES, SR_ONLY } from '@/constants/classes';
 import { GENERIC_EVENTS } from '@/constants/events';
 import { CheckboxState } from '@/constants/types';
 import { Component, Vue } from '@/build/vue-wrapper';
+import { Emitter } from 'mitt';
 
 @Component({})
 export default class Checkbox extends Vue {
@@ -11,6 +12,15 @@ export default class Checkbox extends Vue {
   @Prop() name?: string;
   @Prop() selected!: CheckboxState;
   @Prop() disabled?: boolean;
+
+  @Inject({
+    from: 'emitter',
+    default: undefined,
+  })
+  readonly emitter!: Emitter<{
+    'checkbox-msg': string,
+    content: string,
+  }>;
 
   state: CheckboxState = false;
 
@@ -24,6 +34,8 @@ export default class Checkbox extends Vue {
 
   @Emit(GENERIC_EVENTS.CHANGE)
   _emitChange(ev: Event) {
+    console.log(`emitting checkbox-msg...`)
+    this.emitter.emit('checkbox-msg', 'emtting the event from checkbox');
     return ev;
   }
 
