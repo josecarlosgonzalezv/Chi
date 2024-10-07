@@ -955,19 +955,21 @@
     }
   ],
   "paths": {
-    "bitmaps_reference": "backstop/bitmaps_reference/non_responsive",
+    "bitmaps_reference": "backstop_data/bitmaps_reference/non_responsive",
     "bitmaps_test": "reports/html_report/non_responsive_ce/bitmaps_test",
-    "engine_scripts": "backstop/engine_scripts",
-    "html_report": "backstop/html_report/non_responsive_ce",
-    "ci_report": "backstop/ci_report/non_responsive_ce"
+    "engine_scripts": "backstop_data/engine_scripts",
+    "html_report": "reports/html_report/non_responsive_ce",
+    "ci_report": "reports/ci_report/non_responsive_ce"
   },
-  "report": ["CI"],
   "engine": "puppeteer",
+  "report": [
+    "CI"
+  ],
   "engineOptions": {
-    "waitTimeout": 120000
+    "args": ["--no-sandbox"]
   },
-  "asyncCaptureLimit": 4,
-  "asyncCompareLimit": 4,
+  "asyncCaptureLimit": 5,
+  "asyncCompareLimit": 50,
   "debug": false,
   "debugWindow": false
 }
