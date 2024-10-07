@@ -1,0 +1,342 @@
+@import '../../_global-variables';
+@import '../../_global-mixins';
+
+$sizes: (
+  xs: (
+    height: $number-input-xs-height,
+    line-height: $number-input-xs-line-height,
+    font-size: $number-input-xs-font-size,
+    padding: $number-input-xs-padding,
+    btn-height: $number-input-xs-button-height,
+    right: $number-input-xs-button-right,
+    top: $number-input-xs-button-top,
+    bottom: $number-input-xs-button-bottom,
+    background-size: $number-input-xs-button-icon-background-size,
+  ),
+  sm: (
+    height: $number-input-sm-height,
+    line-height: $number-input-sm-line-height,
+    font-size: $number-input-sm-font-size,
+    padding: $number-input-sm-padding,
+    btn-height: $number-input-sm-button-height,
+    right: $number-input-sm-button-right,
+    top: $number-input-sm-button-top,
+    bottom: $number-input-sm-button-bottom,
+    background-size: $number-input-sm-button-icon-background-size,
+  ),
+  md: (
+    height: $number-input-md-height,
+    line-height: $number-input-md-line-height,
+    font-size: $number-input-md-font-size,
+    padding: $number-input-md-padding,
+    btn-height: $number-input-md-button-height,
+    btn-width: $number-input-md-button-width,
+    right: $number-input-md-button-right,
+    top: $number-input-md-button-top,
+    bottom: $number-input-md-button-bottom,
+    background-size: $number-input-md-button-icon-background-size,
+  ),
+  lg: (
+    height: $number-input-lg-height,
+    line-height: $number-input-lg-line-height,
+    font-size: $number-input-lg-font-size,
+    padding: $number-input-lg-padding,
+    btn-height: $number-input-lg-button-height,
+    btn-width: $number-input-lg-button-width,
+    right: $number-input-lg-button-right,
+    top: $number-input-lg-button-top,
+    bottom: $number-input-lg-button-bottom,
+    background-size: $number-input-lg-button-icon-background-size,
+  ),
+  xl: (
+    height: $number-input-xl-height,
+    line-height: $number-input-xl-line-height,
+    font-size: $number-input-xl-font-size,
+    padding: $number-input-xl-padding,
+    btn-height: $number-input-xl-button-height,
+    btn-width: $number-input-xl-button-width,
+    right: $number-input-xl-button-right,
+    top: $number-input-xl-button-top,
+    bottom: $number-input-xl-button-bottom,
+    background-size: $number-input-xl-button-icon-background-size,
+  ),
+);
+
+$expanded-sizes: (
+  xs: (
+    width: $number-input-expanded-xs-width,
+    btn-font-size: $number-input-expanded-xs-button-font-size,
+    btn-line-height: $number-input-expanded-xs-button-line-height,
+    btn-height: $number-input-expanded-xs-button-height,
+    btn-padding: $number-input-expanded-xs-button-padding,
+    icon-font-size: $number-input-expanded-xs-button-icon-size,
+    icon-height: $number-input-expanded-xs-button-icon-size,
+    icon-line-height: $number-input-expanded-xs-button-icon-size,
+    icon-width: $number-input-expanded-xs-button-icon-size,
+  ),
+  sm: (
+    width: $number-input-expanded-sm-width,
+    btn-font-size: $number-input-expanded-sm-button-font-size,
+    btn-line-height: $number-input-expanded-sm-button-line-height,
+    btn-height: $number-input-expanded-sm-button-height,
+    btn-padding: $number-input-expanded-sm-button-padding,
+    icon-font-size: $number-input-expanded-sm-button-icon-size,
+    icon-height: $number-input-expanded-sm-button-icon-size,
+    icon-line-height: $number-input-expanded-sm-button-icon-size,
+    icon-width: $number-input-expanded-sm-button-icon-size,
+  ),
+  md: (
+    width: $number-input-expanded-md-width,
+    btn-font-size: $number-input-expanded-md-button-font-size,
+    btn-line-height: $number-input-expanded-md-button-line-height,
+    btn-height: $number-input-expanded-md-button-height,
+    btn-padding: $number-input-expanded-md-button-padding,
+    icon-font-size: $number-input-expanded-md-button-icon-size,
+    icon-height: $number-input-expanded-md-button-icon-size,
+    icon-line-height: $number-input-expanded-md-button-icon-size,
+    icon-width: $number-input-expanded-md-button-icon-size,
+  ),
+  lg: (
+    width: $number-input-expanded-lg-width,
+    btn-font-size: $number-input-expanded-lg-button-font-size,
+    btn-line-height: $number-input-expanded-lg-button-line-height,
+    btn-height: $number-input-expanded-lg-button-height,
+    btn-padding: $number-input-expanded-lg-button-padding,
+    icon-font-size: $number-input-expanded-lg-button-icon-size,
+    icon-height: $number-input-expanded-lg-button-icon-size,
+    icon-line-height: $number-input-expanded-lg-button-icon-size,
+    icon-width: $number-input-expanded-lg-button-icon-size,
+  ),
+  xl: (
+    width: $number-input-expanded-xl-width,
+    btn-font-size: $number-input-expanded-xl-button-font-size,
+    btn-line-height: $number-input-expanded-xl-button-line-height,
+    btn-height: $number-input-expanded-xl-button-height,
+    btn-padding: $number-input-expanded-xl-button-padding,
+    icon-font-size: $number-input-expanded-xl-button-icon-size,
+    icon-height: $number-input-expanded-xl-button-icon-size,
+    icon-line-height: $number-input-expanded-xl-button-icon-size,
+    icon-width: $number-input-expanded-xl-button-icon-size,
+  ),
+);
+
+.chi-number-input {
+  position: relative;
+  width: $number-input-md-width;
+
+  input {
+    &[type='number'] {
+      &.chi-input {
+        padding: $number-input-md-padding;
+
+        & ~ button {
+          background-color: $number-input-button-background-color;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: $number-input-md-button-icon-background-size;
+          border: 0.0625rem solid $number-input-button-border-color;
+          border-radius: $number-input-button-border-radius;
+          cursor: pointer;
+          height: $number-input-md-button-height;
+          outline: none;
+          padding: 0;
+          position: absolute;
+          right: $number-input-md-button-right;
+          width: $number-input-md-button-width;
+
+          &:first-of-type {
+            // sass-lint:disable-all
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.002L7.999 12H8l8-7.998L15.999 4H0v.002' fill='#{$number-input-arrow-icon-color}' fill-rule='evenodd'/%3E%3C/svg%3E");
+            // sass-lint:enable-all
+            bottom: $number-input-md-button-bottom;
+          }
+
+          &:last-of-type {
+            // sass-lint:disable-all
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 12H0l8-8z' fill='#{$number-input-arrow-icon-color}' fill-rule='evenodd'/%3E%3C/svg%3E");
+            // sass-lint:enable-all
+            top: $number-input-md-button-top;
+          }
+
+          &:hover {
+            background-color: $number-input-button-hover-background-color;
+          }
+
+          &:active {
+            background-color: $number-input-button-active-background-color;
+          }
+
+          &[disabled] {
+            background-color: $number-input-button-disabled-background-color;
+            opacity: $number-input-button-disabled-opacity;
+            pointer-events: none;
+          }
+        }
+
+        &[disabled] {
+          & ~ button {
+            opacity: $number-input-button-disabled-opacity;
+            pointer-events: none;
+          }
+        }
+
+        // sass-lint:disable-all
+        &[disabled] ~ button,
+        & ~ button[disabled] {
+          &:first-of-type {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.002L7.999 12H8l8-7.998L15.999 4H0v.002' fill='#{$number-input-disabled-arrow-icon-color}' fill-rule='evenodd'/%3E%3C/svg%3E");
+          }
+
+          &:last-of-type {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 12H0l8-8z' fill='#{$number-input-disabled-arrow-icon-color}' fill-rule='evenodd'/%3E%3C/svg%3E");
+          }
+        }
+        // sass-lint:enable-all
+      }
+    }
+  }
+
+  @each $type in map-keys($sizes) {
+    &.-#{$type} {
+      input {
+        &[type='number'] {
+          &.chi-input {
+            font-size: map-get(map-get($sizes, $type), font-size);
+            height: map-get(map-get($sizes, $type), height);
+            line-height: map-get(map-get($sizes, $type), line-height);
+            padding: map-get(map-get($sizes, $type), padding);
+
+            & ~ button {
+              background-size: map-get(map-get($sizes, $type), background-size);
+              height: map-get(map-get($sizes, $type), btn-height);
+              right: map-get(map-get($sizes, $type), right);
+              width: map-get(map-get($sizes, $type), btn-width);
+
+              &:first-of-type {
+                bottom: map-get(map-get($sizes, $type), bottom);
+              }
+
+              &:last-of-type {
+                top: map-get(map-get($sizes, $type), top);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.-expanded {
+    align-items: center;
+    display: flex;
+    width: $number-input-expanded-md-width;
+
+    & > input {
+      &[type='number'] {
+        &.chi-input {
+          border-radius: 0;
+          flex: auto;
+          min-width: 1rem;
+          order: 2;
+          padding-right: $number-input-expanded-md-button-padding;
+          text-align: center;
+          z-index: 1;
+
+          & ~ button {
+            &.chi-button {
+              background-image: none;
+              background-size: auto;
+              border-radius: $border-radius;
+              color: $color-text-base;
+              display: block;
+              height: map-get(map-get($expanded-sizes, md), btn-height);
+              padding: $number-input-expanded-md-button-padding;
+              position: relative;
+
+              &:first-of-type,
+              &:focus:first-of-type {
+                border-bottom-right-radius: 0;
+                border-right-width: 0;
+                border-top-right-radius: 0;
+                bottom: 0;
+                order: 1;
+                right: 0;
+                width: auto;
+              }
+
+              &:last-of-type,
+              &:focus:last-of-type {
+                border-bottom-left-radius: 0;
+                border-left-width: 0;
+                border-top-left-radius: 0;
+                order: 3;
+                right: 0;
+                top: 0;
+                width: auto;
+              }
+
+              .chi-icon {
+                color: $number-input-arrow-icon-color;
+                height: $number-input-expanded-md-button-icon-size;
+                width: $number-input-expanded-md-button-icon-size;
+              }
+            }
+
+            &[disabled] {
+              @include button-disabled;
+
+              .chi-icon {
+                color: $color-icon-muted-light;
+                opacity: $opacity-100;
+              }
+            }
+          }
+        }
+
+        &[disabled] {
+          &.chi-input {
+            & ~ button {
+              background-color: $number-input-expanded-button-disabled-background-color;
+              border-color: $number-input-expanded-button-disabled-border-color;
+              box-shadow: none;
+              color: $number-input-expanded-button-disabled-text-color;
+              opacity: $number-input-expanded-button-disabled-opacity;
+              pointer-events: none;
+
+              & .chi-icon {
+                color: $number-input-expanded-button-disabled-icon-color;
+                opacity: $number-input-expanded-button-disabled-opacity;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @each $size, $values in $expanded-sizes {
+      &.-#{$size} {
+        width: map-get($values, width);
+
+        & > input {
+          &[type='number'] {
+            &.chi-input {
+              & ~ button {
+                font-size: map-get($values, btn-font-size);
+                height: map-get($values, btn-height);
+                line-height: map-get($values, btn-line-height);
+                padding: map-get($values, btn-padding);
+
+                .chi-icon {
+                  font-size: map-get($values, icon-font-size);
+                  height: map-get($values, icon-height);
+                  line-height: map-get($values, icon-line-height);
+                  width: map-get($values, icon-width);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,226 @@
+$sizes: (
+  xs: (
+    height: $text-input-xs-icon-height,
+    top: $text-input-xs-icon-top,
+    width: $text-input-xs-icon-width,
+    spinner: (
+      right: $text-input-xs-spinner-right,
+    ),
+  ),
+  sm: (
+    height: $text-input-sm-icon-height,
+    top: $text-input-sm-icon-top,
+    width: $text-input-sm-icon-width,
+    spinner: (
+      right: $text-input-sm-spinner-right,
+    ),
+  ),
+  md: (
+    height: $text-input-md-icon-height,
+    top: $text-input-md-icon-top,
+    width: $text-input-md-icon-width,
+    spinner: (
+      right: $text-input-md-spinner-right,
+    ),
+  ),
+  lg: (
+    height: $text-input-lg-icon-height,
+    top: $text-input-lg-icon-top,
+    width: $text-input-lg-icon-width,
+    spinner: (
+      right: $text-input-lg-spinner-right,
+    ),
+  ),
+  xl: (
+    height: $text-input-xl-icon-height,
+    top: $text-input-xl-icon-top,
+    width: $text-input-xl-icon-width,
+    spinner: (
+      right: $text-input-xl-spinner-right,
+    ),
+  )
+);
+
+.chi-input__wrapper {
+  .chi-input {
+    & ~ .chi-icon,
+    & ~ chi-icon {
+      height: $text-input-md-icon-height;
+      position: absolute;
+      top: $text-input-md-icon-top;
+      width: $text-input-md-icon-width;
+    }
+
+    & ~ chi-icon {
+      .chi-icon {
+        height: $text-input-md-icon-height;
+        width: $text-input-md-icon-width;
+      }
+    }
+
+    & ~ chi-spinner,
+    & ~ .chi-spinner {
+      height: $text-input-md-icon-height;
+      position: absolute;
+      right: $text-input-md-spinner-right;
+      top: $text-input-md-icon-top;
+      width: $text-input-md-icon-width;
+    }
+
+    @each $type in map-keys($sizes) {
+      &.-#{$type} {
+        & ~ .chi-icon,
+        & ~ chi-icon {
+          height: map-get(map-get($sizes, $type), height);
+          top: map-get(map-get($sizes, $type), top);
+          width: map-get(map-get($sizes, $type), width);
+        }
+
+        & ~ chi-icon {
+          .chi-icon {
+            height: map-get(map-get($sizes, $type), height);
+            top: 0;
+            width: map-get(map-get($sizes, $type), width);
+          }
+        }
+
+        & ~ chi-spinner,
+        & ~ .chi-spinner {
+          color: $text-input-spinner-color;
+          right: map-get(map-get(map-get($sizes, $type), spinner), right);
+          top: map-get(map-get($sizes, $type), top);
+
+          &,
+          svg {
+            height: map-get(map-get($sizes, $type), height);
+            width: map-get(map-get($sizes, $type), width);
+          }
+        }
+      }
+    }
+  }
+
+  &.-icon--left {
+    .chi-input {
+      padding-left: $text-input-md-iconleft-padding-left;
+
+      &.-xs {
+        padding-left: $text-input-xs-iconleft-padding-left;
+
+        & ~ .chi-icon,
+        & ~ chi-icon {
+          &:first-of-type {
+            left: $text-input-xs-iconleft-left;
+          }
+        }
+      }
+
+      &.-sm {
+        padding-left: $text-input-sm-iconleft-padding-left;
+
+        & ~ .chi-icon,
+        & ~ chi-icon {
+          &:first-of-type {
+            left: $text-input-sm-iconleft-left;
+          }
+        }
+      }
+
+      &.-md {
+        padding-left: $text-input-md-iconleft-padding-left;
+      }
+
+      &.-lg {
+        padding-left: $text-input-lg-iconleft-padding-left;
+
+        & ~ .chi-icon,
+        & ~ chi-icon {
+          &:first-of-type {
+            left: $text-input-lg-iconleft-left;
+          }
+        }
+      }
+
+      &.-xl {
+        padding-left: $text-input-xl-iconleft-padding-left;
+
+        & ~ .chi-icon,
+        & ~ chi-icon {
+          &:first-of-type {
+            left: $text-input-xl-iconleft-left;
+          }
+        }
+      }
+
+      & ~ .chi-icon,
+      & ~ chi-icon {
+        &:first-of-type {
+          left: $text-input-md-iconleft-left;
+        }
+      }
+    }
+  }
+
+  &.-icon--right {
+    input {
+      &.chi-input {
+        padding-right: $text-input-md-iconright-padding-right;
+
+        &.-xs {
+          padding-right: $text-input-xs-iconright-padding-right;
+
+          & ~ .chi-icon,
+          & ~ chi-icon {
+            &:last-of-type {
+              right: $text-input-xs-iconright-right;
+            }
+          }
+        }
+
+        &.-sm {
+          padding-right: $text-input-sm-iconright-padding-right;
+
+          & ~ .chi-icon,
+          & ~ chi-icon {
+            &:last-of-type {
+              right: $text-input-sm-iconright-right;
+            }
+          }
+        }
+
+        &.-md {
+          padding-right: $text-input-md-iconright-padding-right;
+        }
+
+        &.-lg {
+          padding-right: $text-input-lg-iconright-padding-right;
+
+          & ~ .chi-icon,
+          & ~ chi-icon {
+            &:last-of-type {
+              right: $text-input-lg-iconright-right;
+            }
+          }
+        }
+
+        &.-xl {
+          padding-right: $text-input-xl-iconright-padding-right;
+
+          & ~ .chi-icon,
+          & ~ chi-icon {
+            &:last-of-type {
+              right: $text-input-xl-iconright-right;
+            }
+          }
+        }
+
+        & ~ .chi-icon,
+        & ~ chi-icon {
+          &:last-of-type {
+            right: $text-input-md-iconright-right;
+          }
+        }
+      }
+    }
+  }
+}

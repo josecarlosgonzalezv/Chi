@@ -1,0 +1,170 @@
+@import '_global-mixins';
+@import '_global-variables';
+
+// Flex direction
+$flex-direction: (row, column, row-reverse, column-reverse);
+
+@each $type in $flex-direction {
+  .-flex--#{$type} { flex-direction: #{$type} !important; }
+}
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    @each $type in $flex-direction {
+      .-flex-#{$size}--#{$type} { flex-direction: #{$type} !important; }
+    }
+  }
+}
+
+// Justify content
+
+$justify-content: (start: flex-start, end: flex-end, center: center,
+  between: space-between, around: space-around);
+
+@each $type, $value in $justify-content {
+  .-justify-content--#{$type} { justify-content: #{$value} !important; }
+}
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    @each $type, $value in $justify-content {
+      .-justify-content-#{$size}--#{$type} { justify-content: #{$value} !important; }
+    }
+  }
+}
+
+// Align items & self
+
+$align: (start: flex-start, end: flex-end, center: center,
+  baseline: baseline, stretch: stretch);
+
+@each $type, $value in $align {
+  .-align-items--#{$type} { align-items: #{$value} !important; }
+}
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    @each $type, $value in $align {
+      .-align-items-#{$size}--#{$type} { align-items: #{$value} !important; }
+    }
+  }
+}
+
+@each $type, $value in $align {
+  .-align-self--#{$type} { align-self: #{$value} !important; }
+}
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    @each $type, $value in $align {
+      .-align-self-#{$size}--#{$type} { align-self: #{$value} !important; }
+    }
+  }
+}
+
+// Align content
+
+$align-content: (start: flex-start, end: flex-end, center: center,
+  around: space-around, between: space-between, stretch: stretch);
+
+@each $type, $value in $align-content {
+  .-align-content--#{$type} { align-content: #{$value} !important; }
+}
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    @each $type, $value in $align-content {
+      .-align-content-#{$size}--#{$type} { align-content: #{$value} !important; }
+    }
+  }
+}
+
+// Flex fill
+
+.-flex--fill { flex: 1 1 auto !important; }
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    .-flex-#{$size}--fill { flex: 1 1 auto !important; }
+  }
+}
+
+// Flex grow
+
+.-flex--grow0 { flex-grow: 0 !important; }
+.-flex--grow1 { flex-grow: 1 !important; }
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    .-flex-#{$size}--grow0 { flex-grow: 0 !important; }
+    .-flex-#{$size}--grow1 { flex-grow: 1 !important; }
+  }
+}
+
+// Flex shrink
+
+.-flex--shrink0 { flex-shrink: 0 !important; }
+.-flex--shrink1 { flex-shrink: 1 !important; }
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    .-flex-#{$size}--shrink0 { flex-shrink: 0 !important; }
+    .-flex-#{$size}--shrink1 { flex-shrink: 1 !important; }
+  }
+}
+
+// Flex wrap
+
+$flex-wrap: (nowrap, wrap, wrap-reverse);
+
+@each $type in $flex-wrap {
+  .-flex--#{$type} { flex-wrap: #{$type} !important; }
+}
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    @each $type in $flex-wrap {
+      .-flex-#{$size}--#{$type} { flex-wrap: #{$type} !important; }
+    }
+  }
+}
+
+// Flex basis
+
+$flex-basis-a: 5;
+
+@while $flex-basis-a <= 100 {
+  .-flex-basis--#{$flex-basis-a} {
+    flex-basis: 1% * $flex-basis-a !important;
+  }
+  $flex-basis-a: $flex-basis-a + 5;
+}
+
+.-flex-basis--auto {
+  flex-basis: auto !important;
+}
+
+.-flex-basis--0 {
+  flex-basis: 0 !important;
+}
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    $flex-basis-b: 5;
+
+    @while $flex-basis-b <= 100 {
+      .-flex-basis-#{$size}--#{$flex-basis-b} {
+        flex-basis: 1% * $flex-basis-b !important;
+      }
+      $flex-basis-b: $flex-basis-b + 5;
+    }
+
+    .-flex-basis-#{$size}--auto {
+      flex-basis: auto !important;
+    }
+
+    .-flex-basis-#{$size}--0 {
+      flex-basis: 0 !important;
+    }
+  }
+}

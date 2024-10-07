@@ -1,0 +1,287 @@
+@import '_global-variables';
+@import '_global-mixins';
+
+$animation-duration: 0.2s;
+
+$sizes: (
+  sm: (
+    font-size: $accordion-sm-item-font-size,
+    icon-size: $accordion-sm-item-icon-size,
+    line-height: $accordion-sm-item-line-height,
+    padding: $accordion-sm-item-padding,
+    content-padding: $accordion-sm-item-content-padding,
+  ),
+  md: (
+    font-size: $accordion-md-item-font-size,
+    icon-size: $accordion-md-item-icon-size,
+    line-height: $accordion-md-item-line-height,
+    padding: $accordion-md-item-padding,
+    content-padding: $accordion-md-item-content-padding,
+  ),
+  lg: (
+    font-size: $accordion-lg-item-font-size,
+    icon-size: $accordion-lg-item-icon-size,
+    line-height: $accordion-lg-item-line-height,
+    padding: $accordion-lg-item-padding,
+    content-padding: $accordion-lg-item-content-padding,
+  ),
+  xl: (
+    font-size: $accordion-xl-item-font-size,
+    icon-size: $accordion-xl-item-icon-size,
+    line-height: $accordion-xl-item-line-height,
+    padding: $accordion-xl-item-padding,
+    content-padding: $accordion-xl-item-content-padding,
+  )
+);
+
+.chi-accordion {
+  &__item {
+    background-color: $accordion-item-background-color;
+    border-bottom: 0.0625rem solid  $accordion-item-border-color;
+
+    &:last-child {
+      border-bottom: 0.0625rem solid transparent;
+    }
+
+    .chi-accordion__trigger {
+      align-items: center;
+      background-color: transparent;
+      border: 0;
+      cursor: pointer;
+      display: flex;
+      padding: $accordion-md-item-padding;
+      width: 100%;
+
+      &[disabled],
+      &.-disabled {
+        color: $accordion-item-disabled-text-color;
+        opacity: $accordion-item-disabled-opacity;
+        pointer-events: none;
+      }
+
+      .chi-icon {
+        color: $accordion-item-trigger-icon-color;
+        font-size: $accordion-md-item-icon-size;
+        height: $accordion-md-item-icon-size;
+        line-height: $accordion-md-item-icon-size;
+        width: $accordion-md-item-icon-size;
+
+        & + .chi-accordion__title {
+          margin-left: 1rem;
+        }
+      }
+
+      .chi-accordion__title {
+        align-items: center;
+        color: $accordion-item-title-text-color;
+        display: flex;
+        flex-grow: 1;
+        font-size: $accordion-md-item-font-size;
+        font-weight: $accordion-item-title-font-weight;
+        line-height: $accordion-md-item-line-height;
+        text-align: left;
+
+        + .chi-icon {
+          margin-left: 1rem;
+        }
+      }
+
+      .icon-chevron-down,
+      .icon-chevron-right {
+        transition-duration: $animation-duration;
+      }
+    }
+
+    .chi-accordion__content {
+      display: none;
+      overflow: hidden;
+      padding: $accordion-md-item-content-padding;
+      transition: height 0.075s ease-out;
+
+      .chi-accordion__text,
+      p {
+        &:first-child {
+          margin-top: 0;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      &.-transitioning {
+        display: block;
+      }
+    }
+
+    &.-expanded {
+      & > .chi-accordion__content {
+        display: block;
+      }
+
+      & > .chi-accordion__trigger {
+        .icon-chevron-down {
+          transform: rotate(180deg);
+          transition: transform $animation-duration ease-in-out;
+        }
+
+        .icon-chevron-right {
+          transform: rotate(90deg);
+          transition: transform $animation-duration ease-in-out;
+        }
+
+        .icon-plus {
+          &::before {
+            content: '\e974';
+          }
+        }
+      }
+    }
+  }
+
+  .chi-accordion__item {
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+  }
+  @each $type in map-keys($sizes) {
+    &.-#{$type} {
+      .chi-accordion__item {
+        font-size: map-get(map-get($sizes, $type), font-size);
+        line-height: map-get(map-get($sizes, $type), line-height);
+
+        .chi-accordion__trigger {
+          font-size: map-get(map-get($sizes, $type), font-size);
+          line-height: map-get(map-get($sizes, $type), line-height);
+          padding: map-get(map-get($sizes, $type), padding);
+
+          .chi-accordion__title {
+            font-size: map-get(map-get($sizes, $type), font-size);
+            line-height: map-get(map-get($sizes, $type), line-height);
+          }
+        }
+
+        .chi-accordion__content {
+          padding: map-get(map-get($sizes, $type), content-padding);
+        }
+      }
+
+      .chi-icon {
+        font-size: map-get(map-get($sizes, $type), icon-size);
+        height: map-get(map-get($sizes, $type), icon-size);
+        line-height: map-get(map-get($sizes, $type), icon-size);
+        width: map-get(map-get($sizes, $type), icon-size);
+      }
+    }
+  }
+
+  &.-truncated {
+    .chi-accordion__title {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .chi-accordion {
+    .chi-accordion__trigger,
+    .chi-accordion__content {
+      background-color: $accordion-item-level-2-background-color;
+    }
+
+    .chi-accordion {
+      .chi-accordion__trigger,
+      .chi-accordion__content {
+        background-color: $accordion-item-level-3-background-color;
+      }
+
+      .chi-accordion {
+        .chi-accordion__trigger,
+        .chi-accordion__content {
+          background-color: $accordion-item-level-4-background-color;
+        }
+
+        .chi-accordion {
+          .chi-accordion__trigger,
+          .chi-accordion__content {
+            background-color: $accordion-item-level-5-background-color;
+          }
+        }
+      }
+    }
+  }
+
+  &.-card {
+    .chi-accordion__item {
+      margin-bottom: 1.75rem;
+
+      &:not(.-expanded) {
+        border-bottom: 0.0625rem solid $color-border-base;
+      }
+
+      .chi-accordion__trigger {
+        background-color: $color-background-white;
+        padding: 0.5rem 0;
+
+        .chi-accordion__title {
+          font-size: $font-size-7;
+          font-weight: $font-weight-extra-bold;
+        }
+      }
+
+      .chi-accordion__content {
+        padding: 2rem;
+      }
+
+      .chi-accordion {
+        .chi-accordion__item {
+          background-color: $color-background-white;
+          border: 0;
+          margin-bottom: 0.5rem;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .chi-accordion__title {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-semi-bold;
+          }
+
+          .chi-accordion__content {
+            padding: 0 1.5rem 1.5rem;
+          }
+        }
+
+        .chi-accordion__trigger {
+          background-color: $color-background-white;
+          padding: 1.5rem;
+        }
+
+        .chi-accordion {
+          .chi-accordion__item,
+          .chi-accordion__trigger {
+            background-color: $color-grey-10;
+          }
+
+          .chi-accordion {
+            .chi-accordion__item,
+            .chi-accordion__trigger {
+              background-color: $color-background-white;
+            }
+          }
+        }
+      }
+    }
+
+    &.-sm {
+      .chi-accordion__item {
+        .chi-accordion__title {
+          font-size: $font-size-base;
+          font-weight: $font-weight-semi-bold;
+        }
+      }
+    }
+  }
+}

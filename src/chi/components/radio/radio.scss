@@ -1,0 +1,107 @@
+@import '_global-variables';
+@import '_global-mixins';
+
+.chi-radio {
+  display: flex;
+  line-height: $line-height;
+  position: relative;
+
+  .chi-radio__input {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    pointer-events: auto;
+    position: absolute;
+    width: 1px;
+
+    &:checked {
+      & + .chi-radio__label {
+        &::before {
+          background-color: $radio-checked-background-color;
+          border-color: $radio-checked-border-color;
+        }
+
+        &::after {
+          background-color: $radio-checked-icon-color;
+          transform: scale(1);
+        }
+      }
+    }
+
+    &.-disabled,
+    &[disabled] {
+      & + .chi-radio__label {
+        color: $radio-disabled-text-color;
+        opacity: $radio-disabled-opacity;
+        pointer-events: none;
+      }
+    }
+
+    &:focus,
+    &.-focus {
+      & + .chi-radio__label::before {
+        outline: 0.125rem solid $radio-focus-border-color;
+        outline-offset: 0.0625rem;
+      }
+    }
+
+    &.-danger {
+      &:not(:checked) {
+        & + .chi-radio__label::before {
+          border-color: $radio-danger-border-color;
+        }
+      }
+    }
+
+    & + .chi-radio__label {
+      align-items: center;
+      cursor: pointer;
+      display: inline-flex;
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+      line-height: $line-height;
+      margin: 0;
+      min-height: 1.25rem;
+      padding-left: 1.5rem;
+      position: relative;
+
+      &::before {
+        background-color: $radio-background-color;
+        border: 0.0625rem solid $radio-border-color;
+        border-radius: 0.5rem;
+        content: '';
+        cursor: pointer;
+        display: block;
+        height: 1rem;
+        left: 0;
+        position: absolute;
+        top: $radio-label-before-top;
+        transition: background-color 0.2s ease-in-out;
+        width: 1rem;
+      }
+
+      &::after {
+        background-color: $radio-icon-color;
+        border-radius: 0.5rem;
+        content: '';
+        display: block;
+        height: 0.375rem;
+        left: 0.3125rem;
+        position: absolute;
+        top: $radio-label-after-top;
+        transform: scale(0);
+        transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        width: 0.375rem;
+      }
+
+      &:hover,
+      &.-hover {
+        &::after {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}

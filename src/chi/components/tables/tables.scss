@@ -1,0 +1,523 @@
+@import '_global-mixins';
+@import '_global-variables';
+
+$sizes: (
+  xs: (
+    padding: 0.5rem,
+  ),
+  sm: (
+    padding: 0.75rem 1rem,
+  ),
+  md: (
+    padding: 1rem,
+  ),
+  lg: (
+    padding: 1.25rem 1rem,
+  ),
+  xl: (
+    padding: 1.5rem,
+  )
+);
+
+$vertical-alignments: (top, bottom, middle);
+
+.chi-table {
+  border-spacing: 0;
+  font-size: $font-size-base;
+  line-height: $line-height-sm;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+
+  @each $type in map-keys($sizes) {
+    &.-#{$type} {
+
+      & th {
+        padding: map-get(map-get($sizes, $type), padding);
+      }
+
+      & td {
+        padding: map-get(map-get($sizes, $type), padding);
+      }
+    }
+  }
+
+  table {
+    border-spacing: 0;
+    font-size: $font-size-base;
+    line-height: $line-height-sm;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  label {
+    margin-bottom: 0;
+  }
+
+  tr {
+    background-color: $table-row-background-color;
+
+    th,
+    td {
+      border-bottom: 0.0625rem solid $table-row-cell-border-color;
+      padding: 1rem;
+    }
+
+    th,
+    .-th {
+      &:not([scope='row']) {
+        border-bottom: 0.0625rem solid $table-header-cell-border-color;
+      }
+    }
+
+    @each $type in map-keys($sizes) {
+      &.-#{$type} {
+
+        & th {
+          padding: map-get(map-get($sizes, $type), padding) !important;
+        }
+
+        & td {
+          padding: map-get(map-get($sizes, $type), padding) !important;
+        }
+      }
+    }
+  }
+
+  th {
+    font-weight: $font-weight-semi-bold;
+
+    &:not([scope='row']) {
+      border-bottom: 0.0625rem solid $table-header-cell-border-color;
+
+      &:not([scope='col']) {
+        text-align: left;
+      }
+    }
+
+    &.-sorted {
+      div {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+
+        &::after {
+          background-image: none;
+          content: '\e921';
+          font-family: $font-family-icon;
+          font-size: $font-size-xs;
+          font-weight: $font-weight-normal;
+          height: 1rem;
+          margin-left: 0.5rem;
+          opacity: 0;
+          width: 0.75rem;
+        }
+      }
+
+      & i {
+        margin-left: 0.5rem;
+      }
+    }
+
+    &.-ascending {
+      div::after {
+        opacity: 1;
+      }
+    }
+
+    &.-descending {
+      div::after {
+        opacity: 1;
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  & tbody {
+    tr {
+      &.-row--success {
+        background-color: $table-row-success-background-color !important;
+      }
+
+      &.-row--warning {
+        background-color: $table-row-warning-background-color !important;
+      }
+
+      &.-row--danger {
+        background-color: $table-row-danger-background-color !important;
+      }
+
+      &.-row--info {
+        background-color: $table-row-info-background-color !important;
+      }
+
+      &[disabled] {
+        color: $table-row-cell-disabled-text-color !important;
+      }
+
+      &.-active {
+        td {
+          background-color: $table-row-active-cell-background-color;
+
+          &:first-child {
+            border-left: 0.25rem solid $table-row-active-cell-accent-border-color;
+            padding-left: 0.75rem;
+          }
+        }
+      }
+    }
+  }
+
+  // Portal
+  &.-portal {
+    tr {
+      th,
+      .-th {
+        background-color: $color-background-muted-lighter;
+
+        &:not([scope='row']) {
+          border-bottom: 0.0625rem solid $color-border-base-dark;
+        }
+      }
+
+      &.-xs {
+        th,
+        td {
+          padding: 0.5rem 1rem;
+        }
+      }
+
+      &.-sm {
+        th,
+        td {
+          padding: 0.75rem 1rem;
+        }
+      }
+    }
+
+    &.-xs {
+      th,
+      td {
+        padding: 0.5rem 1rem;
+      }
+    }
+
+    &.-sm {
+      th,
+      td {
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    thead {
+      tr {
+        &:last-child {
+          th,
+          .-th {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        &:nth-child(even) {
+          background-color: $table-portal-row-even-background-color;
+        }
+
+        &.-active {
+          td {
+            background-color: $table-portal-row-active-background-color;
+          }
+        }
+
+        &:hover,
+        &.-hover {
+          background-color: $table-portal-row-hover-background-color;
+        }
+
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    &.-striped {
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: $table-portal-striped-row-even-background-color;
+          }
+
+          &:nth-child(odd) {
+            background-color: $table-portal-striped-row-odd-background-color;
+          }
+        }
+      }
+    }
+  }
+
+  &.-hover {
+    &:not(.-portal) {
+      tbody {
+        tr {
+          &:hover,
+          &.-hover {
+            background-color: $table-row-hover-background-color;
+          }
+        }
+      }
+    }
+  }
+
+  &.-striped {
+    tbody {
+      tr:nth-child(even) {
+        background-color: $table-striped-row-background-color;
+      }
+    }
+  }
+
+  &.-no-border {
+    &::before {
+      border: 0;
+    }
+
+    tr {
+      & th {
+        border: 0;
+      }
+
+      & td {
+        border: 0;
+      }
+    }
+  }
+
+  &.-bordered {
+    &,
+    &.-portal {
+      &::before {
+        border: 0.0625rem solid $table-bordered-row-cell-border-color;
+        border-bottom-width: 0;
+        border-left-width: 0;
+      }
+
+      thead {
+        tr {
+          &:last-child {
+            th {
+              border-bottom: 0.0625rem solid $table-bordered-header-cell-border-color;
+            }
+          }
+        }
+      }
+
+      tr {
+        & th,
+        & .-th {
+          border: 0.0625rem solid $table-bordered-header-cell-border-color;
+          border-bottom-width: 0;
+          border-right-width: 0;
+
+          &:last-of-type {
+            border-right-width: 0.0625rem;
+          }
+        }
+
+        & td {
+          border: 0.0625rem solid $table-bordered-row-cell-border-color;
+          border-right-width: 0;
+          border-top-width: 0;
+
+          &:last-of-type {
+            border-right-width: 0.0625rem;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          & th,
+          & .-th {
+            border-width: 0.0625rem 0 0.0625rem 0.0625rem;
+
+            &:not([scope='col']) {
+              &:last-of-type {
+                border-right-width: 0;
+              }
+            }
+
+            &[scope='row'] {
+              &:last-of-type {
+                border-top-width: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.-fixed--header {
+    padding-top: 3rem;
+    position: relative;
+
+    &::before {
+      background-color: $table-fixed-header-row-cell-background-color;
+      content: '';
+      display: block;
+      height: 3rem;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    & > div {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    tr {
+      height: 0;
+    }
+
+    th {
+      height: 0;
+      padding: 0;
+
+      div {
+        padding: 1rem;
+        position: absolute;
+        text-align: start;
+        top: 0;
+        vertical-align: middle;
+      }
+
+      &.-sorted {
+        div {
+          align-items: center;
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+
+          &::after {
+            background-image: url('icon-chevron-thin-up.svg');
+            content: '';
+            display: block;
+            height: 0.75rem;
+            margin-left: 0.5rem;
+            opacity: 0;
+            width: 0.75rem;
+          }
+        }
+      }
+
+      &.-ascending {
+        div::after {
+          opacity: 1;
+        }
+      }
+
+      &.-descending {
+        div::after {
+          opacity: 1;
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    td {
+      border-bottom: 0.0625rem solid $table-fixed-header-row-cell-border-color;
+      padding: 1rem;
+      padding-bottom: 0.9375rem;
+      text-align: start;
+      vertical-align: middle;
+    }
+
+    &.-hover {
+      tbody {
+        tr {
+          &:hover,
+          &.-hover {
+            background-color: $table-fixed-header-row-hover-background-color;
+          }
+        }
+      }
+    }
+
+    &.-striped {
+      tbody {
+        tr:nth-child(even) {
+          background-color: $table-fixed-header-striped-row-hover-background-color;
+        }
+      }
+    }
+
+    &.-no-border {
+      &::before {
+        border: 0;
+      }
+
+      td {
+        border: 0;
+        padding: 1rem;
+      }
+    }
+
+    &.-bordered {
+      &::before {
+        border: 0.0625rem solid $table-fixed-header-bordered-row-cell-border-color;
+        border-left-width: 0;
+      }
+
+      th {
+        border: 0;
+      }
+
+      th > div {
+        border-left: 0.0625rem solid $table-fixed-header-bordered-row-cell-border-color;
+        padding-left: 0.9375rem;
+      }
+
+      td {
+        border: 0.0625rem solid $table-fixed-header-bordered-row-cell-border-color;
+        border-right-width: 0;
+        border-top-width: 0;
+        padding: 1rem 1rem 0.9375rem 0.9375rem;
+
+        &:last-of-type {
+          border-right-width: 0.0625rem;
+          padding-right: 0.9375rem;
+        }
+      }
+    }
+  }
+
+  .-valign--top {
+    vertical-align: top;
+  }
+
+  .-valign--middle {
+    vertical-align: middle;
+  }
+
+  .-valign--bottom {
+    vertical-align: bottom;
+  }
+
+  @each $screen-size in $screen-sizes {
+    @include respond-to($screen-size) {
+      @each $type in $vertical-alignments {
+        .-valign-#{$screen-size}--#{$type} {
+
+          vertical-align: #{$type};
+        }
+      }
+    }
+  }
+}

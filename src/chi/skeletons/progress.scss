@@ -1,0 +1,10 @@
+@import '_shine';
+
+chi-progress:not(.hydrated) {
+  animation: shine $animation-duration infinite linear;
+  display: block;
+  font-size: 0;
+  height: 0.5rem;
+
+  @include background-gradient;
+}

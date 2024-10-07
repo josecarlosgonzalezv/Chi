@@ -1,0 +1,219 @@
+$border: 0.0625rem;
+
+$sizes: (
+  xs: (
+    font-size: $picker-group-xs-font-size,
+    line-height: $picker-group-xs-line-height,
+    min-height: $picker-group-xs-min-height,
+    padding: $picker-group-xs-padding,
+    padding_hover: $picker-group-xs-padding-hover,
+    padding_checked: $picker-group-xs-padding-checked,
+  ),
+  sm: (
+    font-size: $picker-group-sm-font-size,
+    line-height: $picker-group-sm-line-height,
+    min-height: $picker-group-sm-min-height,
+    padding: $picker-group-sm-padding,
+    padding_hover: $picker-group-sm-padding-hover,
+    padding_checked: $picker-group-sm-padding-checked,
+  ),
+  md: (
+    font-size: $picker-group-md-font-size,
+    line-height: $picker-group-md-line-height,
+    min-height: $picker-group-md-min-height,
+    padding: $picker-group-md-padding,
+    padding_hover: $picker-group-md-padding-hover,
+    padding_checked: $picker-group-md-padding-checked,
+  ),
+  lg: (
+    font-size: $picker-group-lg-font-size,
+    line-height: $picker-group-lg-line-height,
+    min-height: $picker-group-lg-min-height,
+    padding: $picker-group-lg-padding,
+    padding_hover: $picker-group-lg-padding-hover,
+    padding_checked: $picker-group-lg-padding-checked,
+  ),
+  xl: (
+    font-size: $picker-group-xl-font-size,
+    line-height: $picker-group-xl-line-height,
+    min-height: $picker-group-xl-min-height,
+    padding: $picker-group-xl-padding,
+    padding_hover: $picker-group-xl-padding-hover,
+    padding_checked: $picker-group-xl-padding-checked,
+  ),
+);
+
+.chi-picker-group {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+
+  &__content {
+    display: flex;
+    width: 100%;
+
+    .chi-icon {
+      color: $picker-icon-color;
+    }
+  }
+
+  input {
+    &[type='radio'],
+    &[type='checkbox'] {
+      &.chi-picker__input {
+        left: -9999px;
+        position: absolute;
+
+        & + label {
+          align-items: center;
+          background-color: $picker-background-color;
+          border: solid 0.0625rem $picker-border-color;
+          border-right-width: 0;
+          box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.04);
+          cursor: pointer;
+          display: flex;
+          font-size: $picker-group-md-font-size;
+          font-weight: $font-weight-semi-bold;
+          justify-content: center;
+          line-height: $picker-group-md-line-height;
+          margin-bottom: 0;
+          min-height: $picker-group-md-min-height;
+          padding: $picker-group-md-padding;
+          text-align: center;
+          transition: border-color 0.2s, box-shadow 0.2s;
+
+          @each $type in map-keys($sizes) {
+            &.-#{$type} {
+              font-size: map-get(map-get($sizes, $type), font-size);
+              line-height: map-get(map-get($sizes, $type), line-height);
+              min-height: map-get(map-get($sizes, $type), min-height);
+              padding: map-get(map-get($sizes, $type), padding);
+            }
+          }
+
+          &:first-of-type {
+            border-bottom-left-radius: $border-radius;
+            border-top-left-radius: $border-radius;
+          }
+
+          &:last-of-type {
+            border-bottom-right-radius: $border-radius;
+            border-right-width: 0.0625rem;
+            border-top-right-radius: $border-radius;
+          }
+
+          & > :not(:last-child) {
+            margin-right: 0.5rem;
+          }
+
+          &.-sm,
+          &.-lg,
+          &.-xl {
+            .chi-icon {
+              margin-bottom: 0.125rem;
+              margin-top: 0.125rem;
+            }
+          }
+
+          &.-sm {
+            & > :not(:last-child) {
+              &,
+              &.chi-icon {
+                margin-right: 0.25rem;
+              }
+            }
+          }
+
+          &.chi-picker-label__wrapper {
+            flex-direction: column;
+
+            & > .chi-picker-label {
+              &:not(:last-child) {
+                margin-right: 0;
+              }
+
+              & + .chi-picker-label {
+                font-weight: $font-weight-base;
+              }
+            }
+          }
+        }
+      }
+
+      &:not(:checked) {
+        &.chi-picker__input {
+          & + label {
+            &:hover {
+              background-color: $picker-group-hover-background-color;
+            }
+
+            &:active {
+              background-color: $picker-group-active-background-color;
+            }
+          }
+        }
+      }
+
+      &:checked {
+        &.chi-picker__input {
+          & + label {
+            background-color: $picker-checked-background-color;
+            border: solid 0.0625rem $picker-checked-border-color;
+            box-shadow: inset 0 0 0 0.0625rem $picker-checked-border-color;
+            color: $picker-checked-text-color;
+            font-weight: $font-weight-semi-bold;
+            padding-right: $picker-group-md-padding-hover;
+
+            @each $type in map-keys($sizes) {
+              &.-#{$type} {
+                padding-right: map-get(map-get($sizes, $type), padding_hover);
+              }
+            }
+
+            & + input + label {
+              border-left-width: 0;
+              padding-left: $picker-group-md-padding-checked;
+
+              @each $type in map-keys($sizes) {
+                &.-#{$type} {
+                  padding-left: map-get(map-get($sizes, $type), padding_checked);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &[disabled],
+      &.-disabled {
+        &.chi-picker__input {
+          & + label {
+            background-color: $picker-disabled-background-color;
+            box-shadow: none;
+            color: $picker-disabled-text-color;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  }
+
+  &.-fluid {
+    input {
+      &[type='radio'],
+      &[type='checkbox'] {
+        &:last-of-type {
+          &:checked + label {
+            padding-right: $picker-group-md-padding-checked;
+
+            @each $type in map-keys($sizes) {
+              &.-#{$type} {
+                padding-right: map-get(map-get($sizes, $type), padding_checked);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

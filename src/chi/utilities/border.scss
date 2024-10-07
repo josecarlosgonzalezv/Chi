@@ -1,0 +1,108 @@
+@import '_global-mixins';
+@import '_global-variables';
+
+/* Borders */
+
+$positions: (
+  a: '',
+  b: '-bottom',
+  l: '-left',
+  r: '-right',
+  t: '-top',
+  x: '-x',
+  y: '-y',
+);
+
+$border-colors: (
+  base: $color-border-base,
+  base-light: $color-border-base-light,
+  base-dark: $color-border-base-dark,
+  primary: $color-border-primary,
+  secondary: $color-border-secondary,
+  secondary-dark: $color-border-secondary-darker,
+  success: $color-border-success,
+  success-light: $color-border-success-light,
+  info: $color-border-info,
+  info-light: $color-border-info-light,
+  danger: $color-border-danger,
+  danger-light: $color-border-danger-light,
+  warning: $color-border-warning,
+  warning-light: $color-border-warning-light,
+  black: $color-border-black,
+  white: $color-border-white,
+  transparent: transparent,
+);
+
+@mixin create-border($position, $position-suffix, $breakpoint-infix, $thickness-index) {
+  @if ($position == 'a') {
+    .-b#{$breakpoint-infix}--#{$thickness-index} {
+      border#{$position-suffix}: solid ($thickness-index / 16) + rem $color-border-base !important;
+    }
+  } @else if ($position == 'x') {
+    .-b#{$position}#{$breakpoint-infix}--#{$thickness-index} {
+      border-left: solid ($thickness-index / 16) + rem $color-border-base !important;
+      border-right: solid ($thickness-index / 16) + rem $color-border-base !important;
+    }
+  } @else if ($position == 'y') {
+    .-b#{$position}#{$breakpoint-infix}--#{$thickness-index} {
+      border-bottom: solid ($thickness-index / 16) + rem $color-border-base !important;
+      border-top: solid ($thickness-index / 16) + rem $color-border-base !important;
+    }
+  } @else {
+    .-b#{$position}#{$breakpoint-infix}--#{$thickness-index} {
+      border#{$position-suffix}: solid ($thickness-index / 16) + rem $color-border-base !important;
+    }
+  }
+}
+
+@each $screen-size in $screen-sizes {
+  @if ($screen-size == 'xs') {
+    @each $position, $position-suffix in $positions {
+      @for $index from 0 through 4 {
+        @include create-border($position, $position-suffix, '', $index);
+      }
+    }
+  } @else {
+    @include respond-to($screen-size) {
+      @each $position, $position-suffix in $positions {
+        @for $index from 0 through 4 {
+          @include create-border($position, $position-suffix, '-' + $screen-size, $index);
+        }
+      }
+    }
+  }
+}
+
+@each $screen-size in $screen-sizes {
+  @if ($screen-size == 'xs') {
+    @each $color-name, $color-value in $border-colors {
+      .-b--#{$color-name} {
+        border-color: $color-value !important;
+      }
+    }
+  } @else {
+    @include respond-to($screen-size) {
+      @each $color-name, $color-value in $border-colors {
+        .-b-#{$screen-size}--#{$color-name} {
+          border-color: $color-value !important;
+        }
+      }
+    }
+  }
+}
+
+.-rounded {
+  border-radius: $border-radius !important;
+}
+
+.-raindrop {
+  border-radius: 0 2rem 2rem 2rem !important;
+}
+
+.-no-raindrop {
+  border-radius: $button-border-radius !important;
+}
+
+.-border--circle {
+  border-radius: 50% !important;
+}

@@ -1,0 +1,371 @@
+@import '_global-variables';
+@import '_variables';
+@import '_global-mixins';
+@import '_mixins';
+
+$states: (
+  success: (
+    accent-border-color: $alert-success-accent-border-color,
+    border-color: $alert-success-border-color,
+    banner-background-color: $alert-success-banner-background-color,
+    bubble-background-color: $alert-success-bubble-background-color,
+    color: $alert-success-icon-color,
+    title-color: $alert-success-title-text-color,
+  ),
+  danger: (
+    accent-border-color: $alert-danger-accent-border-color,
+    border-color: $alert-danger-border-color,
+    color: $alert-danger-icon-color,
+    bubble-background-color: $alert-danger-bubble-background-color,
+    banner-background-color: $alert-danger-banner-background-color,
+    title-color: $alert-danger-title-text-color,
+  ),
+  warning: (
+    accent-border-color: $alert-warning-accent-border-color,
+    border-color: $alert-warning-border-color,
+    color: $alert-warning-icon-color,
+    bubble-background-color: $alert-warning-bubble-background-color,
+    banner-background-color: $alert-warning-banner-background-color,
+    title-color: $alert-warning-title-text-color,
+  ),
+  info: (
+    accent-border-color: $alert-info-accent-border-color,
+    border-color: $alert-info-border-color,
+    color: $alert-info-icon-color,
+    bubble-background-color: $alert-info-bubble-background-color,
+    banner-background-color: $alert-info-banner-background-color,
+    title-color: $alert-info-title-text-color,
+  ),
+  muted: (
+    accent-border-color: $alert-muted-accent-border-color,
+    border-color: $alert-muted-border-color,
+    color: $alert-muted-icon-color,
+    bubble-background-color: $alert-muted-bubble-background-color,
+    banner-background-color: $alert-muted-banner-background-color,
+    title-color: $alert-muted-title-text-color,
+  ),
+);
+
+.chi-alert {
+  background-color: $alert-background-color;
+  border-color: $alert-border-color;
+  border-radius: $alert-border-radius;
+  border-style: solid;
+  border-width: 0.0625rem;
+  box-shadow: map-get($shadow, 1);
+  color: $alert-text-color;
+  display: flex;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height;
+  padding: $alert-md-padding;
+  position: relative;
+  text-align: left;
+
+  &:not(.-banner) {
+    &::before {
+      background-color: $alert-accent-border-color;
+      border-top-left-radius: $alert-border-radius;
+      border-bottom-left-radius: $alert-border-radius;
+      content: '';
+      height: calc(100% + 0.125rem);
+      left: -0.0625rem;
+      position: absolute;
+      top: -0.0625rem;
+      width: $alert-accent-border-width;
+    }
+  }
+
+  &.-center {
+    display: flex;
+    justify-content: center;
+
+    &::before {
+      height: 0.125rem;
+      left: 0;
+      top: -0.0625rem;
+      width: 100%;
+    }
+
+    .chi-alert__content {
+      flex-grow: 0;
+      width: auto;
+    }
+  }
+
+  // sass-lint:disable-block force-element-nesting
+  .chi-alert__icon,
+  .chi-alert__spinner,
+  > chi-icon .chi-icon {
+    color: $alert-icon-color;
+  }
+
+  // sass-lint:disable-block force-element-nesting
+  > .chi-icon,
+  > chi-icon .chi-icon,
+  .chi-alert__icon,
+  .chi-alert__spinner,
+  .chi-alert__clickable-icon .chi-icon {
+    &:not(.icon-x) {
+      flex-shrink: 0;
+      font-size: $alert-md-icon-size;
+      height: $alert-md-icon-size;
+      margin-bottom: $alert-md-icon-margin-y;
+      margin-right: $alert-md-icon-margin-right;
+      margin-top: $alert-md-icon-margin-y;
+      width: $alert-md-icon-size;
+    }
+  }
+
+  .chi-alert__clickable-icon {
+    display: flex;
+    padding-left: 1rem;
+
+    .chi-icon {
+      &:not(.icon-x) {
+        margin: 0;
+      }
+    }
+
+    & > .chi-icon,
+    & > chi-icon {
+      align-self: center;
+    }
+  }
+
+  .chi-alert__text,
+  p,
+  .-text {
+    font-size: $alert-md-text-font-size;
+    font-weight: normal;
+    line-height: $alert-md-text-line-height;
+    margin: 0;
+    word-break: break-word;
+  }
+
+  .chi-alert__text {
+    padding-top: $alert-md-text-padding-top;
+  }
+
+  @each $state in map-keys($states) {
+    &.-#{$state} {
+      background-color: map-get(map-get($states, $state), bubble-background-color);
+      border-color: map-get(map-get($states, $state), border-color);
+      color: $alert-text-color;
+
+      &:not(.-banner) {
+        &::before {
+          background-color: map-get(map-get($states, $state), accent-border-color);
+        }
+      }
+
+      &.-banner {
+        background-color: map-get(map-get($states, $state), banner-background-color);
+      }
+
+      .chi-alert__icon,
+      .chi-alert__spinner,
+      > chi-icon .chi-icon {
+        // sass-lint:disable-line force-element-nesting
+        color: map-get(map-get($states, $state), color);
+      }
+
+      .chi-alert__title {
+        color: map-get(map-get($states, $state), title-color);
+      }
+    }
+  }
+
+  &.-close {
+    padding-right: 1rem;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    white-space: normal;
+    width: 100%;
+
+    .chi-alert__title {
+      color: $alert-title-text-color;
+      font-size: $alert-md-title-font-size;
+      font-weight: $alert-md-title-font-weight;
+      line-height: $alert-md-title-line-height;
+      margin-bottom: $alert-md-title-margin-bottom;
+      margin-top: 0;
+      word-break: break-word;
+
+      &::first-letter {
+        text-transform: capitalize;
+      }
+
+      + .chi-alert__text {
+        margin-top: 0;
+        padding-top: 0;
+      }
+    }
+
+    .chi-alert__actions {
+      padding-top: 0.75rem;
+
+      > .chi-button {
+        margin-right: 0.5rem;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  > .chi-button,
+  > chi-button .chi-button {
+    // sass-lint:disable-line force-element-nesting
+    &.-close,
+    &.chi-alert__close-button {
+      align-self: flex-start;
+      margin-left: 1rem;
+      padding: 0.125rem;
+      transform: initial;
+
+      .chi-icon {
+        color: $alert-close-icon-color;
+        font-size: 0.75rem;
+        height: 0.75rem;
+        line-height: 0.75rem;
+        width: 0.75rem;
+      }
+    }
+  }
+
+  &.-lg {
+    padding: $alert-lg-padding;
+
+    // sass-lint:disable-block force-element-nesting
+    > .chi-icon,
+    > chi-icon .chi-icon,
+    .chi-alert__icon,
+    .chi-alert__spinner,
+    .chi-alert__clickable-icon .chi-icon {
+      &:not(.icon-x) {
+        font-size: $alert-lg-icon-size;
+        height: $alert-lg-icon-size;
+        line-height: $alert-lg-icon-size;
+        width: $alert-lg-icon-size;
+      }
+    }
+
+    > .chi-button,
+    > chi-button .chi-button {
+      // sass-lint:disable-line force-element-nesting
+      &.-close,
+      &.chi-alert__close-button {
+        padding: 0;
+
+        .chi-icon {
+          font-size: 1rem;
+          height: 1rem;
+          line-height: 1rem;
+          width: 1rem;
+        }
+      }
+    }
+
+    .chi-alert__content {
+      .chi-alert__text {
+        padding-top: $alert-lg-text-padding-top;
+      }
+
+      .chi-alert__title {
+        font-size: $alert-lg-title-font-size;
+        font-weight: $alert-lg-title-font-weight;
+        line-height: $alert-lg-title-line-height;
+        margin-bottom: $alert-lg-title-margin-bottom;
+
+        + .chi-alert__text {
+          margin-top: 0;
+          padding-top: 0;
+        }
+      }
+
+      .chi-alert__actions {
+        padding-top: 1rem;
+
+        > .chi-button,
+        > chi-button {
+          margin-right: 1rem;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+
+  &.-sm {
+    padding: $alert-sm-padding;
+
+    // sass-lint:disable-block force-element-nesting
+    > .chi-icon,
+    > chi-icon .chi-icon,
+    .chi-alert__icon,
+    .chi-alert__spinner,
+    .chi-alert__clickable-icon .chi-icon {
+      &:not(.icon-x) {
+        font-size: $alert-sm-icon-size;
+        height: $alert-sm-icon-size;
+        line-height: $alert-sm-icon-size;
+        width: $alert-sm-icon-size;
+      }
+    }
+
+    .chi-alert__content {
+      .chi-alert__text {
+        font-size: $alert-sm-text-font-size;
+        line-height: $alert-sm-text-line-height;
+        padding-top: $alert-sm-text-padding-top;
+      }
+
+      .chi-alert__title {
+        font-size: $alert-sm-title-font-size;
+        margin-bottom: 0;
+
+        + .chi-alert__text {
+          margin-top: 0;
+          padding-top: 0;
+        }
+      }
+
+      .chi-alert__actions {
+        padding-top: 0.5rem;
+      }
+    }
+
+    &.-close {
+      padding-right: 1rem;
+    }
+  }
+}
+
+.chi-button {
+  &,
+  &:hover,
+  &.-hover {
+    .chi-alert {
+      // sass-lint:disable-block force-element-nesting
+      .chi-alert__icon,
+      .chi-alert__spinner,
+      & > chi-icon .chi-icon {
+        color: $alert-icon-color;
+      }
+
+      .chi-alert__clickable-icon {
+        .chi-icon {
+          color: $color-icon-base;
+        }
+      }
+    }
+  }
+}

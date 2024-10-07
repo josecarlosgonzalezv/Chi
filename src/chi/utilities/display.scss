@@ -1,0 +1,40 @@
+@import '_global-mixins';
+@import '_global-variables';
+
+/* Display */
+
+@each $type in none inline inline-block block table table-cell table-row flex inline-flex {
+  .-d--#{$type} {
+    display: #{$type};
+  }
+}
+
+@each $size in sm md lg xl {
+  @include respond-to($size) {
+    @each $type in none inline inline-block block table table-cell table-row flex inline-flex {
+      .-d-#{$size}--#{$type} {
+        display: #{$type};
+      }
+    }
+  }
+}
+
+@media screen {
+  .-d-print--only {
+    display: none;
+  }
+
+  .-d-screen--only {
+    display: block;
+  }
+}
+
+@media print {
+  .-d-print--only {
+    display: block;
+  }
+
+  .-d-screen--only {
+    display: none;
+  }
+}

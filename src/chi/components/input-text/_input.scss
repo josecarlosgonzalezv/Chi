@@ -1,0 +1,105 @@
+@import '_global-variables';
+@import '_global-mixins';
+@import '_input-text-variables';
+
+.chi-input {
+  border: 0.0625rem solid $text-input-border-color;
+  border-radius: $text-input-border-radius;
+  color: $text-input-text-color;
+  display: block;
+  font-size: map-get(map-get($sizes, md), font-size);
+  height: map-get(map-get($sizes, md), height);
+  line-height: map-get(map-get($sizes, md), line-height);
+  outline: none;
+  padding: map-get(map-get($sizes, md), padding);
+  transition: all 0.15s ease-in-out;
+  width: 100%;
+
+  &::placeholder {
+    color: $text-input-placeholder-text-color;
+  }
+
+  &::-webkit-calendar-picker-indicator { // sass-lint:disable-line no-vendor-prefixes
+    background: none;
+  }
+
+  &:hover,
+  &.-hover {
+    border-color: $text-input-hover-border-color;
+  }
+
+  &:focus,
+  &.-focus {
+    border-color: $text-input-focus-border-color;
+    box-shadow: 0 0 0 1px $text-input-focus-border-color;
+  }
+
+  &[disabled],
+  &.-disabled {
+    background-color: $text-input-disabled-background-color;
+    border-color: $text-input-disabled-border-color;
+    color: $text-input-disabled-text-color;
+
+    & ~ .chi-icon,
+    & ~ chi-icon {
+      color: $text-input-disabled-icon-color;
+    }
+  }
+
+  &[readonly],
+  &.-readonly {
+    background: none;
+    border-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:focus,
+    &.-focus {
+      border-color: $text-input-focus-border-color;
+    }
+  }
+
+  // Remove ie11,edge clear field
+  &::-ms-clear { // sass-lint:disable-line no-vendor-prefixes
+    display: none;
+  }
+
+  @each $type in map-keys($sizes) {
+    &.-#{$type} {
+      font-size: map-get(map-get($sizes, $type), font-size);
+      height: map-get(map-get($sizes, $type), height);
+      line-height: map-get(map-get($sizes, $type), line-height);
+      padding: map-get(map-get($sizes, $type), padding);
+
+      &[readonly],
+      &.-readonly {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .chi-icon {
+        height: map-get(map-get(map-get($sizes, $type), icons), height);
+        width: map-get(map-get(map-get($sizes, $type), icons), width);
+
+        &[class^='icon-'],
+        &[class*=' icon-'] {
+          font-size: map-get(map-get($sizes, $type), font-size);
+          line-height: map-get(map-get($sizes, $type), line-height);
+        }
+      }
+    }
+  }
+
+  @each $type in map-keys($color-semantic) {
+    &:not([disabled]) {
+      &.-#{$type} {
+        border-color: map-get(map-get($color-semantic, $type), border-color);
+
+        &:focus,
+        &.-focus {
+          box-shadow: 0 0 0 1px rgba(map-get(map-get($color-semantic, $type), border-color), 1);
+        }
+      }
+    }
+  }
+}

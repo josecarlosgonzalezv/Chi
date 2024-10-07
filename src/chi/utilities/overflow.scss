@@ -1,0 +1,10 @@
+@import '_global-mixins';
+@import '_global-variables';
+
+$overflow: (auto, hidden);
+
+@each $type in $overflow {
+  .-overflow--#{$type} {
+    overflow: #{$type} !important;
+  }
+}

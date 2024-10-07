@@ -1,0 +1,667 @@
+@import '_global-variables';
+@import '_global-mixins';
+
+$breakpoints: ('sm', 'md', 'lg', 'xl');
+
+.chi-steps {
+  align-items: center;
+  counter-reset: step;
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem;
+  padding: 0;
+
+  &__icon {
+    align-items: flex-start;
+    display: flex;
+    flex: 1 0 auto;
+    height: 1rem;
+    justify-content: center;
+    width: 1rem;
+  }
+
+  &__line {
+    border-top: 0.125rem solid $steps-item-line-border-color;
+    position: relative;
+    width: 100%;
+  }
+
+  &__content {
+    white-space: nowrap;
+  }
+
+  &__subitem {
+    align-items: center;
+    color: $steps-subitem-text-color;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.375rem;
+    position: relative;
+
+    &:last-child {
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: $font-size-xs;
+      line-height: $line-height-sm;
+      margin: 0;
+    }
+
+    .chi-icon {
+      margin-right: 0.375rem;
+    }
+
+    &-icon {
+      height: 1rem;
+      width: 1.125rem;
+    }
+
+    &.-active {
+      font-weight: $steps-subitem-active-font-weight;
+    }
+
+    &.-completed {
+      color: $steps-subitem-completed-text-color;
+    }
+
+    &:not(.-active) {
+      &:not(.-completed) {
+        padding-left: 1.125rem;
+      }
+    }
+  }
+
+  &__marker {
+    left: -3rem;
+    position: absolute;
+  }
+
+  &__actions {
+    padding-left: 1.125rem;
+  }
+
+  & > li,
+  & > .chi-steps__item {
+    align-items: center;
+    display: flex;
+    flex: 1 0 auto;
+    font-size: $font-size-base;
+    justify-content: center;
+    line-height: $line-height-sm;
+
+    & > .chi-steps__icon {
+      &::before {
+        color: $steps-item-count-text-color;
+        content: counter(step);
+        counter-increment: step;
+        font-family: $font-family-base;
+        font-size: $font-size-xs;
+        font-weight: $steps-item-count-font-weight;
+        position: absolute;
+        z-index: $zindex-prominent;
+      }
+
+      &::after {
+        color: $steps-item-line-border-color;
+        content: '\e934';
+        font-family: $font-family-icon;
+        font-size: 1.5rem;
+        position: absolute;
+      }
+
+      & a,
+      & .chi-steps__item-title {
+        position: relative;
+        top: 1.5rem;
+        white-space: nowrap;
+      }
+
+      & > .chi-steps__content {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        max-width: 100px;
+        position: relative;
+        top: 1.5rem;
+        white-space: normal;
+
+        & a,
+        & .chi-steps__item-title {
+          text-align: center;
+          top: 0;
+          white-space: normal;
+          width: 100px;
+        }
+      }
+    }
+
+    & > a,
+    & > .chi-steps__item-title {
+      font-weight: $font-weight-normal;
+      margin-left: 0.75rem;
+      white-space: nowrap;
+    }
+
+    & > .chi-steps__line {
+      margin: 0.5rem 0.75rem;
+    }
+
+    &.-completed {
+      color: $steps-item-completed-icon-color;
+
+      & > .chi-steps__icon {
+        &::before {
+          content: '';
+        }
+
+        &::after {
+          color: $steps-item-completed-icon-color;
+          content: '\e929';
+        }
+      }
+
+      & > .chi-steps__line {
+        border-color: $steps-item-completed-line-border-color;
+      }
+    }
+
+    &.-active {
+      color: $steps-item-completed-icon-color;
+
+      & > a,
+      & > .chi-steps__content {
+        font-weight: $steps-item-active-content-font-weight;
+      }
+
+      & > .chi-steps__icon {
+        a,
+        .chi-steps__item-title {
+          font-weight: $steps-item-active-title-font-weight;
+        }
+
+        &::after {
+          color: $steps-item-active-icon-color;
+          content: '\e942';
+        }
+
+        &::before {
+          color: $steps-item-active-count-text-color;
+        }
+      }
+
+      & > .chi-steps__line {
+        border-color: $steps-item-line-border-color;
+      }
+    }
+
+    &:last-child {
+      flex-grow: 0;
+    }
+
+    & ~ li {
+      &:last-child {
+        flex-grow: 0;
+      }
+    }
+  }
+
+  & a,
+  & .chi-steps__item-title {
+    color: $steps-item-title-text-color;
+    text-decoration: none;
+  }
+
+  &.-inverse {
+    background-color: $steps-inverse-background-color;
+
+    & > li,
+    & > .chi-steps__item {
+      & > .chi-steps__icon {
+        &::before {
+          color: $steps-inverse-item-completed-count-text-color;
+        }
+
+        &::after {
+          color: $steps-inverse-item-count-border-color;
+        }
+      }
+
+      &::before {
+        border: 0.125rem solid $steps-inverse-item-border-color;
+      }
+
+      & a,
+      & .chi-steps__item-title {
+        color: $steps-inverse-item-title-text-color;
+      }
+
+      & > .chi-steps__line {
+        border-color: $steps-inverse-item-line-border-color;
+      }
+
+      &.-completed {
+        & > .chi-steps__line {
+          border-color: $steps-inverse-item-completed-line-border-color;
+        }
+
+        & > .chi-steps__icon {
+          &::after {
+            color: $steps-inverse-item-completed-text-color;
+          }
+        }
+      }
+
+      &.-active {
+        & > .chi-steps__line {
+          border-color: $steps-inverse-item-line-border-color;
+        }
+
+        & > .chi-steps__icon {
+          &::before {
+            color: $steps-inverse-item-active-count-text-color;
+          }
+
+          &::after {
+            color: $steps-inverse-item-completed-text-color;
+          }
+        }
+      }
+    }
+  }
+
+  &.-horizontal-label {
+    > li,
+    & > .chi-steps__item {
+      > .chi-steps__line {
+        margin-left: 0.5rem;
+        margin-right: 0.875rem;
+      }
+
+      > .chi-steps__content {
+        margin-left: 0.75rem;
+      }
+    }
+  }
+
+  &.-labels--hide {
+    & li,
+    & > .chi-steps__item {
+      > .chi-steps__icon {
+        a,
+        .chi-steps__item-title {
+          display: none;
+        }
+      }
+    }
+
+    & > li > a,
+    & > li > .chi-steps__item-title {
+      display: none;
+    }
+  }
+
+  &.-sm {
+    & > li,
+    & > .chi-steps__item {
+      font-size: $font-size-xs;
+
+      & > .chi-steps__icon {
+        &::before {
+          font-size: 0.625rem;
+        }
+
+        &::after {
+          font-size: $font-size-lg;
+        }
+
+        & > .chi-steps__content {
+          top: 1.25rem;
+        }
+      }
+
+      & > a,
+      & > .chi-steps__content {
+        margin-left: 0.25rem;
+      }
+
+      & > .chi-steps__line {
+        margin: 0.25rem;
+      }
+    }
+
+    &.-horizontal-label {
+      > li,
+      & > .chi-steps__item {
+        > .chi-steps__line {
+          margin-left: 0.25rem;
+          margin-right: 0.375rem;
+        }
+      }
+    }
+  }
+
+  &.-vertical {
+    align-items: flex-start;
+    flex-direction: column;
+
+    & > li,
+    & > .chi-steps__item {
+      align-items: flex-start;
+      min-height: 4rem;
+      position: relative;
+
+      & > .chi-steps__icon {
+        align-items: flex-start;
+        flex-direction: row-reverse;
+        height: 100%;
+        position: relative;
+        width: 100%;
+
+        &::before {
+          left: 0.5rem;
+        }
+
+        &::after {
+          position: relative;
+        }
+
+        & > .chi-steps__content {
+          align-items: flex-start;
+          margin-left: 0.75rem;
+          max-width: initial;
+          top: 0;
+          z-index: 2;
+
+          a,
+          .chi-steps__item-title {
+            text-align: left;
+            width: auto;
+          }
+        }
+      }
+
+      & > .chi-steps__content {
+        z-index: 2;
+      }
+
+      & > .chi-steps__line {
+        border-left: 0.125rem solid $steps-item-line-border-color;
+        border-top: 0;
+        height: calc(100% - 2rem);
+        left: 0.75rem;
+        margin: 1.5rem 0 0;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+      }
+
+      &.-completed {
+        & > .chi-steps__line {
+          border-color: $steps-item-completed-line-border-color;
+        }
+      }
+
+      &.-active {
+        & > .chi-steps__line {
+          border-color: $steps-item-line-border-color;
+        }
+      }
+
+      &:last-child {
+        flex-grow: 0;
+        min-height: auto;
+      }
+    }
+
+    &.-inverse {
+      & > li,
+      & > .chi-steps__item {
+        & > .chi-steps__line {
+          border-color: $steps-inverse-item-line-border-color;
+        }
+      }
+    }
+
+    &.-horizontal-label {
+      > li,
+      & > .chi-steps__item {
+        > .chi-steps__icon {
+          width: 1.5rem;
+        }
+
+        .chi-steps__content {
+          .chi-steps__subitem {
+            justify-content: flex-start;
+          }
+        }
+      }
+    }
+
+    &.-sm {
+      & > li,
+      & > .chi-steps__item {
+        & > .chi-steps__icon {
+          &::before {
+            left: 0.3125rem;
+          }
+        }
+
+        & > .chi-steps__line {
+          height: calc(100% - 1.25rem);
+          left: 0.5rem;
+          margin: 1.125rem 0 0;
+        }
+      }
+
+      &.-horizontal-label {
+        > li,
+        > .chi-steps__item {
+          & > .chi-steps__icon {
+            &::before {
+              left: 0.5625rem;
+            }
+          }
+
+          > .chi-steps__line {
+            margin-left: 0.25rem;
+            margin-right: 0.375rem;
+          }
+        }
+      }
+    }
+  }
+
+  @each $breakpoint in $breakpoints {
+    &.-labels-#{$breakpoint}--hide {
+
+      & li,
+      & .chi-steps__item {
+        > .chi-steps__icon {
+          a,
+          .chi-steps__item-title {
+            display: none;
+
+            @include respond-to(#{$breakpoint}) {
+              display: block;
+            }
+          }
+        }
+      }
+
+      & > li,
+      & > .chi-steps__item {
+        > a,
+        .chi-steps__item-title {
+          display: none;
+
+          @include respond-to(#{$breakpoint}) {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+// sass-lint:disable-all
+/* IE10+ CSS hack */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .chi-steps > li.chi-steps__item > .chi-steps__icon > .chi-steps__content > a.chi-steps__item-title {
+    width: auto;
+  }
+
+  .chi-steps > li.chi-steps__item > div.chi-steps__icon::before {
+    left: 0.25rem;
+    position: relative;
+  }
+
+  .chi-steps > li.chi-steps__item > div.chi-steps__icon::after {
+    position: relative;
+  }
+
+  .chi-steps.-vertical > li.chi-steps__item > div.chi-steps__icon::before {
+    left: -4.5rem;
+  }
+
+  .chi-steps.-vertical.-sm > li.chi-steps__item > div.chi-steps__icon::before {
+    left: -3.8rem;
+  }
+
+  .chi-steps div.chi-steps__icon a {
+    right: 1.125rem;
+  }
+
+  .chi-steps li.-completed div.chi-steps__icon a {
+    right: 0.85rem;
+  }
+
+  .chi-steps li.-completed div.chi-steps__icon::after {
+    position: relative;
+    right: 2.95rem;
+  }
+
+  .chi-steps li:first-child.-active div.chi-steps__icon::before {
+    right: 3rem;
+  }
+
+  .chi-steps li:first-child.-active div.chi-steps__icon::after {
+    right: 3.25rem;
+  }
+
+  .chi-steps li.-active div.chi-steps__icon::after,
+  .chi-steps li div.chi-steps__icon::after {
+    position: relative;
+    right: 3.47rem;
+  }
+
+  .chi-steps div.chi-steps__icon::before,
+  .chi-steps.-horizontal-label div.chi-steps__icon::before  {
+    left: 0.25rem;
+    position: relative;
+  }
+
+  .chi-steps.-horizontal-label div.chi-steps__icon::before  {
+    left: 0.25rem;
+    position: relative;
+  }
+
+  .chi-steps.-horizontal-label div.chi-steps__icon::after,
+  .chi-steps.-horizontal-label li.-active div.chi-steps__icon::after {
+    position: relative;
+    right: 0.75rem;
+  }
+
+  .chi-steps.-horizontal-label li.-completed div.chi-steps__icon::after {
+    position: relative;
+    right: 0.3125rem;
+  }
+
+  .chi-steps.-vertical li div.chi-steps__icon {
+    position: relative;
+  }
+
+  .chi-steps.-vertical li div.chi-steps__icon a,
+  .chi-steps.-vertical li div.chi-steps__icon::after {
+    right: 0rem;
+  }
+
+  .chi-steps.-vertical li div.chi-steps__icon::before {
+    left: -4.5rem;
+  }
+
+  .chi-steps.-vertical.-horizontal-label li.-completed div.chi-steps__icon::after {
+    right: 0rem;
+  }
+
+  .chi-steps.-vertical.-horizontal-label li.-active div.chi-steps__icon::after,
+  .chi-steps.-vertical.-horizontal-label li.-active ~ li div.chi-steps__icon::after {
+    right: -0.5rem;
+  }
+
+  .chi-steps.-vertical.-horizontal-label li div.chi-steps__icon::before {
+    left: -0.5rem;
+  }
+
+  .chi-steps.-sm li.-completed div.chi-steps__icon::after {
+    right: 2.35rem;
+  }
+
+  .chi-steps.-sm li.-active div.chi-steps__icon::after,
+  .chi-steps.-sm li div.chi-steps__icon::after {
+    right: 2.75rem;
+  }
+
+  .chi-steps.-horizontal-label.-sm li.-completed div.chi-steps__icon::after {
+    right: 0.15rem;
+  }
+
+  .chi-steps.-horizontal-label.-sm div.chi-steps__icon::after,
+  .chi-steps.-horizontal-label.-sm li.-active div.chi-steps__icon::after {
+    right: 0.45rem;
+  }
+
+  .chi-steps.-vertical.-sm li div.chi-steps__icon::before {
+    left: -3.8rem;
+  }
+
+  .chi-steps.-sm.-vertical li.-active div.chi-steps__icon::after,
+  .chi-steps.-sm.-vertical li div.chi-steps__icon::after {
+    right: 0rem;
+  }
+
+  .chi-steps.-vertical.-sm.-horizontal-label li div.chi-steps__icon::before {
+    left: -0.5rem;
+  }
+
+  .chi-steps.-vertical.-horizontal-label.-sm li.-active div.chi-steps__icon::after,
+  .chi-steps.-vertical.-horizontal-label.-sm li.-active ~ li div.chi-steps__icon::after {
+    right: -0.25rem;
+  }
+
+  .chi-steps.-vertical.-horizontal-label.-sm li.-completed div.chi-steps__icon::after {
+    right: 0rem;
+  }
+}
+
+/* EDGE CSS hack */
+@supports (-ms-ime-align: auto) {
+  .chi-steps div.chi-steps__line {
+    padding-bottom: 0.1875rem;
+  }
+
+  .chi-steps li.-active div.chi-steps__icon::after,
+  .chi-steps.-inverse li.-active div.chi-steps__icon::after{
+    font-size: 1.4rem;
+  }
+
+  .chi-steps.-horizontal-label div.chi-steps__icon::before,
+  .chi-steps.-horizontal-label li.-active div.chi-steps__icon::before {
+    position: absolute;
+  }
+
+  .chi-steps.-horizontal-label div.chi-steps__line {
+    padding-bottom: 0;
+  }
+}
+// sass-lint:enable-all

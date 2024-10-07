@@ -1,0 +1,202 @@
+@import '_global-variables';
+@import '_global-mixins';
+
+.chi-main {
+  background-color: $app-layout-background-color;
+  height: 100%;
+  padding-top: 2.5rem;
+  position: relative;
+
+  &__header {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+
+    &-start {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-end {
+      display: flex;
+      flex-direction: column-reverse;
+      margin-top: 1.5rem;
+
+      .chi-button + .chi-button {
+        margin-bottom: 0.5rem;
+      }
+
+      @include respond-to(md) {
+        flex-direction: row;
+        margin-top: 0;
+
+        .chi-button + .chi-button {
+          margin-bottom: 0;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+
+    @include respond-to(md) {
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__title {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    @include respond-to(md) {
+      align-items: center;
+      flex-direction: row;
+    }
+
+    &-heading {
+      color: $app-layout-header-title-color;
+      font-size: $font-size-h3;
+      font-weight: $font-weight-black;
+      line-height: $app-layout-header-line-height;
+      margin: 0;
+      padding-right: 1rem;
+
+      .chi-button {
+        margin-left: 0.5rem;
+
+        &.-flat {
+          &.-icon {
+            margin-left: 0;
+
+            &,
+            &:hover {
+              color: inherit;
+
+              .chi-icon {
+                color: inherit;
+              }
+            }
+          }
+        }
+      }
+
+      & + .chi-main__title-subheading {
+        @include respond-to(md) {
+          border-left: 0.0625rem solid $app-layout-sub-header-border-color;
+        }
+      }
+    }
+
+    &-subheading {
+      color: $app-layout-sub-header-title-color;
+      font-size: $app-layout-sub-header-font-size;
+      font-weight: $app-layout-sub-header-font-weight;
+
+      @include respond-to(md) {
+        padding-left: 1rem;
+      }
+    }
+  }
+
+  &__header,
+  &__content,
+  &__alert {
+    margin: 0 1rem 2rem;
+    position: relative;
+
+    @include respond-to(sm) {
+      margin: 0 1.5rem 2rem;
+    }
+
+    @include respond-to(md) {
+      margin: 0 2rem 2rem;
+    }
+
+    @include respond-to(lg) {
+      margin: 0 4rem 1rem;
+    }
+  }
+
+  &__alert {
+    padding-bottom: 0.5rem;
+
+    & > chi-alert,
+    & > .chi-alert {
+      & + chi-alert,
+      & + .chi-alert {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  &.-no-margin {
+    .chi-main__header,
+    .chi-main__content,
+    .chi-main__alert {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  &.-fixed-width {
+    .chi-main__content,
+    .chi-main__header,
+    .chi-main__alert,
+    .chi-footer__internal-content {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 688px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+
+      @include respond-to(lg) {
+        max-width: 792px;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      @include respond-to(xl) {
+        max-width: 1176px;
+      }
+    }
+
+    .chi-main__content {
+      padding-bottom: 1.5rem;
+
+      @include respond-to(lg) {
+        padding-bottom: 2.5rem;
+      }
+    }
+  }
+
+  &.-header-background {
+    .chi-main__background {
+      z-index: 0;
+    }
+
+    .chi-main__title-heading {
+      color: $app-layout-header-background-title-color;
+    }
+  }
+
+  &__background {
+    position: absolute;
+    height: 12rem;
+    overflow: hidden;
+    width: 100%;
+    top: 0;
+  }
+
+  &__background-image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $app-layout-header-background-color;
+  }
+}

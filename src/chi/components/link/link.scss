@@ -1,0 +1,116 @@
+@import '_global-variables';
+@import '_global-mixins';
+
+$sizes: (
+  xs: (
+    font-size: $font-size-xs,
+    line-height: $line-height-sm,
+  ),
+  sm: (
+    font-size: $font-size-sm,
+    line-height: $line-height,
+  ),
+  md: (
+    font-size: $font-size-base,
+    line-height: $line-height,
+  ),
+  lg: (
+    font-size: $font-size-lg,
+    line-height: $line-height-lg,
+  ),
+  xl: (
+    font-size: $font-size-xl,
+    line-height: $line-height-xl,
+  ),
+);
+
+a,
+.chi-link {
+  background-color: transparent;
+  color: $link-color;
+  cursor: pointer;
+  text-decoration: $link-text-decoration;
+
+  &:hover,
+  &.-hover {
+    color: $link-hover-color;
+    text-decoration: $link-hover-text-decoration;
+  }
+
+  &[disabled],
+  &.-disabled {
+    opacity: $opacity-40;
+    pointer-events: none;
+  }
+
+  &.-cta {
+    align-self: flex-start;
+    font-weight: $font-weight-semi-bold;
+    padding-left: $link-cta-padding-left;
+    padding-right: $link-cta-padding-right;
+    position: relative;
+    text-decoration: none;
+    text-transform: $link-cta-text-transform;
+    transition: all 0.2s ease-in;
+
+    &::after {
+      color: $link-cta-icon-color;
+      content: $link-cta-icon;
+      font-family: $font-family-icon;
+      font-size: $link-cta-icon-size;
+      font-weight: normal;
+      height: 100%;
+      left: $link-cta-position-left;
+      position: absolute;
+      right: $link-cta-position-right;
+      top: 0;
+      transition: left 0.2s ease-in, right 0.2s ease-in;
+      width: 1.5rem;
+    }
+
+    &:hover,
+    &.-hover {
+      color: $link-cta-hover-color;
+
+      &::after {
+        left: $link-cta-hover-position-left;
+        right: $link-cta-hover-position-right;
+      }
+    }
+  }
+
+  .chi-link__content {
+    align-items: center;
+    display: flex;
+
+    & > i {
+      &.chi-icon {
+        &::before {
+          display: inline-block;
+        }
+      }
+    }
+
+    & > :not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &.-no-underline {
+    text-decoration: none;
+  }
+
+  &.-no-hover-underline {
+    &:hover,
+    &.-hover {
+      text-decoration: none;
+    }
+  }
+
+  @each $size in map-keys($sizes) {
+    &.-#{$size} {
+      font-size: map-get(map-get($sizes, $size), font-size);
+      line-height: map-get(map-get($sizes, $size), line-height);
+    }
+  }
+}

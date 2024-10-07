@@ -1,0 +1,215 @@
+@import '_global-mixins';
+@import '_global-variables';
+
+$animation-duration: 0.5s;
+
+.chi-drawer {
+  background-color: $drawer-background-color;
+  box-shadow: 0 0 25px 10px rgba($color-black, 0.15);
+  display: none;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  pointer-events: auto;
+  position: fixed;
+  transform: translate(0, 0);
+  z-index: $zindex-fixed;
+
+  &.-active {
+    display: flex;
+  }
+
+  &.-animated {
+    transition-duration: $animation-duration;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.38, 0.52, 0.37, 1);
+
+    &.-transitioning {
+      display: flex;
+    }
+  }
+
+  &.-top {
+    height: $drawer-height;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    &.-animated {
+      &:not(.-active) {
+        transform: translate(0, -$drawer-height);
+      }
+    }
+
+    // sass-lint:disable property-units
+    &.-menu {
+      height: 95vh;
+
+      &.-animated:not(.-active) {
+        transform: translateY(-95vh);
+      }
+
+      @include respond-to(md) {
+        height: $drawer-height;
+
+        &.-animated {
+          &:not(.-active) {
+            transform: translateY(0, -$drawer-height);
+          }
+        }
+      }
+    }
+    // sass-lint:enable property-units
+  }
+
+  &.-right {
+    bottom: 0;
+    right: 0;
+    top: 0;
+    width: $drawer-width;
+
+    &.-animated {
+      &:not(.-active) {
+        transform: translate($drawer-width, 0);
+      }
+    }
+
+    // sass-lint:disable property-units
+    &.-menu {
+      width: 85vw;
+
+      &.-animated:not(.-active) {
+        transform: translate(85vw);
+      }
+
+      @include respond-to(md) {
+        width: $drawer-width;
+
+        &.-animated {
+          &:not(.-active) {
+            transform: translate($drawer-width, 0);
+          }
+        }
+      }
+    }
+    // sass-lint:enable property-units
+  }
+
+  &.-bottom {
+    bottom: 0;
+    height: $drawer-height;
+    left: 0;
+    right: 0;
+
+    &.-animated {
+      &:not(.-active) {
+        transform: translate(0, $drawer-height);
+      }
+    }
+
+    // sass-lint:disable property-units
+    &.-menu {
+      height: 95vh;
+
+      &.-animated:not(.-active) {
+        transform: translateY(95vh);
+      }
+
+      @include respond-to(md) {
+        height: $drawer-height;
+
+        &.-animated {
+          &:not(.-active) {
+            transform: translateY(0, $drawer-height);
+          }
+        }
+      }
+    }
+    // sass-lint:enable property-units
+  }
+
+  &.-left {
+    bottom: 0;
+    left: 0;
+    top: 0;
+    width: $drawer-width;
+
+    &.-animated {
+      &:not(.-active) {
+        transform: translate(-$drawer-width, 0);
+      }
+    }
+
+    // sass-lint:disable property-units
+    &.-menu {
+      width: 85vw;
+
+      &.-animated:not(.-active) {
+        transform: translate(-85vw);
+      }
+
+      @include respond-to(md) {
+        width: $drawer-width;
+
+        &.-animated {
+          &:not(.-active) {
+            transform: translate(-$drawer-width, 0);
+          }
+        }
+      }
+    }
+    // sass-lint:enable property-units
+  }
+
+  .-close {
+    position: fixed;
+    right: 0.75rem;
+    top: $drawer-button-close-top;
+    z-index: 50;
+
+    .chi-icon {
+      color: $drawer-close-icon-color;
+    }
+  }
+
+  &__header {
+    background-color: $drawer-header-background-color;
+    background-image: $drawer-header-background-image;
+    color: $drawer-header-text-color;
+    min-height: $drawer-header-min-height;
+    padding: $drawer-header-padding;
+    position: relative;
+
+    .-close {
+      .chi-icon {
+        color: $drawer-header-close-icon-color;
+      }
+    }
+  }
+
+  &__title {
+    font-size: $drawer-header-title-font-size;
+    font-weight: $drawer-header-title-font-weight;
+    line-height: 1.5rem;
+    margin: 0;
+  }
+
+  &__content {
+    flex-grow: 1;
+    overflow: auto;
+  }
+}
+
+.chi-backdrop__wrapper > .chi-drawer {
+  z-index: $zindex-fixed-with-backdrop;
+}
+
+/* IE11 CSS hack */
+// sass-lint:disable-block no-vendor-prefixes
+@media all and (-ms-high-contrast: none) {
+  .chi-drawer {
+    .-close {
+      position: absolute;
+    }
+  }
+}
