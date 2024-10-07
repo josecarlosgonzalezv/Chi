@@ -7,10 +7,8 @@ const webfontFolder = 'dist/webfont';
 const iconsFolder = 'src/chi/components/icons';
 const marketingIconsFolder = 'src/chi/components/marketing-icon';
 
-const copyRight = `/* Chi and its documentation are released under the terms of the MIT license.
-In addition, Chi uses several 3rd-party libraries,
-a list of which can be viewed in the package.json file.
-Please review each of their license and user agreements, as well. */`;
+const copyRight = "/* Chi and its documentation are released under the terms of the MIT license. In addition, Chi uses several 3rd-party libraries, a list of which can be viewed in the package.json file. Please review each of their license and user agreements, as well. */";
+
 
 function runBashScript(scriptPath, spinner, message = null) {
   try {

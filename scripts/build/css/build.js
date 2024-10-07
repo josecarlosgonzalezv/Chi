@@ -1,40 +1,38 @@
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
-import path, { resolve } from 'path';
+import path from 'path';
+import ora from 'ora';
 
-const ora = (await import('ora')).default;
 const themes = ['lumen', 'portal', 'centurylink', 'colt', 'brightspeed'];
 const scripts = {
-  replace: 'bash ./scripts/build/css/replace-scss.sh',
-  restore: 'bash ./scripts/build/css/restore-scss.sh',
+  replace: './scripts/build/css/replace-scss.sh',
+  restore: './scripts/build/css/restore-scss.sh',
 };
-const __dirname = resolve();
+const __dirname = path.resolve();
+const isWindows = process.platform === 'win32';
 
-const runBashScript = (scriptPath, theme, message = null) => {
-  let spinner;
-  if (message) {
-    spinner = ora(message).start(); 
-  }
+const runBashScript = (scriptPath, theme, message) => {
+  const spinner = message ? ora(message).start() : null;
 
   try {
-    execSync(`${scriptPath} ${theme}`, { stdio: 'ignore' });
-    if (spinner) {
-      spinner.succeed(`[CHI]: ${message} completed successfully`); 
-    }
+    execSync(`bash ${scriptPath} ${theme}`, { stdio: 'ignore' });
+    spinner?.succeed(`[CHI]: ${message} completed successfully`);
   } catch (error) {
-    if (spinner) {
-      spinner.fail(`[CHI]: Error executing ${scriptPath} for ${theme}: ${error.message}`);
-    }
+    spinner?.fail(`[CHI]: Error executing ${scriptPath} for ${theme}: ${error.message}`);
     process.exit(1);
   }
 };
 
-const deleteCssFile = async (theme) => {
+const deleteCssFile = (theme) => {
   const fileName = theme === 'lumen' ? 'chi.css' : `chi-${theme}.css`;
   const filePath = path.resolve(__dirname, 'dist', fileName);
 
   if (existsSync(filePath)) {
-    execSync(`rm -f ${filePath}`);
+    try {
+      execSync(isWindows ? `del /f ${filePath}` : `rm -f ${filePath}`);
+    } catch (error) {
+      console.error(`[CHI]: Error deleting ${fileName}: ${error.message}`);
+    }
   }
 };
 
@@ -42,10 +40,10 @@ const buildTheme = async (theme) => {
   const spinner = ora(`[CHI]: Building ${theme} theme`).start();
 
   try {
-    await deleteCssFile(theme);
+    deleteCssFile(theme);
     runBashScript(scripts.restore, theme);
     runBashScript(scripts.replace, theme);
-    execSync(`THEME=${theme} vite build --c vite-css.config.ts`, { stdio: 'ignore' });
+    execSync(`cross-env THEME=${theme} vite build --c vite-css.config.ts`, { stdio: 'ignore' });
     spinner.succeed(`[CHI]: Build for ${theme} theme completed successfully`);
   } catch (error) {
     spinner.fail(`[CHI]: Error during build for ${theme} theme: ${error.message}`);

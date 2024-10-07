@@ -5,7 +5,7 @@ async function buildJS() {
   const spinnerIIFE = ora(`[CHI]: Building JavaScript (IIFE)`).start();
 
   try {
-    execSync(`JS=iife vite build --c vite-js.config.ts`, { stdio: 'ignore' });
+    execSync(`cross-env JS=iife vite build --c vite-js.config.ts`, { stdio: 'ignore' });
     spinnerIIFE.succeed(`[CHI]: JavaScript (IIFE) build completed successfully`);
   } catch (error) {
     spinnerIIFE.fail(`[CHI]: Error during JavaScript (IIFE) build: ${error.message}`);
@@ -17,7 +17,7 @@ async function buildJS() {
   const spinnerAMD = ora(`[CHI]: Building JavaScript (AMD)`).start();
 
   try {
-    execSync(`JS=amd vite build --c vite-js.config.ts`, { stdio: 'ignore' });
+    execSync(`cross-env JS=amd vite build --c vite-js.config.ts`, { stdio: 'ignore' });
     spinnerAMD.succeed(`[CHI]: JavaScript (AMD) build completed successfully`);
   } catch (error) {
     spinnerAMD.fail(`[CHI]: Error during JavaScript (AMD) build: ${error.message}`);
