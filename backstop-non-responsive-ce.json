@@ -8,13 +8,13 @@
     }
   ],
   "fileNameTemplate": "{scenarioLabel}_{selectorLabel}_{viewportLabel}",
-  "onBeforeScript": "chromy/onBefore.js",
-  "onReadyScript": "chromy/onReady.js",
+  "onBeforeScript": "puppet/onBefore.cjs",
+  "onReadyScript": "puppet/onReady.cjs",
   "scenarios": [
     {
       "label": "alert-banner",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/alert-banner.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/alert-banner.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -48,7 +48,7 @@
     {
       "label": "alert-bubble",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/alert-bubble.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/alert-bubble.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -84,7 +84,7 @@
     {
       "label": "alert-toast",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/alert-toast.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/alert-toast.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -109,7 +109,7 @@
     {
       "label": "app-layout",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/app-layout.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/app-layout.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -139,7 +139,7 @@
     {
       "label": "brand",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/brand.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/brand.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -162,7 +162,7 @@
     {
       "label": "badges",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/badges.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/badges.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -187,7 +187,7 @@
     {
       "label": "icons-svg",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/icons.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/icons.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -215,7 +215,7 @@
     {
       "label": "buttons",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/buttons.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/buttons.html",
       "referenceUrl": "",
       "readyEvent": "backstop_ready",
       "readySelector": "",
@@ -265,7 +265,7 @@
     {
       "label": "carousel",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/carousel.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/carousel.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -291,7 +291,7 @@
     {
       "label": "checkbox",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/checkbox.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/checkbox.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -309,7 +309,7 @@
     {
       "label": "date-picker",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/date-picker.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/date-picker.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": ".test-input-combined-icon chi-date-picker.hydrated",
@@ -335,7 +335,7 @@
     {
       "label": "drawer",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/drawer.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/drawer.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -391,7 +391,7 @@
     {
       "label": "dropdown",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/dropdown.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/dropdown.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -417,7 +417,7 @@
     {
       "label": "expansion-panel",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/expansion-panel.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/expansion-panel.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -443,18 +443,17 @@
     },
     {
       "label": "form-wrapper",
-      "url": "http://localhost:8000/tests/custom-elements/form-wrapper.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/form-wrapper.html",
       "delay": 2000,
       "selectors": [
         ".test-form-wrapper-checkboxes",
-        ".test-form-wrapper-radio-buttons",
-        ".test-form-wrapper-states"
+        ".test-form-wrapper-radio-buttons"
       ]
     },
     {
       "label": "popover",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/popover.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/popover.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -495,7 +494,7 @@
     {
       "label": "progress",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/progress.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/progress.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -524,7 +523,7 @@
     {
       "label": "input-search",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/search-input.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/search-input.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -553,7 +552,7 @@
     {
       "label": "input-text",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/text-input.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/text-input.html",
       "referenceUrl": "",
       "readyEvent": "backstop_ready",
       "readySelector": "",
@@ -612,7 +611,7 @@
     {
       "label": "input-number",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/number-input.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/number-input.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -651,7 +650,7 @@
     {
       "label": "label",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/label.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/label.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -674,7 +673,7 @@
     {
       "label": "link",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/link.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/link.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -699,7 +698,7 @@
     {
       "label": "marketing-icon",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/marketing-icon.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/marketing-icon.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -724,7 +723,7 @@
     {
       "label": "pagination",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/components/pagination.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/components/pagination.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -752,7 +751,7 @@
     {
       "label": "spinner",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/spinner.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/spinner.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -786,7 +785,7 @@
     {
       "label": "tabs",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/tabs.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/tabs.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -813,7 +812,7 @@
     {
       "label": "textarea",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/textarea.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/textarea.html",
       "referenceUrl": "",
       "readyEvent": "backstop_ready",
       "readySelector": "",
@@ -862,7 +861,7 @@
     {
       "label": "toggle-switch",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/toggle-switch.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/toggle-switch.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -880,7 +879,7 @@
     {
       "label": "time",
       "cookiePath": "",
-      "url": "http://localhost:8000/tests/custom-elements/time.html",
+      "url": "http://localhost:8000/chi/6.7.0/tests/custom-elements/time.html",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
@@ -956,14 +955,14 @@
     }
   ],
   "paths": {
-    "bitmaps_reference": "reports/html_report/non_responsive_ce/bitmaps_reference",
+    "bitmaps_reference": "backstop/bitmaps_reference/non_responsive",
     "bitmaps_test": "reports/html_report/non_responsive_ce/bitmaps_test",
-    "engine_scripts": "config/backstop_data/engine_scripts",
-    "html_report": "reports/html_report/non_responsive_ce",
-    "ci_report": "reports/ci_report/non_responsive_ce"
+    "engine_scripts": "backstop/engine_scripts",
+    "html_report": "backstop/html_report/non_responsive_ce",
+    "ci_report": "backstop/ci_report/non_responsive_ce"
   },
   "report": ["CI"],
-  "engine": "chrome",
+  "engine": "puppeteer",
   "engineOptions": {
     "waitTimeout": 120000
   },

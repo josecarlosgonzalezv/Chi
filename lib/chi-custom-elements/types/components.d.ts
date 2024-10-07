@@ -520,10 +520,6 @@ export namespace Components {
     }
     interface ChiFormWrapper {
         /**
-          * To set helper message
-         */
-        "helperMessage"?: string;
-        /**
           * to set a lagend for all fields
          */
         "label"?: string;
@@ -535,10 +531,6 @@ export namespace Components {
           * to set options
          */
         "options": FormWrapperCheckbox[] | FormWrapperRadio[];
-        /**
-          * To set state success, warning or danger
-         */
-        "state"?: ChiStates;
         /**
           * to set form element type { checkbox, radio }.
          */
@@ -2412,10 +2404,6 @@ declare namespace LocalJSX {
     }
     interface ChiFormWrapper {
         /**
-          * To set helper message
-         */
-        "helperMessage"?: string;
-        /**
           * to set a lagend for all fields
          */
         "label"?: string;
@@ -2428,10 +2416,6 @@ declare namespace LocalJSX {
           * to set options
          */
         "options": FormWrapperCheckbox[] | FormWrapperRadio[];
-        /**
-          * To set state success, warning or danger
-         */
-        "state"?: ChiStates;
         /**
           * to set form element type { checkbox, radio }.
          */

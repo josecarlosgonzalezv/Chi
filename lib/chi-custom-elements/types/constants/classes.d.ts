@@ -404,8 +404,5 @@ export declare const DATEPICKER_CLASSES: {
     NEXT_MONTH: string;
 };
 export declare const LABEL_CLASSES: {
-    LABEL: string;
     HELP: string;
-    REQUIRED: string;
-    OPTIONAL: string;
 };
