@@ -1,12 +1,3 @@
-const ACTIVE_CLASS = '-active';
-const COLLAPSED_CLASS = '-collapsed';
-const EXPANDED_CLASS = '-expanded';
-const ACCORDION_CLASSES = {
-  ITEM: 'chi-accordion__item',
-  CONTENT: 'chi-accordion__content'
-};
-const SIDENAV_LIST_CLASS = 'chi-sidenav__list';
-
 describe('Global Sidenav', () => {
   before(() => {
     cy.visit('tests/lumen/js/global-nav.html');
@@ -15,7 +6,7 @@ describe('Global Sidenav', () => {
   beforeEach(() => {
     cy.viewport(1450, 1000);
     cy.get('[data-cy="global-nav"]')
-      .find(`ul.${SIDENAV_LIST_CLASS}`)
+      .find('ul.chi-sidenav__list')
       .as('list');
   });
 
@@ -24,28 +15,28 @@ describe('Global Sidenav', () => {
       cy.get('#toggle-nav')
         .click();
       cy.get('[data-cy="global-nav"]')
-        .should('have.class', COLLAPSED_CLASS);
+        .should('have.class', '-collapsed');
     });
 
     it('check that sidenav expands on hover', () => {
       cy.get('@list')
         .trigger('mouseenter');
       cy.get('[data-cy="global-nav"]')
-        .should('have.class', EXPANDED_CLASS);
+        .should('have.class', '-expanded');
     });
 
     it('check that clicking on the toggle button collapses the sidenav', () => {
       cy.get('#toggle-nav')
         .click();
       cy.get('[data-cy="global-nav"]')
-        .should('have.class', COLLAPSED_CLASS);
+        .should('have.class', '-collapsed');
     });
 
     it('check that clicking on the toggle button again expands the sidenav', () => {
       cy.get('#toggle-nav')
         .click();
       cy.get('[data-cy="global-nav"]')
-        .should('have.class', EXPANDED_CLASS);
+        .should('have.class', '-expanded');
     });
   });
 
@@ -57,16 +48,16 @@ describe('Global Sidenav', () => {
       cy.get('@firstLevelFirstItem')
         .click()
       cy.get('@firstLevelFirstItem')
-        .should('have.class', ACTIVE_CLASS);
+        .should('have.class', '-active');
     });
 
     it('check that clicking on the accordion items expands its content', () => {
       cy.get('@list')
         .find('> li.chi-sidenav__item')
-      cy.get(`.${ACCORDION_CLASSES.ITEM}`).as('accordionItem').find('.chi-accordion__trigger').click({ multiple: true });
+      cy.get('.chi-accordion__item').as('accordionItem').find('.chi-accordion__trigger').click({ multiple: true });
       cy.get('@accordionItem')
         .should('have.class', '-expanded')
-        .find(`.${ACCORDION_CLASSES.CONTENT}`)
+        .find('.chi-accordion__content')
         .should('have.css', 'display', 'block');
     });
   });
@@ -77,7 +68,7 @@ describe('Global Sidenav', () => {
       cy.get('#toggle-nav')
         .click();
       cy.get('[data-cy="global-nav"]')
-        .should('have.class', COLLAPSED_CLASS);
+        .should('have.class', '-collapsed');
     });
   });
 
@@ -96,7 +87,7 @@ describe('Global Sidenav', () => {
       cy.get('#toggle-nav')
         .click();
       cy.get('[data-cy="global-nav"]')
-        .should('have.class', COLLAPSED_CLASS);
+        .should('have.class', '-collapsed');
     });
   });
 });
