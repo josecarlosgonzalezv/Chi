@@ -74,6 +74,7 @@ class GlobalMobileNav extends Component {
   }
 
   _handlerTriggerClick() {
+    if (!this._drawer) return;
     if (this._drawer.active) {
       this._drawer.active = false;
       return;
