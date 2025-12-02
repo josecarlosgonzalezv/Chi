@@ -742,9 +742,13 @@ $sidenav-lg-width: 12.5rem;
   &.-global {
     background: $sidenav-global-background-color;
     height: 100%;
+    width: 4.275rem;
+    margin-right: -4.275rem;
+    z-index: $zindex-prominent;
 
     &.-expanded {
       min-width: 20.250rem;
+      margin-right: -20.250rem;
 
       .chi-sidenav__item-wrapper {
         chi-link {
