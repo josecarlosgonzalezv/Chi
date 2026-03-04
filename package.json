@@ -33,7 +33,8 @@
   "dependencies": {
     "@centurylink/chi-custom-elements": "1.56.0",
     "@centurylink/chi-documentation": "1.64.0",
-    "@centurylink/chi-vue": "3.32.1"
+    "@centurylink/chi-vue": "3.32.1",
+    "mocha": "^11.7.5"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.27.2",
@@ -54,7 +55,6 @@
     "istanbul-lib-coverage": "^3.2.2",
     "istanbul-lib-report": "^3.0.1",
     "istanbul-reports": "^3.2.0",
-    "mocha": "^11.7.5",
     "normalize.css": "^8.0.1",
     "nyc": "^17.1.0",
     "ora": "^8.2.0",
