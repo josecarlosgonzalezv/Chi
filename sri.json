@@ -1,11 +1,11 @@
 {
-  "dist/chi.css": "sha256-m/qWw0IAVZzklwkUCGxEkKKg6MQKNVplW9xi8TjIWfA=",
-  "dist/chi-centurylink.css": "sha256-GQMU0vj9BcTo6EAX58uZEujnmZC86O/OEZlI+zBFH74=",
-  "dist/chi-portal.css": "sha256-uy5DUcOkYFD1BcRW3krt/xDKDS7a2AelB3PL76qYIOU=",
-  "dist/chi-connect.css": "sha256-w0IWTLy+EDvo1qGJukt9qucmdYOYg08d+MtixBj683k=",
-  "dist/chi-brightspeed.css": "sha256-c2ESoVa2e8s8iUfaag2bvrRYsECTUqCD2MK9Pw9PRi4=",
-  "dist/chi-colt.css": "sha256-XLKNmbokdSgklQ0sVMH5JF8ddl5zYWFfEs6xGc1RQck=",
-  "dist/chi-test.css": "sha256-w0IWTLy+EDvo1qGJukt9qucmdYOYg08d+MtixBj683k=",
+  "dist/chi.css": "sha256-Do0gl4dn4BEcCwmNctld9D6MSce4+cW9nxL98K7cpFk=",
+  "dist/chi-centurylink.css": "sha256-yALP0pTztEdu/tcYwyTlH2LWnS4rTtDKTDAilwgXiJA=",
+  "dist/chi-portal.css": "sha256-+yb6FF9tU5gNpSNmfhodNlJhAfe7Clqinsdcxts2Lag=",
+  "dist/chi-connect.css": "sha256-IIRuYT3FYjC5IfRFUu8R09AeU+NRSXvTlVjwGUk528A=",
+  "dist/chi-brightspeed.css": "sha256-gmYInd2gBHXqRlwrtK4jZK9r7AQhtGMDTKcy/Bcjo1s=",
+  "dist/chi-colt.css": "sha256-ijeSAXCnBvcY4tTfZVCkQV9MahugMTHnG+Gdq7jbrho=",
+  "dist/chi-test.css": "sha256-IIRuYT3FYjC5IfRFUu8R09AeU+NRSXvTlVjwGUk528A=",
   "dist/js/chi.js": "sha256-ESh5UZwalFvg23nJKYujCNyelWXnqvL0d+4Ue+bf8ZI=",
   "dist/assets/themes/lumen/images/favicon.svg": "sha256-+0ITKaXKx702ZWOzublRl83MJVOIbUMTQG8JvN+76B0=",
   "dist/assets/themes/lumen/images/favicon.ico": "sha256-EkKmbH+i/VIQAtUl7NF4bPVaaJZCeBc5xWx8LTcMJp0=",
@@ -21,6 +21,6 @@
   "dist/assets/themes/colt/images/favicon.ico": "sha256-01eRZwbyuQHUlu+olKBDR6JW2BpEIQgJvyvtgnJ8aoc=",
   "dist/assets/themes/colt/images/background-hero.png": "sha256-z3ObQ7Ovb1KKHLyl1nO5adiyxC++90EZQ6QYVmGs6FA=",
   "dist/assets/themes/colt/images/background-login.png": "sha256-V60LOksMkHO8xJNTRQUXUk+Vn/xJ0Vxa9+BQVN5Wakg=",
-  "dist/js/ce/ux-chi-ce/ux-chi-ce.esm.js": "sha256-FrG3f7HLQPE8OmXdflf2IqwOFUG3asNqDRgREPFnjNY=",
-  "dist/js/ce/ux-chi-ce/ux-chi-ce.js": "sha256-/EO5bUIf9PjZ5PRT2y6nE/Jfi4eMARz/kmgFSzAv0eo="
+  "dist/js/ce/ux-chi-ce/ux-chi-ce.esm.js": "sha256-DSEX8q8ySCVHSY6E9CG/IsoUwENg21lRRM6/S9VHhsk=",
+  "dist/js/ce/ux-chi-ce/ux-chi-ce.js": "sha256-uwblV0VFkSI96uIvK5TSQH2bAFWQjo5Z9iEsZa9Uctk="
 }
