@@ -6,7 +6,7 @@ const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.jso
 const basePath = `chi/${packageJson.version}`;
 
 module.exports = defineConfig({
-  reporter: 'junit',
+  reporter: 'mocha-junit-reporter',
   reporterOptions: {
     mochaFile: 'cypress/reports/cypress-pr.[hash].xml',
   },
