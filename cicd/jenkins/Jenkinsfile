@@ -232,7 +232,6 @@ pipeline {
 
           unstash name: 'build_testing_stash'
 
-          jslNpmWrapper('ci', GITHUB_PUBLISH_TOKEN_CREDENTIALS)
           jslNpmWrapper('run tests:e2e', GITHUB_PUBLISH_TOKEN_CREDENTIALS)
 
           REPORTS_AVAILABLE = sh(script: "ls cypress/reports/*xml", returnStatus: true)
