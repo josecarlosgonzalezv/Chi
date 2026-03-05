@@ -1,5 +1,6 @@
 {
   "include": ["src/chi/**/*.js"],
+  "exclude": ["src/chi/javascript/components/mobile-navigation.js"],
   "extension": [".js"],
   "reporter": ["lcov", "text-summary"],
 

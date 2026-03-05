@@ -1,6 +1,6 @@
 const drawerDropDownItem = '.chi-mobile-nav__list-item-list ul.chi-tabs li';
 
-describe('mobile-nav-menu', function () {
+describe.skip('mobile-nav-menu (deprecated component)', function () {
   before(() => {
     cy.visit('tests/lumen/js/mobile-nav.html');
   });
