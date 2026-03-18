@@ -17,6 +17,7 @@ import {
   buildMigrationRules,
   RELATIONSHIPS,
   bundleDistributableSkills,
+  loadImplementFromFigmaUsingChi,
 } from '../data/static-data.js';
 import { validateMetadata } from './validate.js';
 
@@ -72,6 +73,7 @@ function collectSourceHashes(): Record<string, string> {
     join(ROOT, 'src/mcp/scripts/validate.ts'),
     join(ROOT, '.cursor/skills/chi-component-schemas/schemas.json'),
     join(ROOT, 'package.json'),
+    join(ROOT, '.cursor/skills/figma/chi-figma-connection/SKILL.md'),
   ];
 
   for (const f of configFiles) {
@@ -196,6 +198,7 @@ function build() {
     relationships: RELATIONSHIPS,
     migration,
     cursorSkills,
+    implementFromFigmaUsingChi: loadImplementFromFigmaUsingChi(),
     cache: {
       checksums: {
         tokens: hash(designTokens),

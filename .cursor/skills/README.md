@@ -22,7 +22,7 @@ Rules are always-on guidelines that Cursor applies automatically when editing ma
 | **chi-code-validation** | `rules/chi-code-validation.md` | `**/*.{html,vue,tsx,jsx}` | Anti-pattern detection, utility class format validation, component schema checks, accessibility rules, cross-MCP conflict detection |
 | **chi-migration** | `rules/chi-migration.md` | `**/*.{html,vue,tsx,jsx}` | CSS-to-Web Component mappings, modifier-to-property conversion tables, migration steps and examples |
 
-## Available Skills (7)
+## Available Skills (11)
 
 Skills are invoked on demand when you ask the AI about specific Chi topics.
 
@@ -34,6 +34,10 @@ Skills are invoked on demand when you ask the AI about specific Chi topics.
 | **chi-component-schemas** | `SKILL.md` + `schemas.json` | Validation schemas: allowed modifiers, conflicting modifier groups, required attributes, accessibility requirements per component |
 | **chi-search** | `SKILL.md` + `reference.md` | Semantic search: synonym dictionary, use-case mappings (e.g. "center content" finds `-mx--auto`, `-justify-content--center`) |
 | **chi-recommendations** | `SKILL.md` | Implementation approach decision tree: framework detection, constraint overrides, confidence levels, code examples for Vue/WC/CSS |
+| **chi-figma-connection** | `figma/chi-figma-connection/SKILL.md` | **Entry point:** Establishes the Figma–Chi connection; use this skill to enter Figma-to-Chi design-to-code. Runs: check MCPs, design source (fileKey), prototype target, get_design_context and implement in Chi. |
+| **chi-figma-check-mcp** | `figma/chi-figma-check-mcp/SKILL.md` | Check that Figma MCP and Chi MCP are installed before Figma-to-code; use first so the user gets a clear message if something is missing |
+| **chi-figma-repo** | `figma/chi-figma-repo/SKILL.md` | Defines which Figma file is the design source for Chi (default: Master CHI); use when implementing from Figma |
+| **chi-figma-design-to-code** | `figma/chi-figma-design-to-code/SKILL.md` | Read a Figma design via get_design_context and generate Chi code (HTML/CSS, Web Components, or Vue) using Chi MCP; map design to Chi, do not reuse Figma reference code as-is |
 | **chi-generate-metadata** | `SKILL.md` | Internal: pointer to the MCP metadata generation pipeline in `src/mcp/`. Not distributed to end users |
 
 ## How to Verify Rules and Skills Are Working
@@ -144,8 +148,17 @@ your-project/
         ├── chi-search/
         │   ├── SKILL.md               # How to search Chi elements
         │   └── reference.md           # Synonym dictionary + use cases
-        └── chi-recommendations/
-            └── SKILL.md               # Implementation approach decision tree
+        ├── chi-recommendations/
+        │   └── SKILL.md               # Implementation approach decision tree
+        └── figma/                     # Figma-to-code skills
+            ├── chi-figma-connection/
+            │   └── SKILL.md           # Entry point: establishes Figma–Chi connection (enter through this skill)
+            ├── chi-figma-check-mcp/
+            │   └── SKILL.md           # Check Figma + Chi MCP installed
+            ├── chi-figma-repo/
+            │   └── SKILL.md           # Figma design source + fileKey (Master CHI)
+            └── chi-figma-design-to-code/
+                └── SKILL.md           # get_design_context → map to Chi → generate HTML/CE/Vue
 ```
 
 ## What is NOT Distributed

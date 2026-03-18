@@ -398,5 +398,22 @@
         }
       }
     }
+  },
+  {
+    "name": "get_implement_from_figma_using_chi",
+    "description": "Call this first when the user asks to implement a Figma design using Chi (e.g. 'implement from Figma', 'Figma to Chi', 'design to code'). Returns the exact flow to execute in order. Follow the returned steps without searching for chi-figma-* skills.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "figmaUrl": {
+          "type": "string",
+          "description": "Optional Figma URL to extract fileKey and nodeId from"
+        },
+        "nodeId": {
+          "type": "string",
+          "description": "Optional node ID already known (colon format, e.g. 1374:381)"
+        }
+      }
+    }
   }
 ]

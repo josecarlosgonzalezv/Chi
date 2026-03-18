@@ -11,7 +11,7 @@ export function validateMetadata(metadata: Record<string, unknown>): ValidationI
 
   const requiredSections = [
     'version', 'designTokens', 'utilities', 'cssComponents', 'schemas',
-    'tools', 'quality', 'searchIndex', 'migration', 'cursorSkills', 'cache',
+    'tools', 'quality', 'searchIndex', 'migration', 'cursorSkills', 'implementFromFigmaUsingChi', 'cache',
     'antiPatterns', 'guidelines', 'relationships', 'summary',
   ];
 
@@ -109,6 +109,12 @@ export function validateMetadata(metadata: Record<string, unknown>): ValidationI
     } else if (cursorSkills.version !== metadata['version']) {
       issues.push({ severity: 'warning', message: `cursorSkills.version (${cursorSkills.version}) doesn't match metadata version (${metadata['version']})` });
     }
+  }
+
+  const implementFromFigmaUsingChi = metadata['implementFromFigmaUsingChi'];
+
+  if (typeof implementFromFigmaUsingChi !== 'string' || implementFromFigmaUsingChi.trim().length === 0) {
+    issues.push({ severity: 'error', message: 'implementFromFigmaUsingChi must be a non-empty string' });
   }
 
   const cache = metadata['cache'] as { checksums?: Record<string, string> } | undefined;

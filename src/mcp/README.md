@@ -74,7 +74,7 @@ npm run build
 - **version** -- Package version
 - **summary** -- Counts and theme list
 - **guidelines** -- Best practices, spacing formula, implementation priority
-- **tools** -- 19 MCP tool definitions (includes `setup_chi_html_css_cursor_skills`)
+- **tools** -- MCP tool definitions (includes `setup_chi_html_css_cursor_skills`, `get_implement_from_figma_using_chi`)
 - **designTokens** -- Extracted from SCSS, enriched with descriptions and examples
 - **utilities** -- Generated (spacing, color, opacity) + static (display, flex, etc.), with examples
 - **cssComponents** -- Extracted from SCSS, deduplicated, categorized, with WC mappings
@@ -85,6 +85,7 @@ npm run build
 - **relationships** -- Element relationships (tokens → utilities → components)
 - **migration** -- CSS-to-WC conversion rules (modifier → property mappings)
 - **cursorSkills** -- Bundled user-facing Skills/Rules (14 files) for distribution via `setup_chi_html_css_cursor_skills`
+- **implementFromFigmaUsingChi** -- Content of the chi-figma-connection skill (`.cursor/skills/figma/chi-figma-connection/SKILL.md`). The Chi MCP server should return this content when the `get_implement_from_figma_using_chi` tool is invoked. Single source of truth: the skill defines the flow and references the other Figma skills in order.
 - **cache** -- MD5 checksums and TTL for MCP client caching
 
 ## Post-Build Validation

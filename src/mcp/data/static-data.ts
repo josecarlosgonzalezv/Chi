@@ -49,6 +49,11 @@ export function loadTools(): unknown[] {
   return readJSON<unknown[]>(join(__dirname, 'tools.json')) ?? [];
 }
 
+/** Load the chi-figma-connection skill content for the get_implement_from_figma_using_chi tool. */
+export function loadImplementFromFigmaUsingChi(): string {
+  return readFile(join(SKILLS_DIR, 'figma/chi-figma-connection/SKILL.md'));
+}
+
 export function loadAntiPatterns(): unknown[] {
   return [
     {
