@@ -32,6 +32,9 @@ else
   node ./scripts/build/js/build.js
 fi
 
+# Build Chi CJA analytics collector
+node ./scripts/build/js/build-cja.js
+
 
 # Build utils
 bash ./scripts/build/utils/copyFile.sh ./src/chi/components/input-file/input-file.js dist

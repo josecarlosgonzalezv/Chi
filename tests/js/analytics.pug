@@ -1,0 +1,69 @@
+extends ../layout.pug
+
+block scripts
+  script(type="module" src='../../../js/ce/ux-chi-ce/ux-chi-ce.esm.js')
+  script(src='../../../js/chi.js')
+  script(src='../../../chi-cja.js')
+
+block variables
+  - var title = 'Analytics'
+
+block content
+  h3 HTML button
+  button#poc-html-btn.chi-button(data-cy="poc-html-btn") Save
+  a.chi-link#poc-html-link(data-cy="poc-html-link") Link
+
+  h3 Non-Chi button
+  button#poc-plain-btn(data-cy="poc-plain-btn") Plain
+
+  h3 Custom element button
+  chi-button#poc-ce-btn(data-cy="poc-ce-btn") Send
+  chi-link#poc-ce-link(data-cy="poc-ce-link") Link
+  chi-checkbox#poc-ce-checkbox(data-cy="poc-ce-checkbox") CE checkbox
+
+  h3 Native form controls
+  .chi-form__item
+    label.chi-checkbox
+      input#poc-native-checkbox.chi-checkbox__input(type='checkbox', data-cy='poc-native-checkbox')
+      label.chi-checkbox__label(for='poc-native-checkbox') Native terms
+  .chi-form__item
+    label.chi-radio
+      input#poc-radio-a.chi-radio__input(type='radio', name='poc-radio', value='a', data-cy='poc-radio-a')
+      label.chi-radio__label(for='poc-radio-a') Option A
+    label.chi-radio
+      input#poc-radio-b.chi-radio__input(type='radio', name='poc-radio', value='b', data-cy='poc-radio-b')
+      label.chi-radio__label(for='poc-radio-b') Option B
+  .chi-form__item
+    select#poc-select.chi-select(data-cy='poc-select')
+      option(value='') Choose
+      option(value='one') One
+      option(value='two') Two
+  .chi-form__item
+    input#poc-text.chi-input(type='text', data-cy='poc-text')
+  .chi-form__item
+    input#poc-number.chi-input(type='number', data-cy='poc-number')
+
+  h3 Vue component (simulated wrapper)
+  .chi-form__item(data-chi-analytics-owned)
+    label.chi-checkbox
+      input#poc-vue-checkbox.chi-checkbox__input(type='checkbox', data-cy='poc-vue-checkbox')
+      label.chi-checkbox__label(for='poc-vue-checkbox') Accept terms
+
+  h3 Suppressed region
+  div(data-chi-analytics-suppress)
+    button#poc-suppressed-btn.chi-button(data-cy="poc-suppressed-btn") Hidden
+
+  h3 Sensitive input
+  input#poc-password.chi-input(type="password", data-cy="poc-password")
+
+  script.
+    document.getElementById('poc-vue-checkbox').addEventListener('change', function (e) {
+      window.chiCja.track({
+        component: 'chi-checkbox',
+        action: 'change',
+        label: 'Accept terms',
+        value: e.target.checked,
+        framework: 'vue',
+        el: e.target
+      });
+    });

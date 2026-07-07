@@ -22,6 +22,7 @@ const cssFilesToHash = selectedThemes.map((theme) => {
 
 const filesToHash = [
   ...cssFilesToHash,
+  'dist/chi-cja.js',
   'dist/chi-agentic.css',
   'dist/js/chi.js',
   'dist/assets/themes/lumen/images/favicon.svg',

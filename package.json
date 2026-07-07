@@ -18,6 +18,7 @@
     "build": "cross-env THEMES_TO_BUILD=lumen,connect,centurylink,test bash ./scripts/build/build.sh",
     "build:testing": "bash ./scripts/build/build.sh --testing",
     "build:prod": "cross-env BUILD_TARGET=prod bash ./scripts/build/build.sh",
+    "build:cja": "vite build --config vite-cja.config.ts",
     "generate:ai-rules": "tsx src/mcp/scripts/sync-skills.ts",
     "build:mcp": "tsx src/mcp/scripts/generate.ts",
     "generate:css-vars": "tsx scripts/build/css/vars/build.ts",
