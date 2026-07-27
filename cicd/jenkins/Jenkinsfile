@@ -36,9 +36,6 @@ pipeline {
     preserveStashes(buildCount: 10)
     disableConcurrentBuilds()
   }
-  parameters {
-    booleanParam(name: 'TEST_ASSETS_SERVER_PR', defaultValue: true, description: 'TEMPORARY: when true, only runs the AssetsServer PR test stage and skips the rest of the pipeline.')
-  }
   environment {
     // Project variables
     PROJECT_NAME = 'ux-chi'
@@ -107,46 +104,6 @@ pipeline {
     DEPLOY_AUTH_TOKEN = ''
   }
   stages {
-    stage('Test AssetsServer PR only') {
-      when {
-        beforeAgent true
-        expression { return params.TEST_ASSETS_SERVER_PR != false }
-      }
-      agent {
-        docker {
-          image DOCKER_NODE22
-        }
-      }
-      steps {
-        script {
-          def version = '7.19.0'
-
-          jslNpmWrapper('ci', GITHUB_PUBLISH_TOKEN_CREDENTIALS)
-          jslNpmWrapper('run build:prod', GITHUB_PUBLISH_TOKEN_CREDENTIALS)
-
-          sh(script: """
-              chmod +x ${CLEAN_SCRIPT}
-              ${CLEAN_SCRIPT}
-          """, label: "Cleaning before pushing to AssetsServer")
-
-          jslGitHubCloneRepo('ux-chi-AssetsServer', env.ASSETS_SERVER_ORG, 'master', GITHUB_APP_CREDENTIALS)
-
-          env.CHECK = sh(script: """
-              chmod +x ${CHECK_FOLDER_SCRIPT}
-              ${CHECK_FOLDER_SCRIPT} ${version}
-          """, returnStdout: true).trim()
-
-          createAndOpenPullRequest(version)
-        }
-      }
-    }
-    // TEMP: wrapper so the whole normal pipeline is skipped while TEST_ASSETS_SERVER_PR is true. Remove after verifying.
-    stage('Full pipeline') {
-      when {
-        beforeAgent true
-        expression { return params.TEST_ASSETS_SERVER_PR == false }
-      }
-      stages {
     stage('Summary') {
       steps {
         script {
@@ -559,8 +516,6 @@ pipeline {
           
           jslAdoptionMain('cypress/reports/*xml')
         }
-      }
-    }
       }
     }
   }
